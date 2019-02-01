@@ -30,6 +30,9 @@ namespace OpenAuth.Repository.Domain
           this.CrateId= string.Empty;
           this.TypeName= string.Empty;
           this.TypeId= string.Empty;
+          this.XRank= string.Empty;
+          this.ZRank= string.Empty;
+          this.CardId= string.Empty;
         }
 
         /// <summary>
@@ -72,6 +75,22 @@ namespace OpenAuth.Repository.Domain
 	    /// 分类ID
 	    /// </summary>
         public string TypeId { get; set; }
+        /// <summary>
+	    /// 年龄
+	    /// </summary>
+        public int? Age { get; set; }
+        /// <summary>
+	    /// 现任行政级别
+	    /// </summary>
+        public string XRank { get; set; }
+        /// <summary>
+	    /// 职务级别
+	    /// </summary>
+        public string ZRank { get; set; }
+        /// <summary>
+	    /// 身份证号
+	    /// </summary>
+        public string CardId { get; set; }
 
     }
 }

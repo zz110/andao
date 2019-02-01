@@ -62,6 +62,7 @@
     <Compile Include="Domain\Category.cs" />
     <Compile Include="Domain\CategoryType.cs" />
     <Compile Include="Core\Entity.cs" />
+    <Compile Include="Domain\EvaluateAverageScore.cs" />
     <Compile Include="Domain\FlowInstance.cs" />
     <Compile Include="Domain\FlowInstanceOperationHistory.cs" />
     <Compile Include="Domain\FlowInstanceTransitionHistory.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Mapping\AnswerMap.cs" />
     <Compile Include="Mapping\ApplicationMap.cs" />
     <Compile Include="Mapping\CategoryTypeMap.cs" />
+    <Compile Include="Mapping\EvaluateAverageScoreMap.cs" />
     <Compile Include="Mapping\FlowInstanceMap.cs" />
     <Compile Include="Mapping\FlowInstanceOperationHistoryMap.cs" />
     <Compile Include="Mapping\FlowInstanceTransitionHistoryMap.cs" />

@@ -65,6 +65,21 @@ namespace OpenAuth.Repository.Mapping
                 .HasColumnName("TypeId")
                 .HasMaxLength(50)
                 .IsOptional();
+            Property(t => t.Age)
+                .HasColumnName("Age")
+                .IsOptional();
+            Property(t => t.XRank)
+                .HasColumnName("XRank")
+                .HasMaxLength(50)
+                .IsOptional();
+            Property(t => t.ZRank)
+                .HasColumnName("ZRank")
+                .HasMaxLength(50)
+                .IsOptional();
+            Property(t => t.CardId)
+                .HasColumnName("CardId")
+                .HasMaxLength(50)
+                .IsOptional();
 
             // Relationships
         }
