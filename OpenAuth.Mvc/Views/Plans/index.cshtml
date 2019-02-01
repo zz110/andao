@@ -1,0 +1,136 @@
+﻿@section header
+{
+    <link rel="stylesheet" href="/css/treetable.css" />
+}
+<blockquote class="layui-elem-quote news_search toolList" id="menus">
+</blockquote>
+
+    <div class="layui-row">
+        @*<div class="layui-col-xs2">
+            <ul id="tree" class="ztree"
+                style="padding: 2px; border: 1px solid #ddd; overflow: auto;">
+            </ul>
+        </div>*@
+        <div class="layui-col-xs10">
+            <table class="layui-table"
+                lay-data="{height: 'full-80', page:true, id:'mainList'}"
+                lay-filter="list"  lay-size="sm">
+                <thead>
+                <tr>
+                    <th lay-data="{checkbox:true, fixed: true}"></th>
+                    <th lay-data="{field:'Id', width:150}">Id</th>
+                    <th lay-data="{field:'PlanName', width:150}">方案名称</th>
+                    <th lay-data="{field:'PlanStart', width:150}">方案开始时间</th>
+                    <th lay-data="{field:'PlanEnd', width:150}">方案结束时间</th>
+                    <th lay-data="{field:'State', width:150}">状态</th>
+                    @*<th lay-data="{field:'RatersId', width:150}">评测人IDs</th>
+                    <th lay-data="{field:'JudgeId', width:150}">被评人Ids</th>
+                    <th lay-data="{field:'OpTime', width:150}">操作时间</th>
+                    <th lay-data="{field:'OpAdmin', width:150}">操作人</th>
+                    <th lay-data="{field:'QuestionId', width:150}">试题组</th>*@
+                    <th lay-data="{fixed: 'right', width:160, align:'center', toolbar: '#barList'}"></th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+<script type="text/html" id="barList">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+</script>
+
+
+<!--添加/编辑窗口-->
+<div id="divEdit" style="display: none">
+    <form class="layui-form" action=""  id="formEdit">
+    <input type="hidden" name="Id" v-model="Id" />
+    <div class="layui-form-item">
+        <label class="layui-form-label">方案名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="PlanName" v-model="PlanName" required lay-verify="required"
+                placeholder="方案名称" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">方案开始时间</label>
+        @*<div class="layui-input-block">
+            <input type="text" name="PlanStart" v-model="PlanStart" required lay-verify="required"
+                   placeholder="方案开始时间" autocomplete="off" class="layui-input">
+        </div>*@
+        <div class="layui-inline">
+
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="test5" name="PlanStart" v-model="PlanStart" placeholder="yyyy-MM-dd">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">方案结束时间</label>
+        @*<div class="layui-input-block">
+            <input type="text" name="PlanEnd" v-model="PlanEnd" required lay-verify="required"
+                placeholder="方案结束时间" autocomplete="off" class="layui-input">
+        </div>*@
+        <div class="layui-inline">
+
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="test6" name="PlanEnd" v-model="PlanEnd" placeholder="yyyy-MM-dd">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block">
+            <input type="radio" name="State" value="1" title="启用" checked>
+            <input type="radio" name="State" value="0" title="禁用">
+        </div>
+    </div>
+    @*<div class="layui-form-item">
+        <label class="layui-form-label">评测人IDs</label>
+        <div class="layui-input-block">
+            <input type="text" name="RatersId" v-model="RatersId" 
+                placeholder="评测人IDs" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">被评人Ids</label>
+        <div class="layui-input-block">
+            <input type="text" name="JudgeId" v-model="JudgeId" 
+                placeholder="被评人Ids" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">操作时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="OpTime" v-model="OpTime" required lay-verify="required"
+                placeholder="操作时间" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">操作人</label>
+        <div class="layui-input-block">
+            <input type="text" name="OpAdmin" v-model="OpAdmin" required lay-verify="required"
+                placeholder="操作人" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">试题组</label>
+        <div class="layui-input-block">
+            <input type="text" name="QuestionId" v-model="QuestionId" required lay-verify="required"
+                placeholder="试题组" autocomplete="off" class="layui-input">
+        </div>
+    </div>*@
+
+
+     <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formSubmit">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/userJs/Plans.js"></script>
+
+

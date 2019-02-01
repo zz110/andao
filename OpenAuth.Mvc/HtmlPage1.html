@@ -1,0 +1,39 @@
+﻿<div>请将从这行文字中挑选一些移动到拖放目标中</div>
+<div id="target" style="margin-top:20px;height: 100px;width:200px;background:lightblue;">拖放目标</div>
+<div id="result"></div>
+<script>
+    target.ondragenter = function (e) {
+        e = e || event;
+        if (e.preventDefault) {
+            e.preventDefault();
+        } else {
+            e.returnValue = false;
+        }
+        this.innerHTML = '有元素进入目标区域';
+        this.style.background = 'red';
+    }
+    target.ondragover = function (e) {
+        e = e || event;
+        if (e.preventDefault) {
+            e.preventDefault();
+        } else {
+            e.returnValue = false;
+        }
+    }
+    target.ondragleave = function (e) {
+        e = e || event;
+        this.innerHTML = '元素已离开目标区域';
+        this.style.backgroundColor = 'lightblue';
+    }
+    target.ondrop = function (e) {
+        e = e || event;
+        if (e.preventDefault) {
+            e.preventDefault();
+        } else {
+            e.returnValue = false;
+        }
+        result.innerHTML = '落入目标区域的文字为:' + e.dataTransfer.getData('text');
+        this.innerHTML = '元素已落在目标区域';
+        this.style.backgroundColor = 'orange';
+    }
+</script>

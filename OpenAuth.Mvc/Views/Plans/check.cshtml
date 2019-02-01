@@ -1,0 +1,46 @@
+﻿
+@section header
+{
+    <link rel="stylesheet" href="/css/treetable.css" />
+}
+
+<div class="layui-row">
+    @*测评人树开始*@
+    <div class="layui-col-xs2">
+        <ul id="tree" class="ztree"
+            style="padding: 2px; border: 1px solid #ddd; overflow: auto;"></ul>
+    </div>
+    @*评测人树结束*@
+    @*评测人列表开始*@
+    <div class="layui-col-xs3">
+        <table class="layui-table" style=""
+               lay-data="{height: 'full-5', page:true, id:'mainList'}"
+               lay-filter="list" lay-size="sm">
+            <thead>
+                <tr>
+                    <th lay-data="{checkbox:true, fixed: true}"></th>
+                    <th lay-data="{field:'Name', width:150}">用户名</th>
+                    <th lay-data="{field:'Id', width:180}">ID</th>
+
+                </tr>
+            </thead>
+        </table>
+    </div>
+    @*评测人列表结束*@
+    @*已选择列表开始*@
+    <div class="layui-col-xs3">
+        <div class="layui-card ">
+            <div class="layui-card-header">已选择参加测评人员</div>
+            <div class="layui-card-body ddr" style="height:500px">
+
+            </div>
+        </div>
+    </div>
+    @*已选择列表结束*@
+    <button class="layui-btn" id="sub">提交</button>
+</div>
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/userJs/CheckPlan.js"></script>
+
+
+
