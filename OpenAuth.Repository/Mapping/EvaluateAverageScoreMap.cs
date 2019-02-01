@@ -35,6 +35,10 @@ namespace OpenAuth.Repository.Mapping
                 .HasColumnName("OrgId")
                 .HasMaxLength(50)
                 .IsOptional();
+            Property(t => t.Creator)
+                .HasColumnName("Creator")
+                .HasMaxLength(50)
+                .IsOptional();
             Property(t => t.EvaluateYear)
                 .HasColumnName("EvaluateYear")
                 .IsOptional();

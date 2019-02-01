@@ -1,7 +1,7 @@
 USE [cp]
 GO
 
-/****** Object:  Table [dbo].[EvaluateAverageScore]    Script Date: 2019/2/1 10:16:05 ******/
+/****** Object:  Table [dbo].[EvaluateAverageScore]    Script Date: 2019/2/1 15:00:58 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -18,6 +18,7 @@ CREATE TABLE [dbo].[EvaluateAverageScore](
 	[EvaluateYear] [int] NULL,
 	[EvaluateMonth] [int] NULL,
 	[Score] [decimal](18, 2) NULL,
+	[Creator] [varchar](50) NULL,
 	[Created] [datetime] NULL,
 	[Updated] [datetime] NULL
 ) ON [PRIMARY]

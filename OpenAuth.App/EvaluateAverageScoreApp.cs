@@ -34,7 +34,13 @@ namespace OpenAuth.App
         {
             UnitWork.Update<EvaluateAverageScore>(u => u.Id == obj.Id, u => new EvaluateAverageScore
             {
-               //todo:要修改的字段赋值
+                //todo:要修改的字段赋值
+                UserId = obj.UserId,
+                OrgId = obj.OrgId,
+                Updated = obj.Updated,
+                EvaluateYear = obj.EvaluateYear,
+                EvaluateMonth = obj.EvaluateMonth,
+                Score = obj.Score
             });
 
         }

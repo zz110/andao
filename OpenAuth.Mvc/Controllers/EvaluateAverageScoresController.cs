@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Mvc;
 using Infrastructure;
@@ -19,6 +20,26 @@ namespace OpenAuth.Mvc.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        [System.Web.Mvc.HttpGet]
+        public ActionResult page(int limit, int offset) {
+
+            List<object> dataList = new List<object>();
+
+            for (int i = 0; i < 100; i++)
+            {
+                dataList.Add(new
+                {
+                    UserName = i.ToString(),
+                    DeptName = i.ToString(),
+                    EvaluateMonth = 12,
+                    Score = 90.12,
+                    Created = DateTime.Now
+                });
+            }
+            int total = dataList.Count;
+            return Json(new { total = total, rows = dataList }, JsonRequestBehavior.AllowGet);
         }
 
         //添加或修改

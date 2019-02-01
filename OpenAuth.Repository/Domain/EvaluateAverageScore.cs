@@ -20,11 +20,12 @@ namespace OpenAuth.Repository.Domain
     {
         public EvaluateAverageScore()
         {
-          this.Id= string.Empty;
-          this.UserId= string.Empty;
-          this.OrgId= string.Empty;
-          this.Created= DateTime.Now;
-          this.Updated= DateTime.Now;
+            this.Id = string.Empty;
+            this.UserId = string.Empty;
+            this.OrgId = string.Empty;
+            this.Creator = string.Empty;
+            this.Created = DateTime.Now;
+            this.Updated = DateTime.Now;
         }
 
         /// <summary>
@@ -51,6 +52,10 @@ namespace OpenAuth.Repository.Domain
 	    /// 得分
 	    /// </summary>
         public decimal? Score { get; set; }
+        /// <summary>
+        /// 创建者
+        /// </summary>
+        public string Creator { get; set; }
         /// <summary>
 	    /// 
 	    /// </summary>
