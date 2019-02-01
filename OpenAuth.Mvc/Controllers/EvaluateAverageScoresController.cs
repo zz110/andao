@@ -6,6 +6,7 @@ using Infrastructure;
 using OpenAuth.App;
 using OpenAuth.App.Request;
 using OpenAuth.App.Response;
+using OpenAuth.App.SSO;
 using OpenAuth.Mvc.Models;
 using OpenAuth.Repository.Domain;
 
@@ -14,11 +15,21 @@ namespace OpenAuth.Mvc.Controllers
     public class EvaluateAverageScoresController : BaseController
     {
         public EvaluateAverageScoreApp App { get; set; }
-
+        
         //
         [Authenticate]
         public ActionResult Index()
         {
+            return View();
+        }
+
+
+        public ActionResult EvaluateAverageScoreForm(string id = "")
+        {
+            var user = AuthUtil.GetCurrentUser();
+
+
+            ViewBag.Id = id;
             return View();
         }
 

@@ -8,9 +8,9 @@
     <div class="box-body">
         <div class="row">
             <div class="col-xs-12 col-sm-12">
-                <button class="btn btn-sm btn-default">新增</button>
-                <button class="btn btn-sm btn-info">编辑</button>
-                <button class="btn btn-sm btn-danger">删除</button>
+                <button class="btn btn-sm btn-default" id="btnAdd">新增</button>
+                <button class="btn btn-sm btn-info" id="btnEdit">编辑</button>
+                <button class="btn btn-sm btn-danger" id="btnDel">删除</button>
             </div>
         </div>
     </div>
@@ -25,7 +25,27 @@
     </div>
 </div>
 
-
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">温馨提示</h4>
+            </div>
+            <div class="modal-body">
+                <p id="modal-message">111111111</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
+                <button id="btnModalOk" type="button" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 
 
 @section scripts
@@ -34,9 +54,32 @@
 
         $(function () {
 
+            $("#btnAdd").click(function () {
+                layer.open({
+                    type: 2,
+                    title: "录入考核平均分",
+                    skin: 'layui-layer-lan',
+                    maxmin: true,
+                    shade: 0.1,
+                    area: ['70%', '60%'], //宽高
+                    content: "/EvaluateAverageScores/EvaluateAverageScoreForm"
+                });
+
+            });
+
+            $("#btnEdit").click(function () {
+                $("#modal-default").modal("show");
+            });
+
+            $("#btnDel").click(function () {
+                $("#modal-default").modal("show");
+            });
+
+
             //1.初始化Table
             var oTable = new TableInit();
             oTable.Init();
+
         });
 
         var TableInit = function () {
@@ -58,7 +101,7 @@
                     pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
                     minimumCountColumns: 2,             //最少允许的列数
                     clickToSelect: true,                //是否启用点击选中行
-                    height: 720,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                    height: 670,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
                     //uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
                     cardView: false,                    //是否显示详细视图
                     detailView: false,                   //是否显示父子表

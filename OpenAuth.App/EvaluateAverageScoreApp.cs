@@ -11,8 +11,7 @@ namespace OpenAuth.App
 {
     public class EvaluateAverageScoreApp : BaseApp<EvaluateAverageScore>
     {
-        public RevelanceManagerApp ReleManagerApp { get; set; }
-
+        
         /// <summary>
         /// 加载列表
         /// </summary>

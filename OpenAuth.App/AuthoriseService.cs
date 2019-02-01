@@ -86,6 +86,37 @@ namespace OpenAuth.App
         }
 
         /// <summary>
+        /// 当前登录用户可访问机构下所有用户信息
+        /// </summary>
+        /// <param name="orgIds"></param>
+        /// <returns></returns>
+        public virtual IQueryable<User> GetUsersQueryByOrgIds(string orgIds, bool exclude_self = true)
+        {
+            var userIds = UnitWork.Find<Relevance>(
+                               u => u.Key == Define.USERORG && orgIds.Contains(u.SecondId)).Select(u => u.FirstId);
+
+            var userList = UnitWork.Find<User>(u => userIds.Contains(u.Id));
+            if (exclude_self) {
+                userList = userList.Where(u => !u.Id.Equals(_user.Id));
+            }
+            return userList;
+        }
+
+        /// <summary>
+        /// 通过用户id获取用户所属的机构信息
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public virtual IQueryable<Org> GetOrgByUserId(string userId)
+        {
+            var orgids = UnitWork.Find<Relevance>(
+                  u => u.FirstId == userId && u.Key == Define.USERORG).Select(u => u.SecondId);
+
+            return UnitWork.Find<Org>(u => orgids.Contains(u.Id));
+        }
+
+
+        /// <summary>
         /// 获取用户可访问的资源
         /// </summary>
         /// <returns>IQueryable&lt;Resource&gt;.</returns>

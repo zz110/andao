@@ -203,6 +203,19 @@
     <Content Include="js\slimscroll.js" />
     <Content Include="js\utils.js" />
     <Content Include="layui\css\modules\laydate\default\font.css" />
+    <Content Include="static\app\EvaluateAverageScoreForm.js" />
+    <Content Include="static\assets\angular\angular-animate.js" />
+    <Content Include="static\assets\angular\angular-animate.min.js" />
+    <Content Include="static\assets\angular\angular-cookies.js" />
+    <Content Include="static\assets\angular\angular-cookies.min.js" />
+    <Content Include="static\assets\angular\angular-route.js" />
+    <Content Include="static\assets\angular\angular-route.min.js" />
+    <Content Include="static\assets\angular\angular-sanitize.js" />
+    <Content Include="static\assets\angular\angular-sanitize.min.js" />
+    <Content Include="static\assets\angular\angular-ui-router.js" />
+    <Content Include="static\assets\angular\angular.js" />
+    <Content Include="static\assets\angular\angular.min.js" />
+    <Content Include="static\assets\angular\ocLazyLoad.min.js" />
     <Content Include="static\assets\bower_components\bootstrap-colorpicker\dist\css\bootstrap-colorpicker.css" />
     <Content Include="static\assets\bower_components\bootstrap-colorpicker\dist\css\bootstrap-colorpicker.min.css" />
     <Content Include="static\assets\bower_components\bootstrap-colorpicker\dist\img\bootstrap-colorpicker\alpha-horizontal.png" />
@@ -6676,6 +6689,22 @@
     <Content Include="static\assets\dist\js\demo.js" />
     <Content Include="static\assets\dist\js\pages\dashboard.js" />
     <Content Include="static\assets\dist\js\pages\dashboard2.js" />
+    <Content Include="static\assets\layer\layer.js" />
+    <Content Include="static\assets\layer\layer.min.js" />
+    <Content Include="static\assets\layer\mobile\layer.js" />
+    <Content Include="static\assets\layer\mobile\need\layer.css" />
+    <Content Include="static\assets\layer\skin\default\icon-ext.png" />
+    <Content Include="static\assets\layer\skin\default\icon.png" />
+    <Content Include="static\assets\layer\skin\default\layer.css" />
+    <Content Include="static\assets\layer\skin\default\loading-0.gif" />
+    <Content Include="static\assets\layer\skin\default\loading-1.gif" />
+    <Content Include="static\assets\layer\skin\default\loading-2.gif" />
+    <Content Include="static\assets\layer\theme\default\icon-ext.png" />
+    <Content Include="static\assets\layer\theme\default\icon.png" />
+    <Content Include="static\assets\layer\theme\default\layer.css" />
+    <Content Include="static\assets\layer\theme\default\loading-0.gif" />
+    <Content Include="static\assets\layer\theme\default\loading-1.gif" />
+    <Content Include="static\assets\layer\theme\default\loading-2.gif" />
     <Content Include="static\assets\plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="static\assets\plugins\bootstrap-slider\slider.css" />
     <Content Include="static\assets\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.js" />
@@ -7873,6 +7902,11 @@
     <Content Include="static\assets\plugins\input-mask\phone-codes\phone-codes.json" />
     <Content Include="static\assets\plugins\jquery-validation\README.md" />
     <Content Include="Views\Shared\_Form.cshtml" />
+    <Content Include="Views\EvaluateAverageScores\EvaluateAverageScoreForm.cshtml" />
+    <Content Include="static\assets\angular\angular-animate.min.js.map" />
+    <Content Include="static\assets\angular\angular-cookies.min.js.map" />
+    <Content Include="static\assets\angular\angular.min.js.map" />
+    <Content Include="Views\UserManager\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="layui\lay\modules\mobile\" />
