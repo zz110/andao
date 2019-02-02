@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_adminLTELayout.cshtml";
 }
 
-<div class="container" ng-app="myApp" ng-controller="appController" ng-init="init()">
+<div class="container" ng-app="myApp" ng-controller="appController">
 
     <div class="box box-warning" id="warningbox" style="display:none">
         <div class="box-header with-border">
@@ -26,18 +26,21 @@
     </div>
 
     <form class="form-horizontal" id="inputForm">
-        <input type="hidden" ng-model="" />
-        <input type="hidden" ng-model=""  />
-        <input type="hidden" ng-model=""  />
+        <input type="hidden" name="Id" ng-model="model.Id" />
+        <input type="hidden" name="Creator" ng-model="model.Creator" />
         <div class="row">
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">姓名:</label>
                     <div class="col-sm-10">
-                        <input type="text"
-                               ng-model="model.UserName"
-                               class="form-control"
-                               readonly />
+                        <select class="form-control" name="UserId" ng-model="model.UserId" ng-change="UserSelected(model.UserId)" >
+                            <option value="" ng-selected="'' == model.UserId">--请选择--</option>
+                            <option ng-repeat="item in UserList"
+                                    ng-selected="item.Id == model.UserId"
+                                    value="{{item.Id}}">
+                                {{item.Name}}
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -45,10 +48,14 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">部门:</label>
                     <div class="col-sm-10">
-                        <input type="text"
-                               ng-model="model.DeptName"
-                               class="form-control required" min="1" max="100"
-                               placeholder="合同期限(年)" />
+                        <select class="form-control" name="OrgId" ng-model="model.OrgId">
+                            <option value="" ng-selected="'' == model.OrgId">--请选择--</option>
+                            <option ng-repeat="item in DeptList"
+                                    ng-selected="item.Id == model.OrgId"
+                                    value="{{item.Id}}">
+                                {{item.Name}}
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -60,6 +67,7 @@
                     <label class="col-sm-2 control-label">年份:</label>
                     <div class="col-sm-10">
                         <input type="text"
+                               name="EvaluateYear"
                                ng-model="model.EvaluateYear"
                                maxlength="10"
                                minlength="2"
@@ -73,11 +81,10 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">月份:</label>
                     <div class="col-sm-10">
-                        
-                        <select  class="form-control" ng-model="model.EvaluateMonth">
+                        <select class="form-control" name="EvaluateMonth" ng-model="model.EvaluateMonth">
                             <option value="">--请选择月份--</option>
                             <option ng-repeat="item in monthList"
-                                    ng-selected="item == currentMonth"
+                                    ng-selected="item == model.EvaluateMonth"
                                     value="{{item}}">
                                 {{item}}
                             </option>
@@ -93,6 +100,7 @@
                     <label class="col-sm-2 control-label">分数:</label>
                     <div class="col-sm-10">
                         <input type="text"
+                               name="Score"
                                ng-model="model.Score"
                                class="form-control required" placeholder="请输入分数" />
                     </div>
@@ -103,6 +111,7 @@
                     <label class="col-sm-2 control-label">创建时间</label>
                     <div class="col-sm-10">
                         <input type="text"
+                               name="Created"
                                ng-model="model.Created"
                                class="form-control adminlte_datepicker created" placeholder="" />
                     </div>
@@ -127,5 +136,8 @@
 
 @section scripts
 {
+    <script>
+         var Id="@ViewBag.Id";
+    </script>
     <script src="~/static/app/EvaluateAverageScoreForm.js"></script>
 }

@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace OpenAuth.Repository.Domain
 {
@@ -29,16 +30,14 @@ namespace OpenAuth.Repository.Domain
         }
 
         /// <summary>
-	    /// 
-	    /// </summary>
-        public string Id { get; set; }
-        /// <summary>
 	    /// 用户id
 	    /// </summary>
+        [Required(AllowEmptyStrings =false,ErrorMessage ="请选择打分用户")]
         public string UserId { get; set; }
         /// <summary>
 	    /// 组织结构id
 	    /// </summary>
+        [Required(AllowEmptyStrings = false, ErrorMessage = "请选择打分用户所在组织")]
         public string OrgId { get; set; }
         /// <summary>
 	    /// 评价年份
@@ -51,6 +50,8 @@ namespace OpenAuth.Repository.Domain
         /// <summary>
 	    /// 得分
 	    /// </summary>
+        [Required(AllowEmptyStrings = false, ErrorMessage = "请录入分数")]
+        [Range(minimum: 0.00, maximum: 100, ErrorMessage = "请录入正确的分数;0-100分")]
         public decimal? Score { get; set; }
         /// <summary>
         /// 创建者

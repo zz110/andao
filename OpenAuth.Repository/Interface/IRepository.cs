@@ -31,6 +31,8 @@ namespace OpenAuth.Repository.Interface
 
         void Add(T entity);
 
+        string AddAndReturnId(T entity);
+
         void BatchAdd(T[] entities);
 
         /// <summary>
@@ -60,5 +62,7 @@ namespace OpenAuth.Repository.Interface
         void Save();
 
         int ExecuteSql(string sql);
+
+        IQueryable<T1> ExecuteQuerySql<T1>(string sql, params object[] parameters);
     }
 }

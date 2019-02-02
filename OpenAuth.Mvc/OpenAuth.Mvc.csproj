@@ -139,6 +139,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AnswersController.cs" />
+    <Compile Include="Controllers\AuthoriseController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ApplicationsController.cs" />
     <Compile Include="Controllers\EvaluateAverageScoresController.cs" />
@@ -203,6 +204,7 @@
     <Content Include="js\slimscroll.js" />
     <Content Include="js\utils.js" />
     <Content Include="layui\css\modules\laydate\default\font.css" />
+    <Content Include="static\app\app.js" />
     <Content Include="static\app\EvaluateAverageScoreForm.js" />
     <Content Include="static\assets\angular\angular-animate.js" />
     <Content Include="static\assets\angular\angular-animate.min.js" />
@@ -7910,6 +7912,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="layui\lay\modules\mobile\" />
+    <Folder Include="Views\Authorise\" />
     <Folder Include="Views\Result\" />
   </ItemGroup>
   <ItemGroup>

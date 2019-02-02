@@ -16,6 +16,14 @@ namespace OpenAuth.Mvc.Controllers
     {
         public EvaluateAverageScoreApp App { get; set; }
         
+        private User _User
+        {
+            get
+            {
+                return AuthUtil.GetCurrentUser().User;
+            }
+        }
+
         //
         [Authenticate]
         public ActionResult Index()
@@ -23,68 +31,104 @@ namespace OpenAuth.Mvc.Controllers
             return View();
         }
 
-
         public ActionResult EvaluateAverageScoreForm(string id = "")
         {
-            var user = AuthUtil.GetCurrentUser();
-
-
             ViewBag.Id = id;
             return View();
+        }
+
+        /// <summary>
+        /// 获取
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [System.Web.Mvc.HttpGet]
+        public ActionResult get(string id = "")
+        {
+            Response<object> response = new Response<object>();
+            try
+            {
+                var result = App.get(id);
+                if (string.IsNullOrEmpty(result.Creator)) {
+                    result.Creator = _User.Id;
+                    result.UserId = "";
+                    result.OrgId = "";
+                    result.EvaluateYear = DateTime.Now.Year;
+                    result.EvaluateMonth = DateTime.Now.Month;
+                    result.Created = DateTime.Now;
+                }
+                response.Result = result;
+                response.Message = "";
+                response.Code = Response<object>.SUCCESS_CODE;
+            }
+            catch (Exception ex)
+            {
+                response.Code = Response<object>.ERROR_CODE;
+                response.Message = ex.Message;
+            }
+            return Json(response, JsonRequestBehavior.AllowGet);
         }
 
         [System.Web.Mvc.HttpGet]
         public ActionResult page(int limit, int offset) {
 
-            List<object> dataList = new List<object>();
+            //List<object> dataList = new List<object>();
 
-            for (int i = 0; i < 100; i++)
+            //for (int i = 0; i < 100; i++)
+            //{
+            //    dataList.Add(new
+            //    {
+            //        UserName = i.ToString(),
+            //        DeptName = i.ToString(),
+            //        EvaluateMonth = 12,
+            //        Score = 90.12,
+            //        Created = DateTime.Now
+            //    });
+            //}
+            //int total = dataList.Count;
+
+            var result = App.page(limit, offset);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public ActionResult save(EvaluateAverageScore input) {
+
+            Response<object> response = new Response<object>("服务器错误");
+            try
             {
-                dataList.Add(new
+                if (!ModelState.IsValid)
                 {
-                    UserName = i.ToString(),
-                    DeptName = i.ToString(),
-                    EvaluateMonth = 12,
-                    Score = 90.12,
-                    Created = DateTime.Now
-                });
-            }
-            int total = dataList.Count;
-            return Json(new { total = total, rows = dataList }, JsonRequestBehavior.AllowGet);
-        }
+                    response.Message = this.GetErrors();
+                    return Json(response);
+                }
 
-        //添加或修改
-        [System.Web.Mvc.HttpPost]
-        public string Add(EvaluateAverageScore obj)
-        {
-            try
-            {
-                App.Add(obj);
-
+                if (string.IsNullOrEmpty(input.Id))
+                {
+                    if (!App.Exists(input))
+                    {
+                        response.Result = App.Add(input);
+                    }
+                    else
+                    {
+                        response.Message = "数据已存在，请勿重复添加";
+                        return Json(response);
+                    }
+                }
+                else {
+                    App.Update(input);
+                    response.Result = input.Id;
+                }
+                response.Message = "";
+                response.Code = Response<object>.SUCCESS_CODE;
             }
             catch (Exception ex)
             {
-                Result.Code = 500;
-                Result.Message = ex.Message;
+                response.Code = Response<object>.ERROR_CODE;
+                response.Message = ex.Message;
             }
-            return JsonHelper.Instance.Serialize(Result);
-        }
-
-        //添加或修改
-        [System.Web.Mvc.HttpPost]
-        public string Update(EvaluateAverageScore obj)
-        {
-            try
-            {
-                App.Update(obj);
-
-            }
-            catch (Exception ex)
-            {
-                Result.Code = 500;
-                Result.Message = ex.Message;
-            }
-            return JsonHelper.Instance.Serialize(Result);
+            return Json(response);
         }
 
         /// <summary>
@@ -96,19 +140,20 @@ namespace OpenAuth.Mvc.Controllers
         }
 
         [System.Web.Mvc.HttpPost]
-        public string Delete(string[] ids)
+        public ActionResult Delete(string[] ids)
         {
+            Response<object> response = new Response<object>("删除失败");
             try
             {
                 App.Delete(ids);
+                response.Message = "删除成功";
+                response.Code = Response<object>.SUCCESS_CODE;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Result.Code = 500;
-                Result.Message = e.Message;
+                response.Code = Response<object>.ERROR_CODE;
             }
-
-            return JsonHelper.Instance.Serialize(Result);
+            return Json(response);
         }
     }
 }

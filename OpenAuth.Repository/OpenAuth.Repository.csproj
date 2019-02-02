@@ -79,6 +79,8 @@
     <Compile Include="Domain\Test.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Domain\UserExt.cs" />
+    <Compile Include="Dto\EvaluateAverageScore\EvaluateAverageScoreQueryInput.cs" />
+    <Compile Include="Dto\EvaluateAverageScore\EvaluateAverageScoreOutput.cs" />
     <Compile Include="Interface\IRepository.cs" />
     <Compile Include="Interface\IUnitWork.cs" />
     <Compile Include="Mapping\AnswerMap.cs" />

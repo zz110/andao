@@ -36,6 +36,7 @@ namespace OpenAuth.Repository
         {
             return Context.Set<T>().AsNoTracking().FirstOrDefault(exp);
         }
+        
 
         /// <summary>
         /// 得到分页记录
@@ -69,6 +70,18 @@ namespace OpenAuth.Repository
             Context.Set<T>().Add(entity);
             Save();
         }
+
+        public string AddAndReturnId(T entity)
+        {
+            if (string.IsNullOrEmpty(entity.Id))
+            {
+                entity.Id = Guid.NewGuid().ToString();
+            }
+            Context.Set<T>().Add(entity);
+            Save();
+            return entity.Id;
+        }
+
 
         /// <summary>
         /// 批量添加
@@ -155,5 +168,11 @@ namespace OpenAuth.Repository
        {
           return  Context.Database.ExecuteSqlCommand(sql);
        }
-   }
+
+        public IQueryable<T1> ExecuteQuerySql<T1>(string sql, params object[] parameters)
+        {
+            return Context.Database.SqlQuery<T1>(sql, parameters).AsQueryable();
+        }
+        
+    }
 }

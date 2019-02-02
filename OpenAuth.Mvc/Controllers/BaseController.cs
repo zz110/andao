@@ -35,6 +35,20 @@ namespace OpenAuth.Mvc.Controllers
         protected string Controllername;   //当前控制器小写名称
         protected string Actionname;        //当前Action小写名称
 
+
+        protected string GetErrors()
+        {
+            string result = string.Empty;
+            foreach (var key in this.ModelState.Keys)
+            {
+                foreach (var err in this.ModelState[key].Errors)
+                {
+                    result += err.ErrorMessage + ",";
+                }
+            }
+            return result;
+        }
+
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             base.OnActionExecuting(filterContext);

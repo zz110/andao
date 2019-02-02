@@ -90,13 +90,14 @@ namespace OpenAuth.App
         /// </summary>
         /// <param name="orgIds"></param>
         /// <returns></returns>
-        public virtual IQueryable<User> GetUsersQueryByOrgIds(string orgIds, bool exclude_self = true)
+        public virtual IQueryable<User> GetUsersQueryByOrgIds(string orgIds, bool exclude_self = false)
         {
             var userIds = UnitWork.Find<Relevance>(
                                u => u.Key == Define.USERORG && orgIds.Contains(u.SecondId)).Select(u => u.FirstId);
 
             var userList = UnitWork.Find<User>(u => userIds.Contains(u.Id));
-            if (exclude_self) {
+            if (exclude_self)
+            {
                 userList = userList.Where(u => !u.Id.Equals(_user.Id));
             }
             return userList;
