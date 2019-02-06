@@ -6973,6 +6973,13 @@
     <Content Include="static\assets\plugins\timepicker\bootstrap-timepicker.js" />
     <Content Include="static\assets\plugins\timepicker\bootstrap-timepicker.min.css" />
     <Content Include="static\assets\plugins\timepicker\bootstrap-timepicker.min.js" />
+    <Content Include="static\assets\sweetalert\ie9.css" />
+    <Content Include="static\assets\sweetalert\sweet-alert.css" />
+    <Content Include="static\assets\sweetalert\sweet-alert.html" />
+    <Content Include="static\assets\sweetalert\sweet-alert.js" />
+    <Content Include="static\assets\sweetalert\sweet-alert.min.js" />
+    <Content Include="static\assets\sweetalert\sweetalert.css" />
+    <Content Include="static\assets\sweetalert\sweetalert.min.js" />
     <Content Include="static\utils\datepicker.js" />
     <Content Include="static\utils\validate.js" />
     <Content Include="userJs\answers.js" />
@@ -7909,6 +7916,7 @@
     <Content Include="static\assets\angular\angular-cookies.min.js.map" />
     <Content Include="static\assets\angular\angular.min.js.map" />
     <Content Include="Views\UserManager\Add.cshtml" />
+    <Content Include="static\assets\sweetalert\sweet-alert.scss" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="layui\lay\modules\mobile\" />

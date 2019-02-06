@@ -9,6 +9,7 @@ using OpenAuth.App.Response;
 using OpenAuth.App.SSO;
 using OpenAuth.Mvc.Models;
 using OpenAuth.Repository.Domain;
+using OpenAuth.Repository.Dto;
 
 namespace OpenAuth.Mvc.Controllers
 {
@@ -70,25 +71,10 @@ namespace OpenAuth.Mvc.Controllers
         }
 
         [System.Web.Mvc.HttpGet]
-        public ActionResult page(int limit, int offset) {
+        public ActionResult page(int limit, int offset, EvaluateAverageScoreQueryInput input) {
 
-            //List<object> dataList = new List<object>();
-
-            //for (int i = 0; i < 100; i++)
-            //{
-            //    dataList.Add(new
-            //    {
-            //        UserName = i.ToString(),
-            //        DeptName = i.ToString(),
-            //        EvaluateMonth = 12,
-            //        Score = 90.12,
-            //        Created = DateTime.Now
-            //    });
-            //}
-            //int total = dataList.Count;
-
-            var result = App.page(limit, offset);
-
+            input.Creator = AuthUtil.GetCurrentUser().User.Id;
+            var result = App.page(limit, offset,  input);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

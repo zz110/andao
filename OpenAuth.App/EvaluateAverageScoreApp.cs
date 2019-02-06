@@ -25,16 +25,30 @@ namespace OpenAuth.App
             };
         }
 
-        public object page(int limit, int offset) {
-            
-            string sql = @"select a.*,b.Name as OrgName,c.Name as UserName 
-                           from EvaluateAverageScore a left join Org b
-                           on a.OrgId=b.Id
-                           left join [User] c
-                           on a.UserId=c.Id";
+        public object page(int limit, int offset, EvaluateAverageScoreQueryInput input) {
 
-            int total = Repository.ExecuteQuerySql<int>("select count(*) from EvaluateAverageScore").FirstOrDefault();
-            var rows = Repository.ExecuteQuerySql<EvaluateAverageScoreOutput>(sql).ToList();
+            offset += 1;
+            string sql = $@"select top {limit} * from(
+                              select row_number() over(order by a.created) as num,a.*,b.Name as OrgName,c.Name as UserName 
+                                                       from EvaluateAverageScore a left join Org b
+                                                       on a.OrgId=b.Id
+                                                       left join [User] c
+                                                       on a.UserId=c.Id 
+                                                       where a.Creator=@Creator 
+                                                       and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
+                                                       and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null)
+                                                       and (c.Name like '%'+@UserName+'%' or @UserName is null)
+                            ) as t where num > ({limit}*({offset}-1))";
+
+            var rows = Repository.ExecuteQuerySql<EvaluateAverageScoreOutput>(sql, input.ToParameters()).ToList();
+            sql = @"select count(*) from EvaluateAverageScore a left join [User] c  on a.UserId=c.Id 
+                    where a.Creator=@Creator 
+                    and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
+                    and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null)
+                    and (c.Name like '%'+@UserName+'%'  or @UserName is null)";
+
+            int total = Repository.ExecuteQuerySql<int>(sql, input.ToParameters()).FirstOrDefault();
+
             return new
             {
                 total = total,

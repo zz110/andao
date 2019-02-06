@@ -8,9 +8,40 @@
     <div class="box-body">
         <div class="row">
             <div class="col-xs-12 col-sm-12">
-                <button class="btn btn-sm btn-default" id="btnAdd">新增</button>
-                <button class="btn btn-sm btn-info" id="btnEdit">编辑</button>
-                <button class="btn btn-sm btn-danger" id="btnDel">删除</button>
+                <div class="col-xs-12">
+                    <div class="col-xs-2">
+                        <button class="btn btn-sm btn-default" id="btnAdd">新增</button>
+                        <button class="btn btn-sm btn-info" id="btnEdit">编辑</button>
+                        <button class="btn btn-sm btn-danger" id="btnDel">删除</button>
+                    </div>
+                    <div class="col-xs-1">
+                        <input type="text" id="EvaluateYear" class="form-control" placeholder="请输入年份">
+                    </div>
+                    <div class="col-xs-2">
+                        <select class="form-control" id="EvaluateMonth">
+                            <option value="">请选择月份</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-1">
+                        <input type="text" id="UserName" class="form-control" placeholder="请输入姓名">
+                    </div>
+                    <div class="col-xs-1">
+                        <button class="btn btn-sm btn-primary" id="btnSearch">搜索</button>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
@@ -56,6 +87,13 @@
         var _dataTable;
         $(function () {
 
+            var date = new Date();
+            var fullYear = date.getFullYear();
+            var month = date.getMonth() + 1;
+
+            $("#EvaluateYear").val(fullYear);
+            $("#EvaluateMonth").val(month);
+
             var columns = [
                 {
                     checkbox: true
@@ -93,7 +131,34 @@
 
             _dataTable = App.initTable('/EvaluateAverageScores/page', columns);
 
-        
+            _dataTable.SetParameters({
+                EvaluateYear: fullYear,
+                EvaluateMonth: month
+            });
+
+            _dataTable.Init();
+
+            $("#btnSearch").click(function () {
+
+                var EvaluateYear = parseInt($("#EvaluateYear").val());
+                var EvaluateMonth = $("#EvaluateMonth").val();
+                var UserName = $("#UserName").val();
+
+                if (isNaN(EvaluateYear) || (EvaluateYear < 1977 && EvaluateYear > 9999)) {
+   
+                    swal("提示", "请输入合法的年份", "warning");
+                    return;
+                }
+
+                _dataTable.SetParameters({
+                    EvaluateYear: EvaluateYear,
+                    EvaluateMonth: EvaluateMonth,
+                    UserName: UserName
+                });
+
+                _dataTable.Refresh();
+            });
+
         });
 
     </script>

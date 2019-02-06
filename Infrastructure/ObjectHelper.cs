@@ -20,6 +20,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace Infrastructure
 {
@@ -66,5 +67,69 @@ namespace Infrastructure
                 }
             }
         }
+
+
+        /// <summary>
+        /// 查询实体转 SqlParameter[]
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="formt">日期字段格式类型 yyyy-MM-dd HH:mm:ss</param>
+        /// <returns></returns>
+        public static SqlParameter[] ToParameters(this object source, string formt="yyyy-MM-dd HH:mm:ss")
+        {
+           
+            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+            Type type = source.GetType();
+            PropertyInfo[] pi = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (PropertyInfo property in pi)
+            {
+                object obj = property.GetValue(source, null);
+                if (obj != null)
+                {
+                    string result = string.Empty;
+                    if (property.PropertyType == typeof(DateTime?))
+                    {
+                        result = ((DateTime)obj).ToString(formt);
+                    }
+                    else if (property.PropertyType == typeof(DateTime))
+                    {
+                        result = ((DateTime)obj).ToString(formt);
+                    }
+                    if (!string.IsNullOrEmpty(result))
+                    {
+                        dictionary.Add(property.Name, result);
+                    }
+                    else {
+                        dictionary.Add(property.Name, obj);
+                    }
+                   
+                }
+                else
+                {
+                    if (property.PropertyType == typeof(int))
+                    {
+                        dictionary.Add(property.Name, 0);
+                    }
+                    else if (property.PropertyType == typeof(double))
+                    {
+                        dictionary.Add(property.Name, 0L);
+                    }
+                    else if (property.PropertyType == typeof(decimal))
+                    {
+                        dictionary.Add(property.Name, 0.00M);
+                    }
+                    else {
+                        dictionary.Add(property.Name, DBNull.Value);
+                    }
+                }
+            }
+
+            List<SqlParameter> parameters = new List<SqlParameter>();
+            foreach (string key in dictionary.Keys) {
+                parameters.Add(new SqlParameter($"@{key}", dictionary[key]));
+            }
+            return parameters.ToArray();
+        }
+
     }
 }

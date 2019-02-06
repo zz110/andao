@@ -16,9 +16,15 @@ namespace OpenAuth.Repository.Dto
 	    /// 评价月份
 	    /// </summary>
         public int? EvaluateMonth { get; set; }
-
+        /// <summary>
+        /// 姓名
+        /// </summary>
         public string UserName { get; set; }
+        /// <summary>
+        /// 创建者
+        /// </summary>
+        public string Creator { get; set; }
+        
 
-        public string OrgName { get; set; }
     }
 }
