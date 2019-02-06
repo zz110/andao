@@ -6981,6 +6981,7 @@
     <Content Include="static\assets\sweetalert\sweetalert.css" />
     <Content Include="static\assets\sweetalert\sweetalert.min.js" />
     <Content Include="static\utils\datepicker.js" />
+    <Content Include="static\utils\jQueryExtend.js" />
     <Content Include="static\utils\validate.js" />
     <Content Include="userJs\answers.js" />
     <Content Include="userJs\checkPlan.js" />
