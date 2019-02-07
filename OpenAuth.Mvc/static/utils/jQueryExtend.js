@@ -4,11 +4,13 @@
     $.fn.extend({
         loadMenus: function (modulecode) {
             var dom = $(this);
+            var flag = false;
             $.ajax("/ModuleManager/LoadAuthorizedMenus?modulecode=" + modulecode,
                 {
                     async: false
                     , success: function (data) {
-                        if ('' !== data) {
+                        
+                        if ('' !== data && '[]' !== data) {
                             var obj = JSON.parse(data);
                             var sb = '';
                             $.each(obj,
@@ -17,12 +19,14 @@
                                     sb += "<button class='btn " + element.Class + "' id='" + element.DomId + "'>" + element.Name + "</button> ";
                                 });
                             dom.html(sb);
-                        }
-                        else {
-                            $(this).hide();
+                            flag = true;
                         }
                     }
                 });
+
+            if (!flag) {
+                $(this).css('display', 'none');
+            }
         }
     });
 
