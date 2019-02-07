@@ -41,6 +41,7 @@ namespace OpenAuth.App
                             ) as t where num > ({limit}*({offset}-1))";
 
             var rows = Repository.ExecuteQuerySql<EvaluateAverageScoreOutput>(sql, input.ToParameters()).ToList();
+
             sql = @"select count(*) from EvaluateAverageScore a left join [User] c  on a.UserId=c.Id 
                     where a.Creator=@Creator 
                     and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
@@ -53,6 +54,75 @@ namespace OpenAuth.App
             {
                 total = total,
                 rows = rows
+            };
+        }
+
+
+        public object get_statistic_analysis_data(EvaluateStatisticAnalysisQueryInput input)
+        {
+
+            string sql = @"SELECT 
+                           row_number() over(order by T1.Average desc) as Num,
+                           UserName,
+                           OrgName,
+                           isnull([1],0.00) as [_1],
+	                       isnull([2],0.00) as [_2],
+	                       isnull([3],0.00) as [_3],
+	                       isnull([4],0.00) as [_4],
+	                       isnull([5],0.00) as [_5],
+	                       isnull([6],0.00) as [_6],
+	                       isnull([7],0.00) as [_7],
+	                       isnull([8],0.00) as [_8],
+	                       isnull([9],0.00) as [_9],
+	                       isnull([10],0.00) as [_10],
+	                       isnull([11],0.00) as [_11],
+	                       isnull([12],0.00) as [_12],
+	                       T1.Average
+	                       FROM (
+	                    select a.UserId,a.OrgId,c.Name as UserName,b.Name as OrgName,a.EvaluateMonth,a.Score
+	                    from EvaluateAverageScore a left join Org b
+	                    on a.OrgId=b.Id
+	                    left join [User] c
+	                    on a.UserId=c.Id 
+                        where (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null) 
+                        and (c.Name like '%'+@search+'%' or b.Name like '%'+@search+'%'  or @search is null)
+                        and (a.UserId in(
+                             select distinct a.FirstId from Relevance a  join [Role] b
+                             on a.SecondId=b.Id
+                             where a.[Key]='UserRole' and b.Name=@role
+
+                        ) or @role is null)
+                    ) 
+                    AS P
+                    PIVOT 
+                    (
+                        SUM(Score) FOR 
+                        p.EvaluateMonth IN ([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
+                    ) AS T
+                    left join (
+                       select a1.UserId,a1.OrgId,convert(decimal(18,2),avg(Score)) as Average from EvaluateAverageScore as a1
+                       left join  Org b1
+                       on a1.OrgId=b1.Id
+                       left join [User] c1
+                       on a1.UserId=c1.Id 
+                       where (a1.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
+                       and (c1.Name like '%'+@search+'%' or b1.Name like '%'+@search+'%'  or @search is null)
+                       and (a1.UserId in(
+                             select distinct a.FirstId from Relevance a  join [Role] b
+                             on a.SecondId=b.Id
+                             where a.[Key]='UserRole' and b.Name=@role
+
+                        ) or @role is null)
+                       group by a1.UserId,a1.OrgId
+                    ) as T1
+                    on  T1.UserId=T.UserId and T1.OrgId=T.OrgId";
+
+
+            var rows = Repository.ExecuteQuerySql<EvaluateStatisticAnalysisOutput>(sql, input.ToParameters()).ToList();
+            return new
+            {
+                rows = rows,
+                total = 10000
             };
         }
 

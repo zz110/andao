@@ -25,17 +25,41 @@ namespace OpenAuth.Mvc.Controllers
             }
         }
 
-        //
+        /// <summary>
+        /// 列表页面
+        /// </summary>
+        /// <returns></returns>
         [Authenticate]
         public ActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// 平均分维护
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult EvaluateAverageScoreForm(string id = "")
         {
             ViewBag.Id = id;
             return View();
+        }
+
+        /// <summary>
+        /// 统计分析
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult statistic_analysis() {
+
+            return View();
+        }
+
+        [System.Web.Mvc.HttpGet]
+        public ActionResult get_statistic_analysis_data(EvaluateStatisticAnalysisQueryInput input)
+        {
+            var result = App.get_statistic_analysis_data(input);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

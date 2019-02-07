@@ -97,33 +97,35 @@
             $("#EvaluateYear").val(fullYear);
             $("#EvaluateMonth").val(month);
 
-            var columns = [
-                {
-                    checkbox: true
-                }, {
-                    visible: false,
-                    field: 'Id'
-                }, {
-                    field: 'UserName',
-                    title: '姓名'
-                }, {
-                    field: 'OrgName',
-                    title: '部门'
-                }, {
-                    field: 'EvaluateYear',
-                    title: '年'
-                }, {
-                    field: 'EvaluateMonth',
-                    title: '月'
-                },
-                {
-                    field: 'Score',
-                    title: '分数'
-                }, {
-                    field: 'CreateTime',
-                    title: '创建时间'
-                }];
-
+            var tbOptions = {
+                columns: [
+                    {
+                        checkbox: true
+                    }, {
+                        visible: false,
+                        field: 'Id'
+                    }, {
+                        field: 'UserName',
+                        title: '姓名'
+                    }, {
+                        field: 'OrgName',
+                        title: '部门'
+                    }, {
+                        field: 'EvaluateYear',
+                        title: '年'
+                    }, {
+                        field: 'EvaluateMonth',
+                        title: '月'
+                    },
+                    {
+                        field: 'Score',
+                        title: '分数'
+                    }, {
+                        field: 'CreateTime',
+                        title: '创建时间'
+                    }]
+            };
+            
             App.init({
                 title: '考核平均分',
                 width: '70%',
@@ -132,7 +134,7 @@
                 delete_url: '/EvaluateAverageScores/Delete'
             });
 
-            _dataTable = App.initTable('/EvaluateAverageScores/page', columns);
+            _dataTable = App.initTable('/EvaluateAverageScores/page', tbOptions);
 
             _dataTable.SetParameters({
                 EvaluateYear: fullYear,
