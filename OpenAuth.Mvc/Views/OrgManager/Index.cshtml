@@ -16,15 +16,16 @@
                lay-data="{height: 'full-80', page:true, id:'mainList'}"
                lay-filter="list" lay-size="sm">
             <thead>
-            <tr>
-                <th lay-data="{checkbox:true, fixed: true}"></th>
-                <th lay-data="{field:'Name', width:150, sort: true, fixed: true}">组织名称</th>
-                <th lay-data="{field:'CascadeId', width:150}">层级ID</th>
-                <th lay-data="{field:'ParentName', width:135}">父节点名称</th>
-                <th lay-data="{field:'SortNo', width:180}">排序号</th>
-                <th lay-data="{field:'Id', width:180}">ID</th>
-                <th lay-data="{fixed: 'right', width:160, align:'center', toolbar: '#barList'}"></th>
-            </tr>
+                <tr>
+                    <th lay-data="{checkbox:true, fixed: true}"></th>
+                    <th lay-data="{field:'Name', width:150, sort: true, fixed: true}">组织名称</th>
+                    <th lay-data="{field:'BizCode', width:150}">组织类型</th>
+                    <th lay-data="{field:'CascadeId', width:150}">层级ID</th>
+                    <th lay-data="{field:'ParentName', width:135}">父节点名称</th>
+                    <th lay-data="{field:'SortNo', width:180}">排序号</th>
+                    <th lay-data="{field:'Id', width:180}">ID</th>
+                    <th lay-data="{fixed: 'right', width:160, align:'center', toolbar: '#barList'}"></th>
+                </tr>
             </thead>
         </table>
     </div>
@@ -48,10 +49,23 @@
                        placeholder="请输入部门名称" autocomplete="off" class="layui-input">
             </div>
         </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">部门类型</label>
+            <div class="layui-input-block">
+                <select name="BizCode" v-model="BizCode" placeholder="请选择">
+                    <option value="-">-</option>
+                    <option value="车间">车间</option>
+                    <option value="专业科室">专业科室</option>
+                    <option value="综合科室">综合科室</option>
+                </select>
+            </div>
+        </div>
+
         <div class="layui-form-item">
             <label class="layui-form-label">排序号</label>
             <div class="layui-input-block">
-                <input type="text" name="SortNo" v-model="SortNo" required lay-verify="required"
+                <input type="text" name="SortNo" v-model="SortNo"  required lay-verify="required"
                        placeholder="请输入排序号" autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -60,7 +74,7 @@
             <label class="layui-form-label">所属部门</label>
             <div class="layui-input-block">
                 <input id="ParentName" name="ParentName" v-model="ParentName" class="layui-input" />
-                <input id="ParentId" name="ParentId" v-model="ParentId"  type="hidden" />
+                <input id="ParentId" name="ParentId" v-model="ParentId" type="hidden" />
                 <div id="menuContent" class="menuContent" style="display: none;">
                     <ul id="org" class="ztree"></ul>
                 </div>

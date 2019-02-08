@@ -63,19 +63,21 @@ layui.config({
     $("#tree").height($("div.layui-table-view").height());
 
     //添加（编辑）对话框
-    var editDlg = function() {
+    var editDlg = function () {
+  
         var vm = new Vue({
             el: "#formEdit"
         });
         var update = false;  //是否为更新
         var show = function (data) {
+         
             var title = update ? "编辑信息" : "添加";
             layer.open({
                 title: title,
                 area: ["500px", "400px"],
                 type: 1,
                 content: $('#divEdit'),
-                success: function() {
+                success: function () {
                     vm.$set('$data', data);
                 },
                 end: mainList
