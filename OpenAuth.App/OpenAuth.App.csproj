@@ -107,6 +107,7 @@
     <Compile Include="BaseApp.cs" />
     <Compile Include="AuthorizeApp.cs" />
     <Compile Include="EvaluateAverageScoreApp.cs" />
+    <Compile Include="MonthlyEvaluationApp.cs" />
     <Compile Include="PlanApp.cs" />
     <Compile Include="Request\QueryAnswerListReq.cs" />
     <Compile Include="Request\QueryAppListReq.cs" />

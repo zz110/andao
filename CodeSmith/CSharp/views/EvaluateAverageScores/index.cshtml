@@ -24,6 +24,7 @@
                     <th lay-data="{field:'EvaluateYear', width:150}">评价年份</th>
                     <th lay-data="{field:'EvaluateMonth', width:150}">评价月份</th>
                     <th lay-data="{field:'Score', width:150}">得分</th>
+                    <th lay-data="{field:'Creator', width:150}">Creator</th>
                     <th lay-data="{field:'Created', width:150}">Created</th>
                     <th lay-data="{field:'Updated', width:150}">Updated</th>
                     <th lay-data="{fixed: 'right', width:160, align:'center', toolbar: '#barList'}"></th>
@@ -81,6 +82,13 @@
         <div class="layui-input-block">
             <input type="text" name="Score" v-model="Score" required lay-verify="required"
                 placeholder="得分" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">Creator</label>
+        <div class="layui-input-block">
+            <input type="text" name="Creator" v-model="Creator" required lay-verify="required"
+                placeholder="Creator" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">

@@ -40,6 +40,7 @@ namespace OpenAuth.Repository
         public System.Data.Entity.DbSet<Form> Forms { get; set; }
         public System.Data.Entity.DbSet<Module> Modules { get; set; }
         public System.Data.Entity.DbSet<ModuleElement> ModuleElements { get; set; }
+        public System.Data.Entity.DbSet<MonthlyEvaluation> MonthlyEvaluations { get; set; }
         public System.Data.Entity.DbSet<Org> Orgs { get; set; }
         public System.Data.Entity.DbSet<Plan> Plans { get; set; }
         public System.Data.Entity.DbSet<Relevance> Relevances { get; set; }
@@ -63,6 +64,7 @@ namespace OpenAuth.Repository
             modelBuilder.Configurations.Add(new FormMap());
             modelBuilder.Configurations.Add(new ModuleMap());
             modelBuilder.Configurations.Add(new ModuleElementMap());
+            modelBuilder.Configurations.Add(new MonthlyEvaluationMap());
             modelBuilder.Configurations.Add(new OrgMap());
             modelBuilder.Configurations.Add(new PlanMap());
             modelBuilder.Configurations.Add(new RelevanceMap());

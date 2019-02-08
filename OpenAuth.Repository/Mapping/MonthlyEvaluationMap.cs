@@ -12,19 +12,23 @@ using System.ComponentModel.DataAnnotations;
 
 namespace OpenAuth.Repository.Mapping
 {
-    public partial class EvaluateAverageScoreMap
-        : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<OpenAuth.Repository.Domain.EvaluateAverageScore>
+    public partial class MonthlyEvaluationMap
+        : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<OpenAuth.Repository.Domain.MonthlyEvaluation>
     {
-        public EvaluateAverageScoreMap()
+        public MonthlyEvaluationMap()
         {
             // table
-            ToTable("EvaluateAverageScore", "dbo");
+            ToTable("MonthlyEvaluation", "dbo");
 
             // keys
 
             // Properties
             Property(t => t.Id)
                 .HasColumnName("Id")
+                .HasMaxLength(50)
+                .IsOptional();
+            Property(t => t.Category)
+                .HasColumnName("Category")
                 .HasMaxLength(50)
                 .IsOptional();
             Property(t => t.UserId)
@@ -54,6 +58,17 @@ namespace OpenAuth.Repository.Mapping
                 .IsOptional();
             Property(t => t.Updated)
                 .HasColumnName("Updated")
+                .IsOptional();
+            Property(t => t.Grade)
+                .HasColumnName("Grade")
+                .IsOptional();
+            Property(t => t.Notes)
+                .HasColumnName("Notes")
+                .HasMaxLength(255)
+                .IsOptional();
+            Property(t => t.LessReason)
+                .HasColumnName("LessReason")
+                .HasMaxLength(255)
                 .IsOptional();
 
             // Relationships

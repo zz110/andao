@@ -16,16 +16,19 @@ namespace OpenAuth.Repository.Domain
     /// <summary>
 	/// 
 	/// </summary>
-    public partial class EvaluateAverageScore : Entity
+    public partial class MonthlyEvaluation : Entity
     {
-        public EvaluateAverageScore()
+        public MonthlyEvaluation()
         {
           this.Id= string.Empty;
+          this.Category= string.Empty;
           this.UserId= string.Empty;
           this.OrgId= string.Empty;
           this.Creator= string.Empty;
           this.Created= DateTime.Now;
           this.Updated= DateTime.Now;
+          this.Notes= string.Empty;
+          this.LessReason= string.Empty;
         }
 
         /// <summary>
@@ -33,23 +36,27 @@ namespace OpenAuth.Repository.Domain
 	    /// </summary>
         public string Id { get; set; }
         /// <summary>
-	    /// 用户id
+	    /// 类别
+	    /// </summary>
+        public string Category { get; set; }
+        /// <summary>
+	    /// 
 	    /// </summary>
         public string UserId { get; set; }
         /// <summary>
-	    /// 组织结构id
+	    /// 
 	    /// </summary>
         public string OrgId { get; set; }
         /// <summary>
-	    /// 评价年份
+	    /// 年份
 	    /// </summary>
         public int? EvaluateYear { get; set; }
         /// <summary>
-	    /// 评价月份
+	    /// 月份
 	    /// </summary>
         public int? EvaluateMonth { get; set; }
         /// <summary>
-	    /// 得分
+	    /// 
 	    /// </summary>
         public decimal? Score { get; set; }
         /// <summary>
@@ -64,6 +71,18 @@ namespace OpenAuth.Repository.Domain
 	    /// 
 	    /// </summary>
         public System.DateTime? Updated { get; set; }
+        /// <summary>
+	    /// 等级 1 优秀,2 合格,3 失格
+	    /// </summary>
+        public int? Grade { get; set; }
+        /// <summary>
+	    /// 备注
+	    /// </summary>
+        public string Notes { get; set; }
+        /// <summary>
+	    /// 减分原因
+	    /// </summary>
+        public string LessReason { get; set; }
 
     }
 }
