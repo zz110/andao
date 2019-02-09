@@ -70,6 +70,7 @@
     <Compile Include="Domain\Form.cs" />
     <Compile Include="Domain\Module.cs" />
     <Compile Include="Domain\ModuleElement.cs" />
+    <Compile Include="Domain\MonthlyAssessment.cs" />
     <Compile Include="Domain\MonthlyEvaluation.cs" />
     <Compile Include="Domain\Org.cs" />
     <Compile Include="Domain\Plan.cs" />
@@ -84,6 +85,8 @@
     <Compile Include="Dto\EvaluateAverageScore\EvaluateAverageScoreOutput.cs" />
     <Compile Include="Dto\EvaluateAverageScore\EvaluateStatisticAnalysisQueryInput.cs" />
     <Compile Include="Dto\EvaluateAverageScore\EvaluateStatisticAnalysisOutput.cs" />
+    <Compile Include="Dto\MonthlyAssessment\MonthlyAssessmentQueryInput.cs" />
+    <Compile Include="Dto\MonthlyAssessment\MonthlyAssessmentOutput.cs" />
     <Compile Include="Dto\MonthlyEvaluation\MonthlyEvaluationQueryInput.cs" />
     <Compile Include="Dto\MonthlyEvaluation\MonthlyEvaluationOutput.cs" />
     <Compile Include="Interface\IRepository.cs" />
@@ -97,6 +100,7 @@
     <Compile Include="Mapping\FlowInstanceTransitionHistoryMap.cs" />
     <Compile Include="Mapping\FlowSchemeMap.cs" />
     <Compile Include="Mapping\FormMap.cs" />
+    <Compile Include="Mapping\MonthlyAssessmentMap.cs" />
     <Compile Include="Mapping\MonthlyEvaluationMap.cs" />
     <Compile Include="Mapping\PlanMap.cs" />
     <Compile Include="Mapping\TestMap.cs" />

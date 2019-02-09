@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Web.Http;
 using System.Web.Mvc;
 using Infrastructure;
@@ -12,14 +12,14 @@ using OpenAuth.Repository.Dto;
 namespace OpenAuth.Mvc.Controllers
 {
     /// <summary>
-    /// 月度评价排名
+    /// 月度考核成绩
     /// </summary>
-    public class MonthlyEvaluationsController : BaseController
+    public class MonthlyAssessmentsController : BaseController
     {
-        public MonthlyEvaluationApp App { get; set; }
+        public MonthlyAssessmentApp App { get; set; }
 
         /// <summary>
-        /// 月度评价排名维护
+        /// 月度考核成绩
         /// </summary>
         /// <returns></returns>
         [Authenticate]
@@ -28,16 +28,11 @@ namespace OpenAuth.Mvc.Controllers
             return View();
         }
 
-        /// <summary>
-        /// 月度评价排名维护
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public ActionResult MonthlyEvaluationForm(string id) {
-
+        public ActionResult MonthlyAssessmentForm(string id) {
             ViewBag.Id = id;
             return View();
         }
+
 
 
         /// <summary>
@@ -74,7 +69,7 @@ namespace OpenAuth.Mvc.Controllers
         }
 
         [System.Web.Mvc.HttpGet]
-        public ActionResult page(int limit, int offset, MonthlyEvaluationQueryInput input)
+        public ActionResult page(int limit, int offset, MonthlyAssessmentQueryInput input)
         {
 
             input.Creator = _User.Id;
@@ -84,7 +79,7 @@ namespace OpenAuth.Mvc.Controllers
 
 
         [System.Web.Mvc.HttpPost]
-        public ActionResult save(MonthlyEvaluation input)
+        public ActionResult save(MonthlyAssessment input)
         {
 
             Response<object> response = new Response<object>("服务器错误");
@@ -123,6 +118,8 @@ namespace OpenAuth.Mvc.Controllers
             }
             return Json(response);
         }
+
+
 
 
 

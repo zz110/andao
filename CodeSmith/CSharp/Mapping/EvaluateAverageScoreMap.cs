@@ -21,12 +21,13 @@ namespace OpenAuth.Repository.Mapping
             ToTable("EvaluateAverageScore", "dbo");
 
             // keys
+            HasKey(t => t.Id);
 
             // Properties
             Property(t => t.Id)
                 .HasColumnName("Id")
                 .HasMaxLength(50)
-                .IsOptional();
+                .IsRequired();
             Property(t => t.UserId)
                 .HasColumnName("UserId")
                 .HasMaxLength(50)

@@ -12,13 +12,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace OpenAuth.Repository.Mapping
 {
-    public partial class MonthlyEvaluationMap
-        : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<OpenAuth.Repository.Domain.MonthlyEvaluation>
+    public partial class MonthlyAssessmentMap
+        : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<OpenAuth.Repository.Domain.MonthlyAssessment>
     {
-        public MonthlyEvaluationMap()
+        public MonthlyAssessmentMap()
         {
             // table
-            ToTable("MonthlyEvaluation", "dbo");
+            ToTable("MonthlyAssessment", "dbo");
 
             // keys
             HasKey(t => t.Id);
@@ -28,10 +28,6 @@ namespace OpenAuth.Repository.Mapping
                 .HasColumnName("Id")
                 .HasMaxLength(50)
                 .IsRequired();
-            Property(t => t.Category)
-                .HasColumnName("Category")
-                .HasMaxLength(50)
-                .IsOptional();
             Property(t => t.UserId)
                 .HasColumnName("UserId")
                 .HasMaxLength(50)
@@ -46,6 +42,14 @@ namespace OpenAuth.Repository.Mapping
             Property(t => t.EvaluateMonth)
                 .HasColumnName("EvaluateMonth")
                 .IsOptional();
+            Property(t => t.AnntubeScore)
+                .HasColumnName("AnntubeScore")
+                .HasPrecision(18, 2)
+                .IsOptional();
+            Property(t => t.QuantifyScore)
+                .HasColumnName("QuantifyScore")
+                .HasPrecision(18, 2)
+                .IsOptional();
             Property(t => t.Score)
                 .HasColumnName("Score")
                 .HasPrecision(18, 2)
@@ -59,17 +63,6 @@ namespace OpenAuth.Repository.Mapping
                 .IsOptional();
             Property(t => t.Updated)
                 .HasColumnName("Updated")
-                .IsOptional();
-            Property(t => t.Grade)
-                .HasColumnName("Grade")
-                .IsOptional();
-            Property(t => t.Notes)
-                .HasColumnName("Notes")
-                .HasMaxLength(255)
-                .IsOptional();
-            Property(t => t.LessReason)
-                .HasColumnName("LessReason")
-                .HasMaxLength(255)
                 .IsOptional();
 
             // Relationships

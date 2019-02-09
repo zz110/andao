@@ -1,7 +1,7 @@
 USE [cp]
 GO
 
-/****** Object:  Table [dbo].[MonthlyEvaluation]    Script Date: 2019/2/8 17:59:12 ******/
+/****** Object:  Table [dbo].[MonthlyEvaluation]    Script Date: 2019/2/9 16:56:37 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -12,7 +12,7 @@ SET ANSI_PADDING ON
 GO
 
 CREATE TABLE [dbo].[MonthlyEvaluation](
-	[Id] [varchar](50) NULL,
+	[Id] [varchar](50) NOT NULL,
 	[Category] [varchar](50) NULL,
 	[UserId] [varchar](50) NULL,
 	[OrgId] [varchar](50) NULL,
@@ -24,7 +24,11 @@ CREATE TABLE [dbo].[MonthlyEvaluation](
 	[Updated] [datetime] NULL,
 	[Grade] [int] NULL,
 	[Notes] [varchar](255) NULL,
-	[LessReason] [varchar](255) NULL
+	[LessReason] [varchar](255) NULL,
+ CONSTRAINT [PK_MonthlyEvaluation] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO

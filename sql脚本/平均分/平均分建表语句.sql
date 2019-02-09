@@ -1,7 +1,7 @@
 USE [cp]
 GO
 
-/****** Object:  Table [dbo].[EvaluateAverageScore]    Script Date: 2019/2/1 15:00:58 ******/
+/****** Object:  Table [dbo].[EvaluateAverageScore]    Script Date: 2019/2/9 16:55:56 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -12,7 +12,7 @@ SET ANSI_PADDING ON
 GO
 
 CREATE TABLE [dbo].[EvaluateAverageScore](
-	[Id] [varchar](50) NULL,
+	[Id] [varchar](50) NOT NULL,
 	[UserId] [varchar](50) NULL,
 	[OrgId] [varchar](50) NULL,
 	[EvaluateYear] [int] NULL,
@@ -20,7 +20,11 @@ CREATE TABLE [dbo].[EvaluateAverageScore](
 	[Score] [decimal](18, 2) NULL,
 	[Creator] [varchar](50) NULL,
 	[Created] [datetime] NULL,
-	[Updated] [datetime] NULL
+	[Updated] [datetime] NULL,
+ CONSTRAINT [PK_EvaluateAverageScore] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO

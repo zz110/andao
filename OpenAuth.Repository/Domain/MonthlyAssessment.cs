@@ -16,9 +16,9 @@ namespace OpenAuth.Repository.Domain
     /// <summary>
 	/// 
 	/// </summary>
-    public partial class EvaluateAverageScore : Entity
+    public partial class MonthlyAssessment : Entity
     {
-        public EvaluateAverageScore()
+        public MonthlyAssessment()
         {
           this.UserId= string.Empty;
           this.OrgId= string.Empty;
@@ -28,23 +28,31 @@ namespace OpenAuth.Repository.Domain
         }
 
         /// <summary>
-	    /// 用户id
+	    /// 
 	    /// </summary>
         public string UserId { get; set; }
         /// <summary>
-	    /// 组织结构id
+	    /// 
 	    /// </summary>
         public string OrgId { get; set; }
         /// <summary>
-	    /// 评价年份
+	    /// 
 	    /// </summary>
         public int? EvaluateYear { get; set; }
         /// <summary>
-	    /// 评价月份
+	    /// 
 	    /// </summary>
         public int? EvaluateMonth { get; set; }
         /// <summary>
-	    /// 得分
+	    /// 安管成绩
+	    /// </summary>
+        public decimal? AnntubeScore { get; set; }
+        /// <summary>
+	    /// 标准量化成绩
+	    /// </summary>
+        public decimal? QuantifyScore { get; set; }
+        /// <summary>
+	    /// 
 	    /// </summary>
         public decimal? Score { get; set; }
         /// <summary>

@@ -20,7 +20,6 @@ namespace OpenAuth.Repository.Domain
     {
         public MonthlyEvaluation()
         {
-          this.Id= string.Empty;
           this.Category= string.Empty;
           this.UserId= string.Empty;
           this.OrgId= string.Empty;
@@ -31,10 +30,6 @@ namespace OpenAuth.Repository.Domain
           this.LessReason= string.Empty;
         }
 
-        /// <summary>
-	    /// 
-	    /// </summary>
-        public string Id { get; set; }
         /// <summary>
 	    /// 类别
 	    /// </summary>

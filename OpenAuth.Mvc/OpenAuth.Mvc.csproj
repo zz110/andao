@@ -143,6 +143,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ApplicationsController.cs" />
     <Compile Include="Controllers\EvaluateAverageScoresController.cs" />
+    <Compile Include="Controllers\MonthlyAssessmentsController.cs" />
     <Compile Include="Controllers\MonthlyEvaluationsController.cs" />
     <Compile Include="Controllers\PlansController.cs" />
     <Compile Include="Controllers\ResourcesController.cs" />
@@ -207,6 +208,7 @@
     <Content Include="layui\css\modules\laydate\default\font.css" />
     <Content Include="static\app\app.js" />
     <Content Include="static\app\EvaluateAverageScoreForm.js" />
+    <Content Include="static\app\MonthlyAssessmentForm.js" />
     <Content Include="static\app\MonthlyEvaluationForm.js" />
     <Content Include="static\assets\angular\angular-animate.js" />
     <Content Include="static\assets\angular\angular-animate.min.js" />
@@ -7944,6 +7946,8 @@
     <Content Include="static\assets\bower_components\table-export\README.md" />
     <Content Include="Views\MonthlyEvaluations\MonthlyEvaluationForm.cshtml" />
     <Content Include="Views\MonthlyEvaluations\Index.cshtml" />
+    <Content Include="Views\MonthlyAssessments\Index.cshtml" />
+    <Content Include="Views\MonthlyAssessments\MonthlyAssessmentForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="layui\lay\modules\mobile\" />
