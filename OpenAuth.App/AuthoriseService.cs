@@ -118,6 +118,54 @@ namespace OpenAuth.App
 
 
         /// <summary>
+        /// 通过组织、角色获取用户列表
+        /// </summary>
+        /// <param name="orgid"></param>
+        /// <param name="role_name"></param>
+        /// <returns></returns>
+        public virtual IQueryable<User> GetUserByOrgAndRole(string orgid, string role_name) {
+
+            string sql = @"select * from [User] where id in(
+	                            select distinct t1.UserId from (
+	                              select a.FirstId as UserId,a.SecondId as OrgId from Relevance as a
+	                              where a.[Key]='UserOrg'
+	                            ) as t1
+	                            inner join (
+	                              select a.FirstId as UserId,a.SecondId as RoleId from Relevance a
+	                              where a.[Key]='UserRole'
+	                            ) t2
+	                            on t1.UserId=t2.UserId
+	                            where t1.OrgId=@orgid and t2.RoleId in(
+	                               select RoleId from [Role] where Name=@role_name
+	                            )
+                            )";
+
+            return Repository.ExecuteQuerySql<User>(sql, new List<System.Data.SqlClient.SqlParameter> {
+                new System.Data.SqlClient.SqlParameter("@orgid",orgid),
+                new System.Data.SqlClient.SqlParameter("@role_name",role_name)
+            }.ToArray());
+        }
+
+
+        /// <summary>
+        /// 通过角色名称获取组织结构
+        /// </summary>
+        /// <param name="role_name"></param>
+        /// <returns></returns>
+        public virtual IQueryable<Org> GetOrgByRole(string role_name)
+        {
+
+            string sql = @"select * from org o where exists(
+                           select a.* from Relevance a  join [Role] b
+                           on a.FirstId=b.Id
+                           where [Key]='RoleOrg' and a.SecondId=o.Id and b.Name=@role_name)";
+
+            return Repository.ExecuteQuerySql<Org>(sql, new System.Data.SqlClient.SqlParameter("@role_name", role_name));
+
+        }
+
+
+        /// <summary>
         /// 获取用户可访问的资源
         /// </summary>
         /// <returns>IQueryable&lt;Resource&gt;.</returns>

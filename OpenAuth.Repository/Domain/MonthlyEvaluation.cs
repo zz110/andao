@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace OpenAuth.Repository.Domain
 {
@@ -32,32 +33,35 @@ namespace OpenAuth.Repository.Domain
         }
 
         /// <summary>
-	    /// 
-	    /// </summary>
-        public string Id { get; set; }
-        /// <summary>
 	    /// 类别
 	    /// </summary>
+        [Required(AllowEmptyStrings =false,ErrorMessage ="请选择类别")]
         public string Category { get; set; }
         /// <summary>
 	    /// 
 	    /// </summary>
+        [Required(AllowEmptyStrings =false,ErrorMessage ="请选择用户")]
         public string UserId { get; set; }
         /// <summary>
 	    /// 
 	    /// </summary>
+        [Required(AllowEmptyStrings =false,ErrorMessage ="请选择部门")]
         public string OrgId { get; set; }
         /// <summary>
 	    /// 年份
 	    /// </summary>
+        [Required(AllowEmptyStrings =false,ErrorMessage ="请输入年份")]
         public int? EvaluateYear { get; set; }
         /// <summary>
 	    /// 月份
 	    /// </summary>
+        [Required(AllowEmptyStrings =false,ErrorMessage ="请输入月份")]
         public int? EvaluateMonth { get; set; }
         /// <summary>
 	    /// 
-	    /// </summary>
+	    /// </summary>       
+        [Required(AllowEmptyStrings = false, ErrorMessage = "请录入分数")]
+        [Range(minimum: 0.00, maximum: 100, ErrorMessage = "请录入正确的分数;0-100分")]
         public decimal? Score { get; set; }
         /// <summary>
 	    /// 

@@ -84,6 +84,8 @@
     <Compile Include="Dto\EvaluateAverageScore\EvaluateAverageScoreOutput.cs" />
     <Compile Include="Dto\EvaluateAverageScore\EvaluateStatisticAnalysisQueryInput.cs" />
     <Compile Include="Dto\EvaluateAverageScore\EvaluateStatisticAnalysisOutput.cs" />
+    <Compile Include="Dto\MonthlyEvaluation\MonthlyEvaluationQueryInput.cs" />
+    <Compile Include="Dto\MonthlyEvaluation\MonthlyEvaluationOutput.cs" />
     <Compile Include="Interface\IRepository.cs" />
     <Compile Include="Interface\IUnitWork.cs" />
     <Compile Include="Mapping\AnswerMap.cs" />

@@ -1,8 +1,9 @@
 ﻿
 @{
-    ViewBag.Title = "EvaluateAverageScoreForm";
+    ViewBag.Title = "月度评价排名维护";
     Layout = "~/Views/Shared/_adminLTELayout.cshtml";
 }
+
 
 <div class="container" ng-app="myApp" ng-controller="appController">
 
@@ -28,17 +29,18 @@
     <form class="form-horizontal" id="inputForm">
         <input type="hidden" name="Id" ng-model="model.Id" />
         <input type="hidden" name="Creator" ng-model="model.Creator" />
+
         <div class="row">
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">姓名:</label>
+                    <label class="col-sm-2 control-label">类别:</label>
                     <div class="col-sm-10">
-                        <select class="form-control" name="UserId" ng-model="model.UserId" ng-change="UserSelected(model.UserId)" >
-                            <option value="" ng-selected="'' == model.UserId">--请选择--</option>
-                            <option ng-repeat="item in UserList"
-                                    ng-selected="item.Id == model.UserId"
-                                    value="{{item.Id}}">
-                                {{item.Name}}
+                        <select class="form-control required" name="UserId" ng-model="model.Category" ng-change="CategorySelected(model.Category)">
+                            <option value="" ng-selected="'' == model.Category">--请选择--</option>
+                            <option ng-repeat="item in CategoryList"
+                                    ng-selected="item == model.Category"
+                                    value="{{item}}">
+                                {{item}}
                             </option>
                         </select>
                     </div>
@@ -48,7 +50,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">部门:</label>
                     <div class="col-sm-10">
-                        <select class="form-control" name="OrgId" ng-model="model.OrgId">
+                        <select class="form-control required" name="OrgId" ng-change="OrgSelected(model.OrgId)" ng-model="model.OrgId">
                             <option value="" ng-selected="'' == model.OrgId">--请选择--</option>
                             <option ng-repeat="item in DeptList"
                                     ng-selected="item.Id == model.OrgId"
@@ -61,7 +63,24 @@
             </div>
 
         </div>
+
+
         <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">姓名:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control required" name="UserId" ng-model="model.UserId" ng-change="UserSelected(model.UserId)">
+                            <option value="" ng-selected="'' == model.UserId">--请选择--</option>
+                            <option ng-repeat="item in UserList"
+                                    ng-selected="item.Id == model.UserId"
+                                    value="{{item.Id}}">
+                                {{item.Name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">年份:</label>
@@ -77,11 +96,13 @@
                 </div>
             </div>
 
+        </div>
+        <div class="row">
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">月份:</label>
                     <div class="col-sm-10">
-                        <select class="form-control" name="EvaluateMonth" ng-model="model.EvaluateMonth">
+                        <select class="form-control required" name="EvaluateMonth" ng-model="model.EvaluateMonth">
                             <option value="">--请选择月份--</option>
                             <option ng-repeat="item in monthList"
                                     ng-selected="item == model.EvaluateMonth"
@@ -92,8 +113,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
 
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
@@ -106,6 +125,35 @@
                     </div>
                 </div>
             </div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">备注:</label>
+                    <div class="col-sm-11">
+                        <input type="text"
+                               name="Notes"
+                               ng-model="model.Notes"
+                               class="form-control" placeholder="请输入备注" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">减分原因:</label>
+                    <div class="col-sm-11">
+                        <input type="text"
+                               name="LessReason"
+                               ng-model="model.LessReason"
+                               class="form-control" placeholder="请输入减分原因" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">创建时间</label>
@@ -140,5 +188,6 @@
     <script>
          var Id="@ViewBag.Id";
     </script>
-    <script src="~/static/app/EvaluateAverageScoreForm.js"></script>
+    <script src="~/static/app/MonthlyEvaluationForm.js"></script>
 }
+

@@ -13,6 +13,65 @@ namespace OpenAuth.Mvc.Controllers
     {
         public AuthoriseService _AuthoriseService { get; set; }
 
+        /// <summary>
+        /// 通过组织、角色获取用户列表
+        /// </summary>
+        /// <param name="orgid"></param>
+        /// <param name="role_name"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult GetUserByOrgAndRole(string orgid, string role_name) {
+
+            Response<object> response = new Response<object>("服务器错误");
+            try
+            {
+                response.Code = Response<object>.SUCCESS_CODE;
+                response.Message = "";
+                var result = _AuthoriseService.GetUserByOrgAndRole(orgid, role_name).Select(s => new
+                {
+                    s.Id,
+                    s.Name
+                }).ToList();
+                response.Result = result;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+            }
+            return Json(response, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+        /// <summary>
+        /// 通过角色名称获取用户
+        /// </summary>
+        /// <param name="role_name"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult GetOrgByRole(string role_name) {
+
+            Response<object> response = new Response<object>("服务器错误");
+            try
+            {
+                response.Code = Response<object>.SUCCESS_CODE;
+                response.Message = "";
+                var result = _AuthoriseService.GetOrgByRole(role_name).Select(s => new
+                {
+                    s.Id,
+                    s.Name
+                }).ToList();
+                response.Result = result;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+            }
+            return Json(response, JsonRequestBehavior.AllowGet);
+
+        }
+
+
 
         /// <summary>
         /// 通过当前登录用户组织id获取用户列表

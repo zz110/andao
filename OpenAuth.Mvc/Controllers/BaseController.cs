@@ -21,6 +21,7 @@ using System.Web.Mvc;
 using Infrastructure;
 using OpenAuth.App.Response;
 using OpenAuth.App.SSO;
+using OpenAuth.Repository.Domain;
 
 namespace OpenAuth.Mvc.Controllers
 {
@@ -35,6 +36,13 @@ namespace OpenAuth.Mvc.Controllers
         protected string Controllername;   //当前控制器小写名称
         protected string Actionname;        //当前Action小写名称
 
+        protected User _User
+        {
+            get
+            {
+                return AuthUtil.GetCurrentUser().User;
+            }
+        }
 
         protected string GetErrors()
         {

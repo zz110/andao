@@ -17,14 +17,6 @@ namespace OpenAuth.Mvc.Controllers
     {
         public EvaluateAverageScoreApp App { get; set; }
         
-        private User _User
-        {
-            get
-            {
-                return AuthUtil.GetCurrentUser().User;
-            }
-        }
-
         /// <summary>
         /// 列表页面
         /// </summary>
@@ -97,7 +89,7 @@ namespace OpenAuth.Mvc.Controllers
         [System.Web.Mvc.HttpGet]
         public ActionResult page(int limit, int offset, EvaluateAverageScoreQueryInput input) {
 
-            input.Creator = AuthUtil.GetCurrentUser().User.Id;
+            input.Creator = _User.Id;
             var result = App.page(limit, offset,  input);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
