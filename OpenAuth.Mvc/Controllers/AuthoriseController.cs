@@ -73,6 +73,45 @@ namespace OpenAuth.Mvc.Controllers
 
 
 
+
+        /// <summary>
+        /// 通过组织id获取用户列表
+        /// </summary>
+        /// <param name="orgid"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult GetUserListByOrgId(string orgid)
+        {
+
+            Response<object> response = new Response<object>("服务器错误");
+            try
+            {
+                var user = AuthUtil.GetCurrentUser();
+                if (user.Orgs != null && user.Orgs.Count == 0)
+                {
+                    response.Message = $"请为{user.User.Name}分配组织结构。";
+                }
+                else
+                {
+                    response.Code = Response<object>.SUCCESS_CODE;
+                    response.Message = "";
+                    var result = _AuthoriseService.GetUsersQueryByOrgIds(orgid).Select(s => new
+                    {
+                        s.Id,
+                        s.Name
+                    }).ToList();
+                    response.Result = result;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+            }
+            return Json(response, JsonRequestBehavior.AllowGet);
+        }
+
+
         /// <summary>
         /// 通过当前登录用户组织id获取用户列表
         /// </summary>

@@ -24,6 +24,16 @@
         detailView: false                   //是否显示父子表
     };
 
+    var defaultSimpleZTreeOptions = {
+        treeId: 'myTree',
+        url:'/UserSession/GetOrgs',
+        text: 'Name',
+        key: 'Id',
+        parentKey: 'ParentId',
+        selectedMulti: true,
+        onClick: null
+    };
+
     /**
      * 处理按钮事件绑定
      * */
@@ -152,6 +162,44 @@
         $('#tbList').tableExport(exportTableOptions);
     }
 
+    /**
+     * 初始化ZTree
+     * */
+    var handlerInitSimpleZTree = function (options) {
+
+        $.extend(defaultSimpleZTreeOptions, options);
+
+        var zTreeObj = {};
+        var setting = {
+            view: { selectedMulti: defaultSimpleZTreeOptions.selectedMulti },
+            data: {
+                key: {
+                    name: defaultSimpleZTreeOptions.text,
+                    title: defaultSimpleZTreeOptions.text
+                },
+                simpleData: {
+                    enable: true,
+                    idKey: defaultSimpleZTreeOptions.key,
+                    pIdKey: defaultSimpleZTreeOptions.parentKey,
+                    rootPId: 'null'
+                }
+            },
+            callback: {
+                onClick: defaultSimpleZTreeOptions.onClick
+            }
+        };
+
+        $.getJSON(defaultSimpleZTreeOptions.url,
+            {
+                page: 1, rows: 10000
+            },
+            function (json) {
+                zTreeObj = $.fn.zTree.init($("#" + defaultSimpleZTreeOptions.treeId), setting, json);
+                zTreeObj.expandAll(true);
+            });
+        return zTreeObj;
+    }
+
 
     /**
      * 初始化列表
@@ -231,6 +279,13 @@
         initTable: function (url, options) {
             dataTable = new handlerTableInit(url, options);
             return dataTable;
+        },
+        /**
+         * 初始化ZTree
+         * @param {any} options
+         */
+        initZTree: function (options) {
+            handlerInitSimpleZTree(options);
         }
     }
 

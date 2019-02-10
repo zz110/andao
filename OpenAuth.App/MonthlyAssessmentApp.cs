@@ -93,37 +93,22 @@ namespace OpenAuth.App
 
         public string Add(MonthlyAssessment obj)
         {
-            decimal score = 0.00M;
-
-            if (!obj.AnntubeScore.HasValue) obj.AnntubeScore = 0.00M;
-            if (!obj.QuantifyScore.HasValue) obj.QuantifyScore = 0.00M;
-
-            score = obj.AnntubeScore.Value * 0.3M + obj.QuantifyScore.Value * 0.7M;
-
             return Repository.AddAndReturnId(obj);
         }
         
         public void Update(MonthlyAssessment obj)
         {
-            decimal score = 0.00M;
-
-            if (!obj.AnntubeScore.HasValue) obj.AnntubeScore = 0.00M;
-            if (!obj.QuantifyScore.HasValue) obj.QuantifyScore = 0.00M;
-
-            score = obj.AnntubeScore.Value * 0.3M + obj.QuantifyScore.Value * 0.7M;
-
             UnitWork.Update<MonthlyAssessment>(u => u.Id == obj.Id, u => new MonthlyAssessment
             {
                 //todo:要修改的字段赋值
                 AnntubeScore = obj.AnntubeScore,
                 QuantifyScore = obj.QuantifyScore,
-                Score = score,
+                Score = obj.Score,
                 EvaluateMonth = obj.EvaluateMonth,
                 EvaluateYear = obj.EvaluateYear,
                 OrgId = obj.OrgId,
                 UserId = obj.UserId,
                 Updated = DateTime.Now
-
             });
 
         }

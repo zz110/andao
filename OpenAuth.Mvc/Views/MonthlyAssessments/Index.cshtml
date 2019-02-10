@@ -83,7 +83,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
-                <button id="btnModalOk" type="button" class="btn btn-primary">确定</button>
+                <button id="btnModalOk" ng-click="OrgSelected()" type="button" class="btn btn-primary">确定</button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -116,9 +116,6 @@
                     }, {
                         visible: false,
                         field: 'Id'
-                    }, {
-                        field: 'Category',
-                        title: '类别'
                     },{
                         field: 'UserName',
                         title: '姓名'
@@ -131,10 +128,16 @@
                     }, {
                         field: 'EvaluateMonth',
                         title: '月'
-                    },
+                    }, {
+                        field: 'AnntubeScore',
+                        title: '安管成绩'
+                    }, {
+                        field: 'QuantifyScore',
+                        title: '标准化成绩'
+                    }, 
                     {
                         field: 'Score',
-                        title: '分数'
+                        title: '月度考核总成绩'
                     }, {
                         field: 'CreateTime',
                         title: '创建时间'
@@ -144,7 +147,7 @@
             App.init({
                 title: '月度考核成绩',
                 width: '75%',
-                height: '80%',
+                height: '95%',
                 form_url: '/MonthlyAssessments/MonthlyAssessmentForm/',
                 delete_url: '/MonthlyAssessments/Delete'
             });
