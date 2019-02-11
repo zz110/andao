@@ -106,6 +106,7 @@
     <Compile Include="AutofacExt.cs" />
     <Compile Include="BaseApp.cs" />
     <Compile Include="AuthorizeApp.cs" />
+    <Compile Include="DepartmentMonthlyEvaluationApp.cs" />
     <Compile Include="EvaluateAverageScoreApp.cs" />
     <Compile Include="MonthlyAssessmentApp.cs" />
     <Compile Include="MonthlyEvaluationApp.cs" />

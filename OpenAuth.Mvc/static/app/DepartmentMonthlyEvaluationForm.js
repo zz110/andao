@@ -7,10 +7,8 @@ app.controller('appController', function ($scope) {
     $scope.ErrList = [];
     $scope.monthList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     $scope.UserList = [];
+    $scope.DeptList = [];
     $scope.model.id = "";
-
-    $scope.OrgId = '';
-    $scope.OrgName = '';
 
     /**
     * 时间控件回调函数
@@ -23,7 +21,7 @@ app.controller('appController', function ($scope) {
         if (clsName.indexOf('created') != -1) {
             $scope.model.Created = result;
         }
-       
+
     }
 
     //初始化时间控件
@@ -31,26 +29,24 @@ app.controller('appController', function ($scope) {
         callback: $scope.DatepickerCallback
     });
 
+
+
     /**
      * 初始化表单
      * */
     $scope.init = function (id) {
 
-        $.get('/MonthlyAssessments/get/' + id,
+        $.get('/DepartmentMonthlyEvaluations/get/' + id,
             function (resp) {
                 if (resp.Code == 200) {
-
-                    $scope.GetUserByOrgId(resp.Result.OrgId);
-
                     $scope.model = resp.Result;
                     $scope.model.Created = momentObj.format('YYYY-MM-DD HH:mm:ss');
                     $scope.model.Updated = momentObj.format('YYYY-MM-DD HH:mm:ss');
-                    $scope.$apply();
-
-                   
+                    $scope.$apply();//通知更新，否则表单数据无法显示
+                    $scope.GetUserList();
+                    $scope.GetOrgList($scope.model.UserId);
                 }
             });
-       
     };
 
     $scope.show_box_warning = function (flag) {
@@ -63,14 +59,14 @@ app.controller('appController', function ($scope) {
     }
 
     /**
-     * 通过角色名称获取部门列表
-     * @param {any} orgid
-     */
-    $scope.GetUserByOrgId = function (orgid) {
-        $scope.UserList = [];
-        $.get('/Authorise/GetUserListByOrgId?orgid=' + orgid,
+     * 获取用户列表
+     * */
+    $scope.GetUserList = function () {
+
+        $.get('/Authorise/GetUserListByCurrentUserOrgIds',
             function (resp) {
                 if (resp.Code === 200) {
+
                     $scope.UserList = resp.Result;
                     $scope.$apply();//通知更新，否则表单数据无法显示
                 }
@@ -78,44 +74,44 @@ app.controller('appController', function ($scope) {
     }
 
     /**
-     * zTree节点点击事件
-     * @param {any} event
-     * @param {any} treeId
-     * @param {any} treeNode
-     */
-    $scope.zTreeOnClick = function (event, treeId, treeNode) {
-        
-        $scope.OrgId = treeNode.Id;
-        $scope.OrgName = treeNode.Name;
-    }
-
-    /**
-     * 部门选择事件
+     * 用户选择事件
      * @param {any} value
      */
-    $scope.OrgSelected = function () {
-        
-        if ($scope.OrgId != '') {
+    $scope.UserSelected = function (value) {
+        $scope.DeptList = [];
+        $scope.model.OrgId = '';
+        if (value == "") return;
+        $.get('/Authorise/GetOrgByUserId/' + value,
+            function (resp) {
+                if (resp.Code === 200) {
 
-            $scope.model.OrgId = $scope.OrgId;
-            $scope.model.OrgName = $scope.OrgName;
-            $scope.$apply();
-
-            $scope.GetUserByOrgId($scope.model.OrgId);
-        }
-        $("#modal-default").modal("hide");
+                    $scope.DeptList = resp.Result;
+                    if ($scope.DeptList.length == 1) {
+                        $scope.model.OrgId = $scope.DeptList[0].Id;
+                    }
+                    $scope.$apply();//通知更新，否则表单数据无法显示
+                }
+            });
     }
 
-    /**
-     * 部门点击事件
-     * */
-    $scope.OrgClick = function () {
 
-        $scope.OrgId = '';
-        $scope.OrgName = '';
-        App.initZTree({
-            onClick: $scope.zTreeOnClick
-        });
+    /**
+     * 获取组织结构列表
+     * */
+    $scope.GetOrgList = function (id) {
+
+        $.get('/Authorise/GetOrgByUserId/' + id,
+            function (resp) {
+                if (resp.Code === 200) {
+
+                    $scope.DeptList = resp.Result;
+                    if ($scope.DeptList.length == 1) {
+                        $scope.model.OrgId = $scope.DeptList[0].Id;
+                    }
+                    $scope.$apply();//通知更新，否则表单数据无法显示
+                }
+            });
+
     }
 
 
@@ -127,11 +123,11 @@ app.controller('appController', function ($scope) {
         if (window.parent._dataTable) {
             window.parent._dataTable.Refresh();
         }
-        
+
         if (window.parent.layer) {
             window.parent.layer.closeAll();
         }
-      
+
     }
 
     /**
@@ -139,7 +135,7 @@ app.controller('appController', function ($scope) {
      * */
     $scope.Submit = function () {
 
-        var url = "/MonthlyAssessments/save";
+        var url = "/DepartmentMonthlyEvaluations/save";
         $.post(url, { input: $scope.model }, function (resp) {
 
             if (resp.Code === 200) {
@@ -162,38 +158,7 @@ app.controller('appController', function ($scope) {
         });
     }
 
-    /**
-     * 安管成绩change事件
-     * @param {any} AnntubeScore
-     */
-    $scope.AnntubeScoreChange = function (AnntubeScore) {
-        var _score = parseFloat(AnntubeScore);
-        _score = isNaN(_score) ? 0 : _score;
-
-        var _QuantifyScore = parseFloat($scope.model.QuantifyScore);
-        _QuantifyScore = isNaN(_QuantifyScore) ? 0 : _QuantifyScore;
-
-        $scope.model.Score = (_score * 0.3 + _QuantifyScore * 0.7).toFixed(2);
-
-        $scope.$apply();
-    }
-
-    /**
-     * 标准量化成绩change事件
-     * @param {any} QuantifyScore
-     */
-    $scope.QuantifyScore = function (QuantifyScore) {
-        var _score = parseFloat(QuantifyScore);
-        _score = isNaN(_score) ? 0 : _score;
-
-        var _AnntubeScore = parseFloat($scope.model.AnntubeScore);
-        _AnntubeScore = isNaN(_AnntubeScore) ? 0 : _AnntubeScore;
-
-        $scope.model.Score = (_AnntubeScore * 0.3 + _score * 0.7).toFixed(2);
-
-        $scope.$apply();
-    }
 
     $scope.init(Id);
-    
+
 });

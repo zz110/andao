@@ -161,6 +161,7 @@
     <Compile Include="Controllers\RoleManagerController.cs" />
     <Compile Include="Controllers\UserManagerController.cs" />
     <Compile Include="Controllers\UserSessionController.cs" />
+    <Compile Include="Controllers\DepartmentMonthlyEvaluationsController.cs" />
     <Compile Include="Models\JobjectModelBinder.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -207,6 +208,7 @@
     <Content Include="js\utils.js" />
     <Content Include="layui\css\modules\laydate\default\font.css" />
     <Content Include="static\app\app.js" />
+    <Content Include="static\app\DepartmentMonthlyEvaluationForm.js" />
     <Content Include="static\app\EvaluateAverageScoreForm.js" />
     <Content Include="static\app\MonthlyAssessmentForm.js" />
     <Content Include="static\app\MonthlyEvaluationForm.js" />
@@ -8219,6 +8221,8 @@
     <Content Include="Views\MonthlyEvaluations\Index.cshtml" />
     <Content Include="Views\MonthlyAssessments\Index.cshtml" />
     <Content Include="Views\MonthlyAssessments\MonthlyAssessmentForm.cshtml" />
+    <Content Include="Views\DepartmentMonthlyEvaluations\Index.cshtml" />
+    <Content Include="Views\DepartmentMonthlyEvaluations\DepartmentMonthlyEvaluationForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="layui\lay\modules\mobile\" />

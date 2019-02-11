@@ -32,6 +32,7 @@ namespace OpenAuth.Repository
         public System.Data.Entity.DbSet<Application> Applications { get; set; }
         public System.Data.Entity.DbSet<Category> Categories { get; set; }
         public System.Data.Entity.DbSet<CategoryType> CategoryTypes { get; set; }
+        public System.Data.Entity.DbSet<DepartmentMonthlyEvaluation> DepartmentMonthlyEvaluations { get; set; }
         public System.Data.Entity.DbSet<EvaluateAverageScore> EvaluateAverageScores { get; set; }
         public System.Data.Entity.DbSet<FlowInstance> FlowInstances { get; set; }
         public System.Data.Entity.DbSet<FlowInstanceOperationHistory> FlowInstanceOperationHistories { get; set; }
@@ -57,6 +58,7 @@ namespace OpenAuth.Repository
             modelBuilder.Configurations.Add(new ApplicationMap());
             modelBuilder.Configurations.Add(new CategoryMap());
             modelBuilder.Configurations.Add(new CategoryTypeMap());
+            modelBuilder.Configurations.Add(new DepartmentMonthlyEvaluationMap());
             modelBuilder.Configurations.Add(new EvaluateAverageScoreMap());
             modelBuilder.Configurations.Add(new FlowInstanceMap());
             modelBuilder.Configurations.Add(new FlowInstanceOperationHistoryMap());

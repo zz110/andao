@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OpenAuth.Repository.Dto
 {
-    public class MonthlyAssessmentQueryInput
+    public class DepartmentMonthlyEvaluationQueryInput
     {
         public int? EvaluateYear { get; set; }
 

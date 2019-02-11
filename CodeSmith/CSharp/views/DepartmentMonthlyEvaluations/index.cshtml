@@ -1,0 +1,116 @@
+﻿@section header
+{
+    <link rel="stylesheet" href="/css/treetable.css" />
+}
+<blockquote class="layui-elem-quote news_search toolList" id="menus">
+</blockquote>
+
+    <div class="layui-row">
+        <div class="layui-col-xs2">
+            <ul id="tree" class="ztree"
+                style="padding: 2px; border: 1px solid #ddd; overflow: auto;">
+            </ul>
+        </div>
+        <div class="layui-col-xs10">
+            <table class="layui-table"
+                lay-data="{height: 'full-80', page:true, id:'mainList'}"
+                lay-filter="list"  lay-size="sm">
+                <thead>
+                <tr>
+                    <th lay-data="{checkbox:true, fixed: true}"></th>
+                    <th lay-data="{field:'Id', width:150}">Id</th>
+                    <th lay-data="{field:'UserId', width:150}">用户id</th>
+                    <th lay-data="{field:'OrgId', width:150}">组织结构id</th>
+                    <th lay-data="{field:'EvaluateYear', width:150}">评价年份</th>
+                    <th lay-data="{field:'EvaluateMonth', width:150}">评价月份</th>
+                    <th lay-data="{field:'Score', width:150}">得分</th>
+                    <th lay-data="{field:'Creator', width:150}">Creator</th>
+                    <th lay-data="{field:'Created', width:150}">Created</th>
+                    <th lay-data="{field:'Updated', width:150}">Updated</th>
+                    <th lay-data="{fixed: 'right', width:160, align:'center', toolbar: '#barList'}"></th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+<script type="text/html" id="barList">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+</script>
+
+
+<!--添加/编辑窗口-->
+<div id="divEdit" style="display: none">
+    <form class="layui-form" action=""  id="formEdit">
+    <input type="hidden" name="Id" v-model="Id" />
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户id</label>
+        <div class="layui-input-block">
+            <input type="text" name="UserId" v-model="UserId" required lay-verify="required"
+                placeholder="用户id" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">组织结构id</label>
+        <div class="layui-input-block">
+            <input type="text" name="OrgId" v-model="OrgId" required lay-verify="required"
+                placeholder="组织结构id" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">评价年份</label>
+        <div class="layui-input-block">
+            <input type="radio" name="EvaluateYear" value="1" title="value1" checked>
+            <input type="radio" name="EvaluateYear" value="0" title="value2">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">评价月份</label>
+        <div class="layui-input-block">
+            <input type="radio" name="EvaluateMonth" value="1" title="value1" checked>
+            <input type="radio" name="EvaluateMonth" value="0" title="value2">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">得分</label>
+        <div class="layui-input-block">
+            <input type="text" name="Score" v-model="Score" required lay-verify="required"
+                placeholder="得分" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">Creator</label>
+        <div class="layui-input-block">
+            <input type="text" name="Creator" v-model="Creator" required lay-verify="required"
+                placeholder="Creator" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">Created</label>
+        <div class="layui-input-block">
+            <input type="text" name="Created" v-model="Created" required lay-verify="required"
+                placeholder="Created" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">Updated</label>
+        <div class="layui-input-block">
+            <input type="text" name="Updated" v-model="Updated" required lay-verify="required"
+                placeholder="Updated" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+
+     <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formSubmit">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/userJs/DepartmentMonthlyEvaluations.js"></script>
+
+
