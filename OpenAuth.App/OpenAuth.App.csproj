@@ -101,6 +101,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnnualExaminationRegistrationApp.cs" />
     <Compile Include="AnswerApp.cs" />
     <Compile Include="AuthoriseService.cs" />
     <Compile Include="AutofacExt.cs" />

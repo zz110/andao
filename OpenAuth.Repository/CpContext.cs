@@ -28,6 +28,7 @@ namespace OpenAuth.Repository
             : base(nameOrConnectionString)
         { }
 
+        public System.Data.Entity.DbSet<AnnualExaminationRegistration> AnnualExaminationRegistrations { get; set; }
         public System.Data.Entity.DbSet<Answer> Answers { get; set; }
         public System.Data.Entity.DbSet<Application> Applications { get; set; }
         public System.Data.Entity.DbSet<Category> Categories { get; set; }
@@ -54,6 +55,7 @@ namespace OpenAuth.Repository
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Configurations.Add(new AnnualExaminationRegistrationMap());
             modelBuilder.Configurations.Add(new AnswerMap());
             modelBuilder.Configurations.Add(new ApplicationMap());
             modelBuilder.Configurations.Add(new CategoryMap());

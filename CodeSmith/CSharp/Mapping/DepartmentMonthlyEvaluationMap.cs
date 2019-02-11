@@ -28,10 +28,6 @@ namespace OpenAuth.Repository.Mapping
                 .HasColumnName("Id")
                 .HasMaxLength(50)
                 .IsRequired();
-            Property(t => t.UserId)
-                .HasColumnName("UserId")
-                .HasMaxLength(50)
-                .IsOptional();
             Property(t => t.OrgId)
                 .HasColumnName("OrgId")
                 .HasMaxLength(50)

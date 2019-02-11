@@ -20,17 +20,12 @@ namespace OpenAuth.Repository.Domain
     {
         public DepartmentMonthlyEvaluation()
         {
-          this.UserId= string.Empty;
           this.OrgId= string.Empty;
           this.Creator= string.Empty;
           this.Created= DateTime.Now;
           this.Updated= DateTime.Now;
         }
 
-        /// <summary>
-	    /// 
-	    /// </summary>
-        public string UserId { get; set; }
         /// <summary>
 	    /// 
 	    /// </summary>

@@ -138,6 +138,7 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AnnualExaminationRegistrationsController.cs" />
     <Compile Include="Controllers\AnswersController.cs" />
     <Compile Include="Controllers\AuthoriseController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -207,6 +208,7 @@
     <Content Include="js\slimscroll.js" />
     <Content Include="js\utils.js" />
     <Content Include="layui\css\modules\laydate\default\font.css" />
+    <Content Include="static\app\AnnualExaminationRegistrationForm.js" />
     <Content Include="static\app\app.js" />
     <Content Include="static\app\DepartmentMonthlyEvaluationForm.js" />
     <Content Include="static\app\EvaluateAverageScoreForm.js" />
@@ -8224,6 +8226,8 @@
     <Content Include="Views\DepartmentMonthlyEvaluations\Index.cshtml" />
     <Content Include="Views\DepartmentMonthlyEvaluations\DepartmentMonthlyEvaluationForm.cshtml" />
     <Content Include="Views\MonthlyAssessments\MonthlyPostAssessment.cshtml" />
+    <Content Include="Views\AnnualExaminationRegistrations\AnnualExaminationRegistrationForm.cshtml" />
+    <Content Include="Views\AnnualExaminationRegistrations\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="layui\lay\modules\mobile\" />

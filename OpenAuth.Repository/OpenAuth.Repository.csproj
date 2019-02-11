@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Core\TreeEntity.cs" />
     <Compile Include="CpContext.cs" />
+    <Compile Include="Domain\AnnualExaminationRegistration.cs" />
     <Compile Include="Domain\Answer.cs" />
     <Compile Include="Domain\Application.cs" />
     <Compile Include="Domain\Category.cs" />
@@ -82,6 +83,8 @@
     <Compile Include="Domain\Test.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Domain\UserExt.cs" />
+    <Compile Include="Dto\AnnualExaminationRegistration\AnnualExaminationRegistrationOutput.cs" />
+    <Compile Include="Dto\AnnualExaminationRegistration\AnnualExaminationRegistrationQueryInput.cs" />
     <Compile Include="Dto\DepartmentMonthlyEvaluation\DepartmentMonthlyEvaluationQueryInput.cs" />
     <Compile Include="Dto\DepartmentMonthlyEvaluation\DepartmentMonthlyEvaluationOutput.cs" />
     <Compile Include="Dto\EvaluateAverageScore\EvaluateAverageScoreQueryInput.cs" />
@@ -96,6 +99,7 @@
     <Compile Include="Dto\MonthlyAssessment\MonthlyPostAssessmentOutput.cs" />
     <Compile Include="Interface\IRepository.cs" />
     <Compile Include="Interface\IUnitWork.cs" />
+    <Compile Include="Mapping\AnnualExaminationRegistrationMap.cs" />
     <Compile Include="Mapping\AnswerMap.cs" />
     <Compile Include="Mapping\ApplicationMap.cs" />
     <Compile Include="Mapping\CategoryTypeMap.cs" />
