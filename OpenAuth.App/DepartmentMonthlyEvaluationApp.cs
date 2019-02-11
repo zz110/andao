@@ -18,24 +18,20 @@ namespace OpenAuth.App
 
             offset += 1;
             string sql = $@"select top {limit} * from(
-                              select row_number() over(order by a.created) as num,a.*,b.Name as OrgName,c.Name as UserName 
+                              select row_number() over(order by a.created) as num,a.*,b.Name as OrgName
                                                        from DepartmentMonthlyEvaluation a left join Org b
                                                        on a.OrgId=b.Id
-                                                       left join [User] c
-                                                       on a.UserId=c.Id 
                                                        where a.Creator=@Creator 
                                                        and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
                                                        and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null)
-                                                       and (c.Name like '%'+@UserName+'%' or @UserName is null)
                             ) as t where num > ({limit}*({offset}-1))";
 
             var rows = Repository.ExecuteQuerySql<DepartmentMonthlyEvaluationOutput>(sql, input.ToParameters()).ToList();
 
-            sql = @"select count(*) from DepartmentMonthlyEvaluation a left join [User] c  on a.UserId=c.Id 
+            sql = @"select count(*) from DepartmentMonthlyEvaluation a left join Org b on a.OrgId=b.Id
                     where a.Creator=@Creator 
                     and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
-                    and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null)
-                    and (c.Name like '%'+@UserName+'%'  or @UserName is null)";
+                    and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null)";
 
             int total = Repository.ExecuteQuerySql<int>(sql, input.ToParameters()).FirstOrDefault();
 
@@ -59,11 +55,7 @@ namespace OpenAuth.App
             else
             {
                 DepartmentMonthlyEvaluationOutput result = model.MapTo<DepartmentMonthlyEvaluationOutput>();
-                if (!string.IsNullOrEmpty(result.UserId))
-                {
-                    result.UserName = UnitWork.Find<User>(w => w.Id.Equals(result.UserId))?.FirstOrDefault()?.Name;
-                }
-
+  
                 if (!string.IsNullOrEmpty(result.OrgId))
                 {
                     result.OrgName = UnitWork.Find<Org>(w => w.Id.Equals(result.OrgId))?.FirstOrDefault()?.Name;
@@ -75,16 +67,16 @@ namespace OpenAuth.App
 
         public bool Exists(DepartmentMonthlyEvaluation obj)
         {
-            return Repository.Find(w => w.UserId.Equals(obj.UserId) &&
+            return Repository.Find(w =>
                                 w.OrgId.Equals(obj.OrgId) &&
                                 w.EvaluateYear.Value.Equals(obj.EvaluateYear.Value) &&
                                 w.EvaluateMonth.Value.Equals(obj.EvaluateMonth.Value)).Count() > 0;
         }
 
 
-        public void Add(DepartmentMonthlyEvaluation obj)
+        public string Add(DepartmentMonthlyEvaluation obj)
         {
-            Repository.Add(obj);
+            return Repository.AddAndReturnId(obj);
         }
         
         public void Update(DepartmentMonthlyEvaluation obj)
@@ -95,7 +87,6 @@ namespace OpenAuth.App
                 EvaluateMonth = obj.EvaluateMonth,
                 EvaluateYear = obj.EvaluateYear,
                 OrgId = obj.OrgId,
-                UserId = obj.UserId,
                 Score = obj.Score,
                 Updated = DateTime.Now
             });

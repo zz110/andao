@@ -14,10 +14,6 @@ namespace OpenAuth.Repository.Dto
         /// </summary>
         public string Id { get; set; }
         /// <summary>
-	    /// 用户id
-	    /// </summary>
-        public string UserId { get; set; }
-        /// <summary>
 	    /// 组织结构id
 	    /// </summary>
         public string OrgId { get; set; }
@@ -60,7 +56,6 @@ namespace OpenAuth.Repository.Dto
         /// </summary>
         public System.DateTime? Updated { get; set; }
 
-        public string UserName { get; set; }
 
         public string OrgName { get; set; }
     }

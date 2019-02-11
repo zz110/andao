@@ -43,8 +43,7 @@ app.controller('appController', function ($scope) {
                     $scope.model.Created = momentObj.format('YYYY-MM-DD HH:mm:ss');
                     $scope.model.Updated = momentObj.format('YYYY-MM-DD HH:mm:ss');
                     $scope.$apply();//通知更新，否则表单数据无法显示
-                    $scope.GetUserList();
-                    $scope.GetOrgList($scope.model.UserId);
+                    $scope.GetOrgList(UserId);
                 }
             });
     };
@@ -58,43 +57,7 @@ app.controller('appController', function ($scope) {
         }
     }
 
-    /**
-     * 获取用户列表
-     * */
-    $scope.GetUserList = function () {
-
-        $.get('/Authorise/GetUserListByCurrentUserOrgIds',
-            function (resp) {
-                if (resp.Code === 200) {
-
-                    $scope.UserList = resp.Result;
-                    $scope.$apply();//通知更新，否则表单数据无法显示
-                }
-            });
-    }
-
-    /**
-     * 用户选择事件
-     * @param {any} value
-     */
-    $scope.UserSelected = function (value) {
-        $scope.DeptList = [];
-        $scope.model.OrgId = '';
-        if (value == "") return;
-        $.get('/Authorise/GetOrgByUserId/' + value,
-            function (resp) {
-                if (resp.Code === 200) {
-
-                    $scope.DeptList = resp.Result;
-                    if ($scope.DeptList.length == 1) {
-                        $scope.model.OrgId = $scope.DeptList[0].Id;
-                    }
-                    $scope.$apply();//通知更新，否则表单数据无法显示
-                }
-            });
-    }
-
-
+ 
     /**
      * 获取组织结构列表
      * */

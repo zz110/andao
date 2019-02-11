@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace OpenAuth.Repository.Domain
@@ -20,7 +21,6 @@ namespace OpenAuth.Repository.Domain
     {
         public DepartmentMonthlyEvaluation()
         {
-          this.UserId= string.Empty;
           this.OrgId= string.Empty;
           this.Creator= string.Empty;
           this.Created= DateTime.Now;
@@ -28,12 +28,12 @@ namespace OpenAuth.Repository.Domain
         }
 
         /// <summary>
-	    /// 
-	    /// </summary>
-        public string UserId { get; set; }
+        /// 
+        /// </summary>
         /// <summary>
-	    /// 
-	    /// </summary>
+        /// 组织结构id
+        /// </summary>
+        [Required(AllowEmptyStrings = false, ErrorMessage = "请选择部门")]
         public string OrgId { get; set; }
         /// <summary>
 	    /// 
@@ -44,8 +44,10 @@ namespace OpenAuth.Repository.Domain
 	    /// </summary>
         public int? EvaluateMonth { get; set; }
         /// <summary>
-	    /// 
-	    /// </summary>
+        /// 
+        /// </summary>
+        [Required(AllowEmptyStrings = false, ErrorMessage = "请录入分数")]
+        [Range(minimum: 0.00, maximum: 100, ErrorMessage = "请录入正确的分数;0-100分")]
         public decimal? Score { get; set; }
         /// <summary>
 	    /// 

@@ -1,7 +1,7 @@
 USE [cp]
 GO
 
-/****** Object:  Table [dbo].[DepartmentMonthlyEvaluation]    Script Date: 2019/2/11 15:11:21 ******/
+/****** Object:  Table [dbo].[DepartmentMonthlyEvaluation]    Script Date: 2019/2/11 16:45:26 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -13,7 +13,6 @@ GO
 
 CREATE TABLE [dbo].[DepartmentMonthlyEvaluation](
 	[Id] [varchar](50) NOT NULL,
-	[UserId] [varchar](50) NULL,
 	[OrgId] [varchar](50) NULL,
 	[EvaluateYear] [int] NULL,
 	[EvaluateMonth] [int] NULL,

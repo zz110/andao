@@ -28,6 +28,7 @@ namespace OpenAuth.Mvc.Controllers
         public ActionResult DepartmentMonthlyEvaluationForm(string id = "")
         {
             ViewBag.Id = id;
+            ViewBag.UserId = _User.Id;
             return View();
         }
 
@@ -47,7 +48,6 @@ namespace OpenAuth.Mvc.Controllers
                 if (string.IsNullOrEmpty(result.Creator))
                 {
                     result.Creator = _User.Id;
-                    result.UserId = "";
                     result.OrgId = "";
                     result.EvaluateYear = DateTime.Now.Year;
                     result.EvaluateMonth = DateTime.Now.Month;
