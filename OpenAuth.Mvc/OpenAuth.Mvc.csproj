@@ -8223,6 +8223,7 @@
     <Content Include="Views\MonthlyAssessments\MonthlyAssessmentForm.cshtml" />
     <Content Include="Views\DepartmentMonthlyEvaluations\Index.cshtml" />
     <Content Include="Views\DepartmentMonthlyEvaluations\DepartmentMonthlyEvaluationForm.cshtml" />
+    <Content Include="Views\MonthlyAssessments\MonthlyPostAssessment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="layui\lay\modules\mobile\" />

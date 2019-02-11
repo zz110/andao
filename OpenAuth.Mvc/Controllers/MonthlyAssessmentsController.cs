@@ -28,11 +28,21 @@ namespace OpenAuth.Mvc.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 月度岗位履责考评结果
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult MonthlyPostAssessment() {
+
+            return View();
+        }
+
         public ActionResult MonthlyAssessmentForm(string id) {
             ViewBag.Id = id;
             return View();
         }
 
+        
 
 
         /// <summary>
