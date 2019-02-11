@@ -54,6 +54,35 @@ namespace OpenAuth.App
             };
         }
 
+        public object GetMonthlyPostAssessment(int limit, int offset, MonthlyPostAssessmentQueryInput input) {
+
+            string sql = @"select d.Name as UserName,c.Name as OrgName,a.EvaluateYear,a.EvaluateMonth,isnull(a.Score,0.00) as Score,isnull(b.Score,0.00) as DepartmentMonthlyScore
+                            FROM MonthlyAssessment a left join DepartmentMonthlyEvaluation b
+                            on a.OrgId=b.OrgId and a.EvaluateYear=b.EvaluateYear and a.EvaluateMonth=b.EvaluateMonth
+                            left join Org c
+                            on a.OrgId=c.Id
+                            left join [User] as d
+                            on a.UserId=d.Id
+                            where  (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
+                            and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null) 
+                            and (d.Name like '%'+@UserName+'%'  or @UserName is null)
+                            and (c.Name like '%'+@OrgName+'%' or @OrgName is null)
+                            and (a.UserId in(
+                                select distinct a.FirstId from Relevance a  join [Role] b
+                                on a.SecondId=b.Id
+                                where a.[Key]='UserRole' and b.Name=@role
+
+                            ) or @role is null)
+                            and (c.BizCode=@DeptType or (@DeptType='' or @DeptType is null or @DeptType=''))";
+
+            var rows = Repository.ExecuteQuerySql<MonthlyPostAssessmentOutput>(sql, input.ToParameters()).ToList();
+            return new
+            {
+                total = 10000,
+                rows = rows
+            };
+        }
+
 
         public MonthlyAssessmentOutput get(string id)
         {

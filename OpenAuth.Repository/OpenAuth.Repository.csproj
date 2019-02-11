@@ -92,6 +92,8 @@
     <Compile Include="Dto\MonthlyAssessment\MonthlyAssessmentOutput.cs" />
     <Compile Include="Dto\MonthlyEvaluation\MonthlyEvaluationQueryInput.cs" />
     <Compile Include="Dto\MonthlyEvaluation\MonthlyEvaluationOutput.cs" />
+    <Compile Include="Dto\MonthlyAssessment\MonthlyPostAssessmentQueryInput.cs" />
+    <Compile Include="Dto\MonthlyAssessment\MonthlyPostAssessmentOutput.cs" />
     <Compile Include="Interface\IRepository.cs" />
     <Compile Include="Interface\IUnitWork.cs" />
     <Compile Include="Mapping\AnswerMap.cs" />

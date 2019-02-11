@@ -28,6 +28,15 @@ namespace OpenAuth.Mvc.Controllers
             return View();
         }
 
+
+        public ActionResult MonthlyAssessmentForm(string id)
+        {
+            ViewBag.Id = id;
+            return View();
+        }
+
+
+
         /// <summary>
         /// 月度岗位履责考评结果
         /// </summary>
@@ -37,12 +46,21 @@ namespace OpenAuth.Mvc.Controllers
             return View();
         }
 
-        public ActionResult MonthlyAssessmentForm(string id) {
-            ViewBag.Id = id;
-            return View();
+        /// <summary>
+        /// 月度岗位履责考评结果数据
+        /// </summary>
+        /// <param name="limit"></param>
+        /// <param name="offset"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [System.Web.Mvc.HttpGet]
+        public ActionResult GetMonthlyPostAssessment(int limit, int offset, MonthlyPostAssessmentQueryInput input)
+        {
+            var result = App.GetMonthlyPostAssessment(limit, offset, input);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        
+
 
 
         /// <summary>
