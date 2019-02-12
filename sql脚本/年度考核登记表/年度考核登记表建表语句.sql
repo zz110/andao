@@ -1,7 +1,7 @@
 USE [cp]
 GO
 
-/****** Object:  Table [dbo].[AnnualExaminationRegistration]    Script Date: 2019/2/11 23:05:31 ******/
+/****** Object:  Table [dbo].[AnnualExaminationRegistration]    Script Date: 2019/2/12 14:14:15 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -27,8 +27,10 @@ CREATE TABLE [dbo].[AnnualExaminationRegistration](
 	[Conclusion] [varchar](max) NULL,
 	[IsReward] [int] NULL,
 	[Reward] [varchar](500) NULL,
+	[RewardTime] [datetime] NULL,
 	[RewardReasons] [varchar](500) NULL,
 	[IsPenalty] [int] NULL,
+	[PenaltyTime] [datetime] NULL,
 	[Penalty] [varchar](500) NULL,
 	[PenaltyReasons] [varchar](500) NULL,
 	[Scope] [varchar](50) NULL,
@@ -85,16 +87,25 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'文化程度' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'AnnualExaminationRegistration', @level2type=N'COLUMN',@level2name=N'DegreeEdu'
 GO
 
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'个人总结' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'AnnualExaminationRegistration', @level2type=N'COLUMN',@level2name=N'Conclusion'
+GO
+
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'是否奖励 0 否 1 是' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'AnnualExaminationRegistration', @level2type=N'COLUMN',@level2name=N'IsReward'
 GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'奖励' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'AnnualExaminationRegistration', @level2type=N'COLUMN',@level2name=N'Reward'
 GO
 
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'奖励时间' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'AnnualExaminationRegistration', @level2type=N'COLUMN',@level2name=N'RewardTime'
+GO
+
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'奖励原因' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'AnnualExaminationRegistration', @level2type=N'COLUMN',@level2name=N'RewardReasons'
 GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'是否惩罚 0 否 1 是' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'AnnualExaminationRegistration', @level2type=N'COLUMN',@level2name=N'IsPenalty'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'惩罚时间' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'AnnualExaminationRegistration', @level2type=N'COLUMN',@level2name=N'PenaltyTime'
 GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'惩罚' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'AnnualExaminationRegistration', @level2type=N'COLUMN',@level2name=N'Penalty'

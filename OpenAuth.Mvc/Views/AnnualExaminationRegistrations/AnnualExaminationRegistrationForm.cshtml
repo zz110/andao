@@ -28,64 +28,30 @@
 
     <form class="form-horizontal" id="inputForm">
         <input type="hidden" name="Id" ng-model="model.Id" />
+        <input type="hidden" name="UserId" ng-model="model.UserId" />
         <input type="hidden" name="Creator" ng-model="model.Creator" />
-        <div class="row">
-            <div class="col-xs-12 col-sm-6">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">姓名:</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" name="UserId" ng-model="model.UserId" ng-change="UserSelected(model.UserId)">
-                            <option value="" ng-selected="'' == model.UserId">--请选择--</option>
-                            <option ng-repeat="item in UserList"
-                                    ng-selected="item.Id == model.UserId"
-                                    value="{{item.Id}}">
-                                {{item.Name}}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">部门:</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" name="OrgId" ng-model="model.OrgId">
-                            <option value="" ng-selected="'' == model.OrgId">--请选择--</option>
-                            <option ng-repeat="item in DeptList"
-                                    ng-selected="item.Id == model.OrgId"
-                                    value="{{item.Id}}">
-                                {{item.Name}}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-            </div>
 
-        </div>
         <div class="row">
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-xs-12 col-sm-4">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">年份:</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-3 control-label">姓名:</label>
+                    <div class="col-sm-9">
                         <input type="text"
-                               name="EvaluateYear"
-                               ng-model="model.EvaluateYear"
-                               maxlength="10"
-                               minlength="2"
-                               class="form-control required"
-                               placeholder="请输入年份" />
+                               name="Name"
+                               ng-model="model.Name"
+                               readonly
+                               class="form-control required" />
                     </div>
                 </div>
             </div>
-
-            <div class="col-xs-12 col-sm-6">
+            <div class="col-xs-12 col-sm-4">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">月份:</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" name="EvaluateMonth" ng-model="model.EvaluateMonth">
-                            <option value="">--请选择月份--</option>
-                            <option ng-repeat="item in monthList"
-                                    ng-selected="item == model.EvaluateMonth"
+                    <label class="col-sm-3 control-label">性别:</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" name="UserId" ng-model="model.Sex" ng-change="UserSelected(model.Sex)">
+                            <option value="" ng-selected="'' == model.UserId">--请选择--</option>
+                            <option ng-repeat="item in SexList"
+                                    ng-selected="item == model.Sex"
                                     value="{{item}}">
                                 {{item}}
                             </option>
@@ -93,7 +59,358 @@
                     </div>
                 </div>
             </div>
+            <div class="col-xs-12 col-sm-4">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">出生日期:</label>
+                    <div class="col-sm-9">
+                        <input type="text"
+                               name="Birthday"
+                               ng-model="model.Birthday"
+                               class="form-control adminlte_datepicker Birthday required" placeholder="请选择出生日期" />
+                    </div>
+                </div>
+            </div>
+
         </div>
+
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-4">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">民族:</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" name="Nation" ng-model="model.Nation">
+                            <option value="" ng-selected="'' == model.Nation">--请选择--</option>
+                            <option ng-repeat="item in NationList"
+                                    ng-selected="item == model.Nation"
+                                    value="{{item}}">
+                                {{item}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">政治面貌:</label>
+                    <div class="col-sm-9">
+
+                        <select class="form-control" name="Politicalaffiliation" ng-model="model.Politicalaffiliation">
+                            <option value="" ng-selected="'' == model.Politicalaffiliation">--请选择--</option>
+                            <option ng-repeat="item in PoliticalaffiliationList"
+                                    ng-selected="item == model.Politicalaffiliation"
+                                    value="{{item}}">
+                                {{item}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">文化程度:</label>
+                    <div class="col-sm-9">
+
+                        <select class="form-control" name="Politicalaffiliation" ng-model="model.DegreeEdu">
+                            <option value="" ng-selected="'' == model.DegreeEdu">--请选择--</option>
+                            <option ng-repeat="item in DegreeEduList"
+                                    ng-selected="item == model.DegreeEdu"
+                                    value="{{item}}">
+                                {{item}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 col-sm-pull-1 control-label">现任职务:</label>
+                    <div class="col-sm-8 col-sm-pull-1">
+                        <input type="text"
+                               name="Position"
+                               ng-model="model.Position"
+                               maxlength="20"
+                               minlength="2"
+                               class="form-control required"
+                               placeholder="请输入现任职务" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 col-sm-offset-1 control-label">任现职时间:</label>
+                    <div class="col-sm-8">
+                        <input type="text"
+                               name="Officetime"
+                               ng-model="model.Officetime"
+                               class="form-control adminlte_datepicker Officetime required" placeholder="请选择任现职时间" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">个人总结:</label>
+                    <div class="col-sm-11">
+                        <textarea class="form-control" placeholder="请输入个人总结" rows="10" name="Conclusion" ng-model="model.Conclusion"></textarea>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">
+                        考核期内奖惩情况:
+                    </label>
+                    <div class="col-sm-11">
+                        <div class="box box-success">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-2">
+                                                    <input type="text"
+                                                           ng-model="model.PenaltyTime" name="PenaltyTime"
+                                                           class="form-control adminlte_datepicker PenaltyTime" placeholder="请选择日期">
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <label class="control-label">因</label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="text"
+                                                           ng-model="model.PenaltyReasons" name="PenaltyReasons"
+                                                           class="form-control" placeholder="请输入原因">
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <label class="control-label">受</label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="text"
+                                                           ng-model="model.Penalty" name="Penalty"
+                                                           class="form-control" placeholder="请输入处分详情">
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <label class="control-label">处分</label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-2">
+                                                    <input type="text"
+                                                           ng-model="model.RewardTime" name="RewardTime"
+                                                           class="form-control adminlte_datepicker RewardTime" placeholder="请选择日期">
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <label class="control-label">因</label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="text"
+                                                           ng-model="model.RewardReasons" name="RewardReasons"
+                                                           class="form-control" placeholder="请输入原因">
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <label class="control-label">获得</label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="text"
+                                                           ng-model="model.Reward" name="Reward"
+                                                           class="form-control" placeholder="请输入称号">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">民主测评:</label>
+                    <div class="col-sm-11">
+                        <div class="box box-success">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">测评人员范围:</label>
+                                            <div class="col-sm-9">
+                                                <input type="text"
+                                                       name="Scope"
+                                                       ng-model="model.Scope"
+                                                       class="form-control" placeholder="请输入被测评人员范围" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">测评人数:</label>
+                                            <div class="col-sm-9">
+                                                <input type="text"
+                                                       name="EvaluationCount"
+                                                       ng-model="model.EvaluationCount"
+                                                       class="form-control" placeholder="请输入被测评人数" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">要素测评得分:</label>
+                                            <div class="col-sm-9">
+                                                <input type="text"
+                                                       name="FactorScore"
+                                                       ng-model="model.FactorScore"
+                                                       class="form-control" placeholder="请输入要素测评得分" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">优秀称职率:</label>
+                                            <div class="col-sm-9">
+                                                <input type="text"
+                                                       name="Rate"
+                                                       ng-model="model.Rate"
+                                                       class="form-control" placeholder="请输入优秀称职率" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">排名顺位:</label>
+                                            <div class="col-sm-9">
+                                                <input type="text"
+                                                       name="Rank"
+                                                       ng-model="model.Rank"
+                                                       class="form-control" placeholder="请输入排名顺位" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">车间(部门)正职意见:
+                    </label>
+                    <div class="col-sm-11">
+                        <div class="box box-success">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">测评人员范围:</label>
+                                            <div class="col-sm-9">
+                                                <input type="text"
+                                                       name="Scope"
+                                                       ng-model="model.Scope"
+                                                       class="form-control" placeholder="请输入被测评人员范围" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">测评人数:</label>
+                                            <div class="col-sm-9">
+                                                <input type="text"
+                                                       name="EvaluationCount"
+                                                       ng-model="model.EvaluationCount"
+                                                       class="form-control" placeholder="请输入被测评人数" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">要素测评得分:</label>
+                                            <div class="col-sm-9">
+                                                <input type="text"
+                                                       name="FactorScore"
+                                                       ng-model="model.FactorScore"
+                                                       class="form-control" placeholder="请输入要素测评得分" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">优秀称职率:</label>
+                                            <div class="col-sm-9">
+                                                <input type="text"
+                                                       name="Rate"
+                                                       ng-model="model.Rate"
+                                                       class="form-control" placeholder="请输入优秀称职率" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-xs-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">排名顺位:</label>
+                                            <div class="col-sm-9">
+                                                <input type="text"
+                                                       name="Rank"
+                                                       ng-model="model.Rank"
+                                                       class="form-control" placeholder="请输入排名顺位" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
         <div class="row">
 
             <div class="col-xs-12 col-sm-6">
@@ -120,6 +437,9 @@
                 </div>
             </div>
         </div>
+
+
+
         <div class="row">
 
             <div class="col-xs-12 col-sm-6">
@@ -139,7 +459,8 @@
 @section scripts
 {
     <script>
-         var Id="@ViewBag.Id";
+         var Id = "@ViewBag.Id";
     </script>
     <script src="~/static/app/AnnualExaminationRegistrationForm.js"></script>
+
 }
