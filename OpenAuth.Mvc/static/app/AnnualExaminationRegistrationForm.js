@@ -3,6 +3,8 @@ app.controller('appController', function ($scope) {
 
     var momentObj = new moment(new Date());
 
+    var _checkbox = $('input[type="radio"].minimal');
+
     $scope.model = $scope.model || {};
     $scope.ErrList = [];
     $scope.monthList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -37,6 +39,37 @@ app.controller('appController', function ($scope) {
             $scope.model.Created = momentObj.format('YYYY-MM-DD HH:mm:ss');
         }
 
+        if (clsName.indexOf('RegistrationTime') != -1) {
+            $scope.model.RegistrationTime = momentObj.format('YYYY-MM-DD');
+        }
+
+        if (clsName.indexOf('Birthday') != -1) {
+            $scope.model.Birthday = momentObj.format('YYYY-MM-DD');
+        }
+
+        if (clsName.indexOf('Officetime') != -1) {
+            $scope.model.Officetime = momentObj.format('YYYY-MM-DD');
+        }
+
+        if (clsName.indexOf('PenaltyTime') != -1) {
+            $scope.model.PenaltyTime = momentObj.format('YYYY-MM-DD');
+        }
+
+        if (clsName.indexOf('RewardTime') != -1) {
+            $scope.model.RewardTime = momentObj.format('YYYY-MM-DD');
+        }
+
+        if (clsName.indexOf('OfficialTime') != -1) {
+            $scope.model.OfficialTime = momentObj.format('YYYY-MM-DD');
+        }
+
+        if (clsName.indexOf('HRTime') != -1) {
+            $scope.model.HRTime = momentObj.format('YYYY-MM-DD');
+        }
+
+        if (clsName.indexOf('UnitTime') != -1) {
+            $scope.model.UnitTime = momentObj.format('YYYY-MM-DD');
+        }
     }
 
     //初始化时间控件
@@ -55,8 +88,42 @@ app.controller('appController', function ($scope) {
             function (resp) {
                 if (resp.Code == 200) {
                     $scope.model = resp.Result;
-                    $scope.model.Created = momentObj.format('YYYY-MM-DD HH:mm:ss');
+                    $scope.model.Created = moment($scope.model.Created).format('YYYY-MM-DD HH:mm:ss');
                     $scope.model.Updated = momentObj.format('YYYY-MM-DD HH:mm:ss');
+                    if ($scope.model.Birthday) {
+                        $scope.model.Birthday = moment($scope.model.Birthday).format('YYYY-MM-DD');
+                    }
+                    if ($scope.model.Officetime) {
+                        $scope.model.Officetime = moment($scope.model.Officetime).format('YYYY-MM-DD');
+                    }
+                    if ($scope.model.RegistrationTime) {
+                        $scope.model.RegistrationTime = moment($scope.model.RegistrationTime).format('YYYY-MM-DD');
+                    }
+                    if ($scope.model.RewardTime) {
+                        $scope.model.RewardTime = moment($scope.model.RewardTime).format('YYYY-MM-DD');
+                    }
+                    if ($scope.model.PenaltyTime) {
+                        $scope.model.PenaltyTime = moment($scope.model.PenaltyTime).format('YYYY-MM-DD');
+                    }
+
+                    if ($scope.model.OfficialTime) {
+                        $scope.model.OfficialTime = moment($scope.model.OfficialTime).format('YYYY-MM-DD');
+                    }
+
+                    if ($scope.model.HRTime) {
+                        $scope.model.HRTime = moment($scope.model.HRTime).format('YYYY-MM-DD');
+                    }
+
+                    if ($scope.model.UnitTime) {
+                        $scope.model.UnitTime = moment($scope.model.UnitTime).format('YYYY-MM-DD');
+                    }
+
+                    _checkbox.each(function () {
+                        var _id = $(this).val();
+                        if (_id === $scope.model.Officialadvice) {
+                            $(this).iCheck('check');
+                        }
+                    });
                     $scope.$apply();//通知更新，否则表单数据无法显示
                     $scope.GetOrgList($scope.model.UserId);
                 }
@@ -113,6 +180,18 @@ app.controller('appController', function ($scope) {
      * 表单提交处理
      * */
     $scope.Submit = function () {
+        
+        
+        var _Officialadvice = '';
+
+        _checkbox.each(function () {
+            var _id = $(this).val();
+            if (_id != null && _id != "undefine" && $(this).is(":checked")) {
+                _Officialadvice = _id;
+            }
+        });
+
+        $scope.model.Officialadvice = _Officialadvice;
 
         var url = "/AnnualExaminationRegistrations/save";
         $.post(url, { input: $scope.model }, function (resp) {

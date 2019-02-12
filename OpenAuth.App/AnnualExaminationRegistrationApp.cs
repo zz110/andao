@@ -29,7 +29,7 @@ namespace OpenAuth.App
 
                             ) as t where num > ({limit}*({offset}-1))";
 
-            var rows = Repository.ExecuteQuerySql<MonthlyEvaluationOutput>(sql, input.ToParameters()).ToList();
+            var rows = Repository.ExecuteQuerySql<AnnualExaminationRegistrationOutput>(sql, input.ToParameters()).ToList();
 
             sql = @"select count(*) from AnnualExaminationRegistration a left join [User] c  on a.UserId=c.Id 
                     left join Org b
@@ -121,7 +121,9 @@ namespace OpenAuth.App
                 Sex = obj.Sex,
                 UnitAdvice = obj.UnitAdvice,
                 UnitTime = obj.UnitTime,
-                Updated = DateTime.Now
+                Updated = DateTime.Now,
+                PenaltyTime = obj.PenaltyTime,
+                RewardTime = obj.RewardTime
             });
 
         }

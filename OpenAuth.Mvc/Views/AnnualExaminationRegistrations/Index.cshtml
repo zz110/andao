@@ -14,7 +14,7 @@
                        
                     </div>
                     <div class="col-xs-1">
-                        <input type="text" id="EvaluateYear" class="form-control" placeholder="请输入年份">
+                        <input type="text" id="EvaluateYear"  autocomplete="off" class="form-control" placeholder="请输入年份">
                     </div>
                     <div class="col-xs-1">
                         <button class="btn btn-sm btn-primary" id="btnSearch">搜索</button>
@@ -81,23 +81,31 @@
                         visible: false,
                         field: 'Id'
                     }, {
-                        field: 'UserName',
+                        field: 'Name',
                         title: '姓名'
                     }, {
                         field: 'OrgName',
                         title: '部门'
+                    },  {
+                        field: 'Sex',
+                        title: '性别'
+                    },   {
+                        field: 'Position',
+                        title: '现任职务'
                     }, {
-                        field: 'EvaluateYear',
-                        title: '年'
+                        field: 'Nation',
+                        title: '民族'
+                    },{
+                        field: 'Politicalaffiliation',
+                        title: '正职面貌'
+                    },{
+                        field: 'DegreeEdu',
+                        title: '文化程度'
+                    },{
+                        field: '_RegistrationTime',
+                        title: '登记时间'
                     }, {
-                        field: 'EvaluateMonth',
-                        title: '月'
-                    },
-                    {
-                        field: 'Score',
-                        title: '分数'
-                    }, {
-                        field: 'CreateTime',
+                        field: 'CreatedTime',
                         title: '创建时间'
                     }]
             };
