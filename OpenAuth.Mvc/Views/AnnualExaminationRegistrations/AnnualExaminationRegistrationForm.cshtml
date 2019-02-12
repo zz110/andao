@@ -331,7 +331,8 @@
         <div class="row">
             <div class="col-xs-12 col-sm-12">
                 <div class="form-group">
-                    <label class="col-sm-1 control-label">车间(部门)正职意见:
+                    <label class="col-sm-1 control-label">
+                        车间(部门)正职意见:
                     </label>
                     <div class="col-sm-11">
                         <div class="box box-success">
@@ -369,18 +370,18 @@
                                     <div class="col-xs-12 col-sm-12">
                                         <div class="form-group">
                                             <div class="col-sm-12">
-                                                <div class="col-sm-8 col-sm-offset-4">
+                                                <div class="col-sm-10 col-sm-offset-4">
                                                     <div class="col-sm-3">
                                                         <label class="control-label">正职领导：{{model.OfficialName}}</label>
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 col-sm-offset-3">
                                                         <input type="text"
                                                                name="OfficialTime"
                                                                ng-model="model.OfficialTime"
-                                                               class="form-control adminlte_datepicker OfficialTime required" placeholder="请选择" />
+                                                               class="form-control adminlte_datepicker OfficialTime required" placeholder="请选择正职领导办理时间" />
                                                     </div>
-                                                  
-                                                 
+
+
                                                 </div>
 
                                             </div>
@@ -397,36 +398,148 @@
         </div>
 
 
-
-
-
         <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">
+                        人事部门意见:
+                    </label>
+                    <div class="col-sm-11">
+                        <div class="box box-success">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-6">
+                                                    <label class="control-label">依据唐山供电段《干部综合考核评价实施办法》，该同志考核评定为：</label>
 
-            <div class="col-xs-12 col-sm-6">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">分数:</label>
-                    <div class="col-sm-10">
-                        <input type="text"
-                               name="Score"
-                               ng-model="model.Score"
-                               class="form-control required" placeholder="请输入分数" />
+                                                </div>
+                                                <div class="col-sm-6">
+
+                                                    <textarea name="HRAdvice" ng-model="model.HRAdvice" rows="5" class="form-control"></textarea>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-10 col-sm-offset-4">
+
+                                                    <div class="col-sm-4 col-sm-offset-6">
+                                                        <input type="text"
+                                                               name="HRTime"
+                                                               ng-model="model.HRTime"
+                                                               class="form-control adminlte_datepicker HRTime required" placeholder="请选择人力部办理时间" />
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-6">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">创建时间</label>
-                    <div class="col-sm-10">
-                        <input type="text"
-                               name="Created"
-                               ng-model="model.Created"
-                               disabled
-                               class="form-control adminlte_datepicker created" placeholder="" />
-                    </div>
-                </div>
-            </div>
+
         </div>
 
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">
+                        单位(党委)意见:
+                    </label>
+                    <div class="col-sm-11">
+                        <div class="box box-success">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                
+                                                <div class="col-sm-12">
+                                                    <textarea name="UnitAdvice" ng-model="model.UnitAdvice" rows="5" class="form-control"></textarea>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-10 col-sm-offset-4">
+
+                                                    <div class="col-sm-4 col-sm-offset-6">
+                                                        <input type="text"
+                                                               name="UnitTime"
+                                                               ng-model="model.UnitTime"
+                                                               class="form-control adminlte_datepicker UnitTime required" placeholder="请选择单位(党委)办理时间" />
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">
+                        备注:
+                    </label>
+                    <div class="col-sm-11">
+                        <div class="box box-success">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+
+                                                <div class="col-sm-12">
+                                                    <textarea name="Notes" ng-model="model.Notes" rows="5" class="form-control"></textarea>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
 
         <div class="row">

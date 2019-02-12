@@ -20,33 +20,35 @@ namespace OpenAuth.Repository.Domain
     {
         public AnnualExaminationRegistration()
         {
-            this.Name = string.Empty;
-            this.UserId = string.Empty;
-            this.OrgId = string.Empty;
-            this.Sex = string.Empty;
-            this.Birthday = DateTime.Now;
-            this.Position = string.Empty;
-            this.Officetime = DateTime.Now;
-            this.RegistrationTime = DateTime.Now;
-            this.Nation = string.Empty;
-            this.Politicalaffiliation = string.Empty;
-            this.DegreeEdu = string.Empty;
-            this.Conclusion = string.Empty;
-            this.Reward = string.Empty;
-            this.RewardReasons = string.Empty;
-            this.Penalty = string.Empty;
-            this.PenaltyReasons = string.Empty;
-            this.Scope = string.Empty;
-            this.OfficialName = string.Empty;
-            this.OfficialTime = DateTime.Now;
-            this.HRAdvice = string.Empty;
-            this.HRTime = DateTime.Now;
-            this.UnitAdvice = string.Empty;
-            this.UnitTime = DateTime.Now;
-            this.Notes = string.Empty;
-            this.Creator = string.Empty;
-            this.Created = DateTime.Now;
-            this.Updated = DateTime.Now;
+          this.Name= string.Empty;
+          this.UserId= string.Empty;
+          this.OrgId= string.Empty;
+          this.Sex= string.Empty;
+          this.Birthday= DateTime.Now;
+          this.Position= string.Empty;
+          this.Officetime= DateTime.Now;
+          this.RegistrationTime= DateTime.Now;
+          this.Nation= string.Empty;
+          this.Politicalaffiliation= string.Empty;
+          this.DegreeEdu= string.Empty;
+          this.Conclusion= string.Empty;
+          this.Reward= string.Empty;
+          this.RewardTime= DateTime.Now;
+          this.RewardReasons= string.Empty;
+          this.PenaltyTime= DateTime.Now;
+          this.Penalty= string.Empty;
+          this.PenaltyReasons= string.Empty;
+          this.Scope= string.Empty;
+          this.OfficialName= string.Empty;
+          this.OfficialTime= DateTime.Now;
+          this.HRAdvice= string.Empty;
+          this.HRTime= DateTime.Now;
+          this.UnitAdvice= string.Empty;
+          this.UnitTime= DateTime.Now;
+          this.Notes= string.Empty;
+          this.Creator= string.Empty;
+          this.Created= DateTime.Now;
+          this.Updated= DateTime.Now;
         }
 
         /// <summary>
@@ -54,8 +56,8 @@ namespace OpenAuth.Repository.Domain
 	    /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// 
-        /// </summary>
+	    /// 
+	    /// </summary>
         public string UserId { get; set; }
         /// <summary>
 	    /// 
@@ -94,7 +96,7 @@ namespace OpenAuth.Repository.Domain
 	    /// </summary>
         public string DegreeEdu { get; set; }
         /// <summary>
-	    /// 
+	    /// 个人总结
 	    /// </summary>
         public string Conclusion { get; set; }
         /// <summary>
@@ -106,6 +108,10 @@ namespace OpenAuth.Repository.Domain
 	    /// </summary>
         public string Reward { get; set; }
         /// <summary>
+	    /// 奖励时间
+	    /// </summary>
+        public System.DateTime? RewardTime { get; set; }
+        /// <summary>
 	    /// 奖励原因
 	    /// </summary>
         public string RewardReasons { get; set; }
@@ -113,6 +119,10 @@ namespace OpenAuth.Repository.Domain
 	    /// 是否惩罚 0 否 1 是
 	    /// </summary>
         public int? IsPenalty { get; set; }
+        /// <summary>
+	    /// 惩罚时间
+	    /// </summary>
+        public System.DateTime? PenaltyTime { get; set; }
         /// <summary>
 	    /// 惩罚
 	    /// </summary>

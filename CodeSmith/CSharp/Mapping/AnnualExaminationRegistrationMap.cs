@@ -32,6 +32,10 @@ namespace OpenAuth.Repository.Mapping
                 .HasColumnName("Name")
                 .HasMaxLength(50)
                 .IsOptional();
+            Property(t => t.UserId)
+                .HasColumnName("UserId")
+                .HasMaxLength(50)
+                .IsOptional();
             Property(t => t.OrgId)
                 .HasColumnName("OrgId")
                 .HasMaxLength(50)
@@ -75,12 +79,18 @@ namespace OpenAuth.Repository.Mapping
                 .HasColumnName("Reward")
                 .HasMaxLength(500)
                 .IsOptional();
+            Property(t => t.RewardTime)
+                .HasColumnName("RewardTime")
+                .IsOptional();
             Property(t => t.RewardReasons)
                 .HasColumnName("RewardReasons")
                 .HasMaxLength(500)
                 .IsOptional();
             Property(t => t.IsPenalty)
                 .HasColumnName("IsPenalty")
+                .IsOptional();
+            Property(t => t.PenaltyTime)
+                .HasColumnName("PenaltyTime")
                 .IsOptional();
             Property(t => t.Penalty)
                 .HasColumnName("Penalty")

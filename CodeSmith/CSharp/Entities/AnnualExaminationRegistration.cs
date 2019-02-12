@@ -21,6 +21,7 @@ namespace OpenAuth.Repository.Domain
         public AnnualExaminationRegistration()
         {
           this.Name= string.Empty;
+          this.UserId= string.Empty;
           this.OrgId= string.Empty;
           this.Sex= string.Empty;
           this.Birthday= DateTime.Now;
@@ -32,7 +33,9 @@ namespace OpenAuth.Repository.Domain
           this.DegreeEdu= string.Empty;
           this.Conclusion= string.Empty;
           this.Reward= string.Empty;
+          this.RewardTime= DateTime.Now;
           this.RewardReasons= string.Empty;
+          this.PenaltyTime= DateTime.Now;
           this.Penalty= string.Empty;
           this.PenaltyReasons= string.Empty;
           this.Scope= string.Empty;
@@ -52,6 +55,10 @@ namespace OpenAuth.Repository.Domain
 	    /// 姓名
 	    /// </summary>
         public string Name { get; set; }
+        /// <summary>
+	    /// 
+	    /// </summary>
+        public string UserId { get; set; }
         /// <summary>
 	    /// 
 	    /// </summary>
@@ -89,7 +96,7 @@ namespace OpenAuth.Repository.Domain
 	    /// </summary>
         public string DegreeEdu { get; set; }
         /// <summary>
-	    /// 
+	    /// 个人总结
 	    /// </summary>
         public string Conclusion { get; set; }
         /// <summary>
@@ -101,6 +108,10 @@ namespace OpenAuth.Repository.Domain
 	    /// </summary>
         public string Reward { get; set; }
         /// <summary>
+	    /// 奖励时间
+	    /// </summary>
+        public System.DateTime? RewardTime { get; set; }
+        /// <summary>
 	    /// 奖励原因
 	    /// </summary>
         public string RewardReasons { get; set; }
@@ -108,6 +119,10 @@ namespace OpenAuth.Repository.Domain
 	    /// 是否惩罚 0 否 1 是
 	    /// </summary>
         public int? IsPenalty { get; set; }
+        /// <summary>
+	    /// 惩罚时间
+	    /// </summary>
+        public System.DateTime? PenaltyTime { get; set; }
         /// <summary>
 	    /// 惩罚
 	    /// </summary>

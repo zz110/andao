@@ -12,13 +12,14 @@ namespace OpenAuth.Repository.Dto
         /// 
         /// </summary>
         public string Id { get; set; }
+
         /// <summary>
         /// 姓名
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// 
-        /// </summary>
+	    /// 
+	    /// </summary>
         public string UserId { get; set; }
         /// <summary>
 	    /// 
@@ -32,19 +33,6 @@ namespace OpenAuth.Repository.Dto
 	    /// 生日
 	    /// </summary>
         public System.DateTime? Birthday { get; set; }
-
-        public string _Birthday
-        {
-            get
-            {
-                if (Birthday.HasValue)
-                {
-                    return Birthday.Value.ToString("yyyy-MM-dd");
-                }
-                return "";
-            }
-        }
-
         /// <summary>
 	    /// 职务
 	    /// </summary>
@@ -53,36 +41,10 @@ namespace OpenAuth.Repository.Dto
 	    /// 任职时间
 	    /// </summary>
         public System.DateTime? Officetime { get; set; }
-
-        public string _Officetime
-        {
-            get
-            {
-                if (Officetime.HasValue)
-                {
-                    return Officetime.Value.ToString("yyyy-MM-dd");
-                }
-                return "";
-            }
-        }
-
         /// <summary>
 	    /// 登记时间
 	    /// </summary>
         public System.DateTime? RegistrationTime { get; set; }
-
-        public string _RegistrationTime
-        {
-            get
-            {
-                if (RegistrationTime.HasValue)
-                {
-                    return RegistrationTime.Value.ToString("yyyy-MM-dd");
-                }
-                return "";
-            }
-        }
-
         /// <summary>
 	    /// 民族
 	    /// </summary>
@@ -96,7 +58,7 @@ namespace OpenAuth.Repository.Dto
 	    /// </summary>
         public string DegreeEdu { get; set; }
         /// <summary>
-	    /// 
+	    /// 个人总结
 	    /// </summary>
         public string Conclusion { get; set; }
         /// <summary>
@@ -108,6 +70,10 @@ namespace OpenAuth.Repository.Dto
 	    /// </summary>
         public string Reward { get; set; }
         /// <summary>
+	    /// 奖励时间
+	    /// </summary>
+        public System.DateTime? RewardTime { get; set; }
+        /// <summary>
 	    /// 奖励原因
 	    /// </summary>
         public string RewardReasons { get; set; }
@@ -115,6 +81,10 @@ namespace OpenAuth.Repository.Dto
 	    /// 是否惩罚 0 否 1 是
 	    /// </summary>
         public int? IsPenalty { get; set; }
+        /// <summary>
+	    /// 惩罚时间
+	    /// </summary>
+        public System.DateTime? PenaltyTime { get; set; }
         /// <summary>
 	    /// 惩罚
 	    /// </summary>
@@ -152,22 +122,9 @@ namespace OpenAuth.Repository.Dto
 	    /// </summary>
         public string OfficialName { get; set; }
         /// <summary>
-	    /// 正职时间
+	    /// 
 	    /// </summary>
         public System.DateTime? OfficialTime { get; set; }
-
-        public string _OfficialTime
-        {
-            get
-            {
-                if (OfficialTime.HasValue)
-                {
-                    return OfficialTime.Value.ToString("yyyy-MM-dd");
-                }
-                return "";
-            }
-        }
-
         /// <summary>
 	    /// 人事部意见
 	    /// </summary>
@@ -176,19 +133,6 @@ namespace OpenAuth.Repository.Dto
 	    /// 人事部时间
 	    /// </summary>
         public System.DateTime? HRTime { get; set; }
-
-        public string _HRTime
-        {
-            get
-            {
-                if (HRTime.HasValue)
-                {
-                    return HRTime.Value.ToString("yyyy-MM-dd");
-                }
-                return "";
-            }
-        }
-
         /// <summary>
 	    /// 单位意见
 	    /// </summary>
@@ -197,19 +141,6 @@ namespace OpenAuth.Repository.Dto
 	    /// 单位时间
 	    /// </summary>
         public System.DateTime? UnitTime { get; set; }
-
-        public string _UnitTime
-        {
-            get
-            {
-                if (UnitTime.HasValue)
-                {
-                    return UnitTime.Value.ToString("yyyy-MM-dd");
-                }
-                return "";
-            }
-        }
-
         /// <summary>
 	    /// 备注
 	    /// </summary>
@@ -226,6 +157,89 @@ namespace OpenAuth.Repository.Dto
 	    /// 
 	    /// </summary>
         public System.DateTime? Updated { get; set; }
+
+
+        public string _Birthday
+        {
+            get
+            {
+                if (Birthday.HasValue)
+                {
+                    return Birthday.Value.ToString("yyyy-MM-dd");
+                }
+                return "";
+            }
+        }
+
+      
+
+        public string _Officetime
+        {
+            get
+            {
+                if (Officetime.HasValue)
+                {
+                    return Officetime.Value.ToString("yyyy-MM-dd");
+                }
+                return "";
+            }
+        }
+
+        
+
+        public string _RegistrationTime
+        {
+            get
+            {
+                if (RegistrationTime.HasValue)
+                {
+                    return RegistrationTime.Value.ToString("yyyy-MM-dd");
+                }
+                return "";
+            }
+        }
+
+       
+
+        public string _OfficialTime
+        {
+            get
+            {
+                if (OfficialTime.HasValue)
+                {
+                    return OfficialTime.Value.ToString("yyyy-MM-dd");
+                }
+                return "";
+            }
+        }
+
+      
+
+        public string _HRTime
+        {
+            get
+            {
+                if (HRTime.HasValue)
+                {
+                    return HRTime.Value.ToString("yyyy-MM-dd");
+                }
+                return "";
+            }
+        }
+        
+
+        public string _UnitTime
+        {
+            get
+            {
+                if (UnitTime.HasValue)
+                {
+                    return UnitTime.Value.ToString("yyyy-MM-dd");
+                }
+                return "";
+            }
+        }
+        
 
         public string OrgName { get; set; }
 
