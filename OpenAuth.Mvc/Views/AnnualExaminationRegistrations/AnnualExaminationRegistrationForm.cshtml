@@ -337,67 +337,56 @@
                         <div class="box box-success">
                             <div class="box-body">
                                 <div class="row">
-                                    <div class="col-xs-12 col-sm-6">
+                                    <div class="col-xs-12 col-sm-12">
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">测评人员范围:</label>
-                                            <div class="col-sm-9">
-                                                <input type="text"
-                                                       name="Scope"
-                                                       ng-model="model.Scope"
-                                                       class="form-control" placeholder="请输入被测评人员范围" />
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-6">
+                                                    <label class="control-label">同意该同志考核评定为：</label>
+                                                    <label>
+                                                        <input type="radio" name="Officialadvice" value="1" ng-checked="model.Officialadvice==1" class="minimal">
+                                                        优秀
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" name="Officialadvice" value="2" ng-checked="model.Officialadvice==2" class="minimal">
+                                                        称职
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" name="Officialadvice" value="3" ng-checked="model.Officialadvice==3" class="minimal">
+                                                        基本称职
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" name="Officialadvice" value="4" ng-checked="model.Officialadvice==3" class="minimal">
+                                                        不称职
+                                                    </label>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label">测评人数:</label>
-                                            <div class="col-sm-9">
-                                                <input type="text"
-                                                       name="EvaluationCount"
-                                                       ng-model="model.EvaluationCount"
-                                                       class="form-control" placeholder="请输入被测评人数" />
-                                            </div>
-                                        </div>
-                                    </div>
+
                                 </div>
                                 <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-8 col-sm-offset-4">
+                                                    <div class="col-sm-3">
+                                                        <label class="control-label">正职领导：{{model.OfficialName}}</label>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <input type="text"
+                                                               name="OfficialTime"
+                                                               ng-model="model.OfficialTime"
+                                                               class="form-control adminlte_datepicker OfficialTime required" placeholder="请选择" />
+                                                    </div>
+                                                  
+                                                 
+                                                </div>
 
-                                    <div class="col-xs-12 col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label">要素测评得分:</label>
-                                            <div class="col-sm-9">
-                                                <input type="text"
-                                                       name="FactorScore"
-                                                       ng-model="model.FactorScore"
-                                                       class="form-control" placeholder="请输入要素测评得分" />
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label">优秀称职率:</label>
-                                            <div class="col-sm-9">
-                                                <input type="text"
-                                                       name="Rate"
-                                                       ng-model="model.Rate"
-                                                       class="form-control" placeholder="请输入优秀称职率" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
 
-                                    <div class="col-xs-12 col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label">排名顺位:</label>
-                                            <div class="col-sm-9">
-                                                <input type="text"
-                                                       name="Rank"
-                                                       ng-model="model.Rank"
-                                                       class="form-control" placeholder="请输入排名顺位" />
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -459,7 +448,16 @@
 @section scripts
 {
     <script>
-         var Id = "@ViewBag.Id";
+        var Id = "@ViewBag.Id";
+
+        $(function () {
+            //iCheck for checkbox and radio inputs
+            $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+                checkboxClass: 'icheckbox_minimal-blue',
+                radioClass: 'iradio_minimal-blue'
+            });
+        })
+
     </script>
     <script src="~/static/app/AnnualExaminationRegistrationForm.js"></script>
 
