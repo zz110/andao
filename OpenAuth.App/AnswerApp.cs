@@ -34,16 +34,18 @@ namespace OpenAuth.App
         {
             UnitWork.Update<Answer>(u => u.Id == obj.Id, u => new Answer
             {
-               //todo:要修改的字段赋值
-               RatersId=obj.RatersId,
-               JudgeId=obj.JudgeId,
-               Q1=obj.Q1,
-               Q2=obj.Q2,
-               Q3=obj.Q3,
-               Q4=obj.Q4,
-               Optime=obj.Optime,
-               State=obj.State,
-               PlanName=obj.PlanName,
+                //todo:要修改的字段赋值
+                RatersId = obj.RatersId,
+                JudgeId = obj.JudgeId,
+                Q1 = obj.Q1,
+                Q2 = obj.Q2,
+                Q3 = obj.Q3,
+                Q4 = obj.Q4,
+                Q5 = obj.Q5,
+                Q6 = obj.Q6,
+                Optime = obj.Optime,
+                State = obj.State,
+                PlanName = obj.PlanName,
             });
 
         }

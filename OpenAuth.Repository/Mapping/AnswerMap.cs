@@ -52,6 +52,14 @@ namespace OpenAuth.Repository.Mapping
                 .HasColumnName("Q4")
                 .HasMaxLength(50)
                 .IsOptional();
+            Property(t => t.Q5)
+          .HasColumnName("Q5")
+          .HasMaxLength(50)
+          .IsOptional();
+            Property(t => t.Q6)
+          .HasColumnName("Q6")
+          .HasMaxLength(50)
+          .IsOptional();
             Property(t => t.Optime)
                 .HasColumnName("Optime")
                 .IsOptional();
