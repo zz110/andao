@@ -44,7 +44,13 @@ namespace OpenAuth.Mvc.Controllers
         public string JudgeList(string testId,string userId)
         {
             object ob = null;
-            var list = Papp.Repository.FindSingle(d => d.PlanName == testId&&d.State==1&&d.PlanStart<DateTime.Now&&d.PlanEnd>DateTime.Now&&d.RatersId.Contains(userId));
+
+            var list = Papp.Repository.FindSingle(
+                                                    d => d.PlanName == testId &&
+                                                    d.State == 1 &&
+                                                    d.PlanStart < DateTime.Now &&
+                                                    d.PlanEnd > DateTime.Now &&
+                                                    d.RatersId.Contains(userId));
             if (list!=null)
             {
                 List<object> result = new List<object>();
@@ -57,7 +63,11 @@ namespace OpenAuth.Mvc.Controllers
                     var part = Rapp.Repository.FindSingle(d => d.Key == "UserOrg" && d.FirstId == temp).SecondId;
                     var part1 = Oapp.Repository.FindSingle(d => d.Id == part);
                     var user = Uapp.Repository.FindSingle(d => d.Id == temp);
-                    var answer = Aapp.Repository.FindSingle(d => d.PlanName == testId && d.JudgeId == temp && d.RatersId == userId);
+                    var answer = Aapp.Repository.FindSingle(d =>
+                                                                 d.PlanName == testId &&
+                                                                 d.State != "已提交" &&
+                                                                 d.JudgeId == temp &&
+                                                                 d.RatersId == userId);
                     if (answer==null)
                     {
                          ob = new { name = user.Name, part = part1.Name, id = user.Id, state = "待评价" };
