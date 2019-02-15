@@ -100,11 +100,28 @@ namespace OpenAuth.Mvc.Controllers
         /// <returns></returns>
         public string sub(string Q1, string Q2, string Q3, string Q4, string Q5,string Q6,string PlanId, string PlanName, string JudgeId, string RatersId,string state)
         {
-            Answer an = new Answer() { Q1 = Q1, Q2 = Q2, Q3 = Q3, Q4 = Q4, Q5 = Q5, Q6 = Q6, PlanId = PlanId, PlanName = PlanName, JudgeId = JudgeId, RatersId = RatersId, State = state };
+            Answer an = new Answer() { Q1 = Q1, Q2 = Q2, Q3 = Q3, Q4 = Q4, Q5 = Q5, Q6 = Q6,
+                PlanId = PlanId, PlanName = PlanName,
+                JudgeId = JudgeId, RatersId = RatersId,
+                State = state };
             Answer model = Aapp.Repository.FindSingle(d => d.PlanId == PlanId);
             if (model != null)
             {
-                Aapp.Repository.Update(d => d.PlanId == PlanId, d => new Answer { Q1 = Q1, Q2 = Q2, Q3 = Q3, Q4 = Q4, Q5 = Q5, Q6 = Q6, PlanId = PlanId, PlanName = PlanName, JudgeId = JudgeId, RatersId = RatersId, State = state });
+                Aapp.Repository.Update(d => d.PlanId == PlanId && d.JudgeId == JudgeId && d.RatersId == RatersId,
+                    d => new Answer
+                        {
+                            Q1 = Q1,
+                            Q2 = Q2,
+                            Q3 = Q3,
+                            Q4 = Q4,
+                            Q5 = Q5,
+                            Q6 = Q6,
+                            PlanId = PlanId,
+                            PlanName = PlanName,
+                            JudgeId = JudgeId,
+                            RatersId = RatersId,
+                            State = state
+                        });
             }
             else
             {
