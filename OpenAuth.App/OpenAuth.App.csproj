@@ -111,6 +111,7 @@
     <Compile Include="EvaluateAverageScoreApp.cs" />
     <Compile Include="MonthlyAssessmentApp.cs" />
     <Compile Include="MonthlyEvaluationApp.cs" />
+    <Compile Include="PerformanceAppraisalApp.cs" />
     <Compile Include="PlanApp.cs" />
     <Compile Include="Request\QueryAnswerListReq.cs" />
     <Compile Include="Request\QueryAppListReq.cs" />
