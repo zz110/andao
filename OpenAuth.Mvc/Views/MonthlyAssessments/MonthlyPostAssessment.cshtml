@@ -100,9 +100,14 @@
                 pageList: [10000],
                 pageSize: 10000,
                 columns: [
-        {filed:'UserName',
-        title:'姓名'},
-                   {
+                    {
+                        field: 'UserName',
+                        title: '姓名'
+                        //formatter: function (value, row, index) {
+                        //    return row.UserName;
+                        //}
+                    },
+                    {
                         field: 'EvaluateYear',
                         title: '年份'
                     }, {
@@ -111,7 +116,7 @@
                     }, {
                         field: 'OrgName',
                         title: '部门'
-                    },{
+                    }, {
                         field: 'Score',
                         title: '月度考核成绩',
                         formatter: function (value, row, index) {
