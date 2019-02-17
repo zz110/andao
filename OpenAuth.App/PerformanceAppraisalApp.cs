@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Infrastructure;
 using OpenAuth.App.Request;
 using OpenAuth.App.Response;
 using OpenAuth.App.SSO;
@@ -25,21 +26,52 @@ namespace OpenAuth.App
             };
         }
 
+
+        public object page(int limit, int offset, PerformanceAppraisal input)
+        {
+
+            offset += 1;
+            string sql = $@"select top {limit} * from(
+                              select row_number() over(order by a.id) as num,c.name JudgeName,a.[Id]
+      ,a.[AccessmentScore]
+      ,a.[RatersId]
+      ,a.[RatersName]
+      ,a.[JudgeId],a.Optime
+      , Datename(year,a.[Optime])  State
+                                                       from PerformanceAppraisal a left join [User] c
+                                                       on a.JudgeId=c.Id 
+ 
+                                                       
+                            ) as t where num > ({limit}*({offset}-1))";
+
+            var rows = Repository.ExecuteQuerySql<PerformanceAppraisal>(sql, input.ToParameters()).ToList();
+
+            sql = @"select count(*) from PerformanceAppraisal ";
+
+            int total = Repository.ExecuteQuerySql<int>(sql, input.ToParameters()).FirstOrDefault();
+
+            return new
+            {
+                total = total,
+                rows = rows
+            };
+        }
+
         public void Add(PerformanceAppraisal obj)
         {
             Repository.Add(obj);
         }
-        
+
         public void Update(PerformanceAppraisal obj)
         {
             UnitWork.Update<PerformanceAppraisal>(u => u.Id == obj.Id, u => new PerformanceAppraisal
             {
-               //todo:要修改的字段赋值
+                //todo:要修改的字段赋值
             });
 
         }
 
-        public List<PerformanceAppraisalOutPut> List(string year, string type)
+        public List<PerformanceAppraisalOutPut> List(string year,string type)
         {
             string sql = $@"select top 1000 JudgeId,JudgeName,
                             (select SUM(Score)/12 from MonthlyAssessment 
@@ -113,7 +145,7 @@ namespace OpenAuth.App
                             ) as t 
                             left join Relevance r on r.FirstId = t.JudgeId 
                             inner join [Role] ro on ro.Id = r.SecondId 
-                            where num > 0 and ro.Name = '{ type }' and ro.Name 
+                            where num > 0 and (ro.Name = '{ type }' or '{ type }' = '') 
                             group by JudgeId,JudgeName";
             var rows = Repository.ExecuteQuerySql<PerformanceAppraisalOutPut>(sql).ToList();
 

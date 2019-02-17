@@ -8251,13 +8251,6 @@
     <Content Include="Views\AnnualExaminationRegistrations\Index.cshtml" />
     <Content Include="Views\Judge\Index.cshtml" />
     <Content Include="Views\CheckAndEvaluate\Index.cshtml" />
-    <Content Include="Views\PerformanceAppraisals\Index.cshtml" />
-    <Content Include="Views\PerformanceAppraisals\PerformanceForm.cshtml" />
-    <Content Include="Views\StatisticalAnalysis\evaluationscore.cshtml" />
-    <Content Include="Views\StatisticalAnalysis\integrationscore.cshtml" />
-    <Content Include="Views\StatisticalAnalysis\totalscore.cshtml" />
-    <Content Include="Views\CheckAndEvaluate\Add.cshtml" />
-    <Content Include="template\evaluation_export_template.docx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="layui\lay\modules\mobile\" />
