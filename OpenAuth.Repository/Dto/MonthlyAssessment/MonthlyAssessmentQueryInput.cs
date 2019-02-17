@@ -17,5 +17,9 @@ namespace OpenAuth.Repository.Dto
         public string OrgName { get; set; }
 
         public string Creator { get; set; }
+
+        public string Reason1 { get; set; }
+
+        public string Reason2 { get; set; }
     }
 }
