@@ -148,6 +148,7 @@
     <Compile Include="Controllers\JudgeController.cs" />
     <Compile Include="Controllers\MonthlyAssessmentsController.cs" />
     <Compile Include="Controllers\MonthlyEvaluationsController.cs" />
+    <Compile Include="Controllers\PerformanceAppraisalsController.cs" />
     <Compile Include="Controllers\PlansController.cs" />
     <Compile Include="Controllers\ResourcesController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
@@ -7285,6 +7286,7 @@
     <Content Include="userJs\assignRole.js" />
     <Content Include="userJs\flowSchemePreview.js" />
     <Content Include="userJs\flowinstanceDetail.js" />
+    <Content Include="userJs\performanceappraisals.js" />
     <Content Include="userJs\plans.js" />
     <Content Include="userJs\resources.js" />
     <Content Include="userJs\verification.js" />
@@ -8233,6 +8235,8 @@
     <Content Include="Views\Judge\Index.cshtml" />
     <Content Include="Views\CheckAndEvaluate\Index.cshtml" />
     <Content Include="Views\MonthlyAssessments\MonthStatistics.cshtml" />
+    <Content Include="Views\CheckAndEvaluate\Add.cshtml" />
+    <Content Include="Views\MonthlyAssessments\MonthlyAssessmentAdd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="layui\lay\modules\mobile\" />

@@ -1,29 +1,30 @@
-﻿using Infrastructure;
-using OpenAuth.Repository.Domain;
-using OpenAuth.Repository.Dto;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OpenAuth.App.Request;
+using OpenAuth.App.Response;
+using OpenAuth.App.SSO;
+using OpenAuth.Repository.Domain;
+using OpenAuth.Repository.Dto;
 
 namespace OpenAuth.App
 {
-    public class PerformanceAppraisalApp : BaseApp<DepartmentMonthlyEvaluation>
+    public class PerformanceAppraisalApp : BaseApp<PerformanceAppraisal>
     {
-        public object page(int limit, int offset, PerformanceAppraisalQueryInput input)
+        public RevelanceManagerApp ReleManagerApp { get; set; }
+
+        /// <summary>
+        /// 加载列表
+        /// </summary>
+        public TableData Load(QueryPerformanceAppraisalListReq request)
         {
-            string sql = $@"select top {limit} * from(
-                              select row_number() over(order by pa.Optime) as num,* from PerformanceAppraisal pa 
-                            ) as t where num > ({limit}*({offset}-1))";
-            var rows = Repository.ExecuteQuerySql<PerformanceAppraisalOutPut>(sql, input.ToParameters()).ToList();
-            return new
+             return new TableData
             {
-                total = 10000,
-                rows = rows
+                count = Repository.GetCount(null),
+                data = Repository.Find(request.page, request.limit, "Id desc")
             };
         }
-        public List<PerformanceAppraisalOutPut> List(string year,string type)
+        public List<PerformanceAppraisalOutPut> List(string year, PerformanceAppraisalQueryInput input)
         {
             string sql = $@"select top 1000 JudgeId,JudgeName,
                             (select SUM(Score)/12 from MonthlyAssessment 
@@ -103,5 +104,6 @@ namespace OpenAuth.App
 
             return rows;
         }
+
     }
 }

@@ -117,6 +117,7 @@
     <Compile Include="Request\QueryAppListReq.cs" />
     <Compile Include="AppManager.cs" />
     <Compile Include="Request\QueryEvaluateAverageScoreListReq.cs" />
+    <Compile Include="Request\QueryPerformanceAppraisalListReq.cs" />
     <Compile Include="Request\QueryPlanListReq.cs" />
     <Compile Include="ResourceApp.cs" />
     <Compile Include="CategoryApp.cs" />
