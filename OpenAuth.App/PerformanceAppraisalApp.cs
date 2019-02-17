@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Infrastructure;
 using OpenAuth.App.Request;
 using OpenAuth.App.Response;
 using OpenAuth.App.SSO;
@@ -37,6 +38,30 @@ namespace OpenAuth.App
                //todo:要修改的字段赋值
             });
 
+        }
+
+        public object page(int limit, int offset, PerformanceAppraisal input)
+        {
+
+            offset += 1;
+            string sql = $@"select top {limit} * from(
+                              select row_number() over(order by id) as num,*
+                                                       from PerformanceAppraisal 
+                                                      
+                                                       
+                            ) as t where num > ({limit}*({offset}-1))";
+
+            var rows = Repository.ExecuteQuerySql<PerformanceAppraisal>(sql, input.ToParameters()).ToList();
+
+            sql = @"select count(*) from PerformanceAppraisal ";
+
+            int total = Repository.ExecuteQuerySql<int>(sql, input.ToParameters()).FirstOrDefault();
+
+            return new
+            {
+                total = total,
+                rows = rows
+            };
         }
 
         public List<PerformanceAppraisalOutPut> List(string year, string type)

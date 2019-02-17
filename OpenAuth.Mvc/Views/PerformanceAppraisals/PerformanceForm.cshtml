@@ -133,7 +133,7 @@
         function SubmitTo() {
             var url = "/PerformanceAppraisals/Add";
             var input = {
-                AccessmentScore: $("#AccessmentScore").val(), JudgeId: $("#JudgeId").val()
+                AccessmentScore: $("#AccessmentScore").val(), JudgeId: $("#JudgeId").val(),  JudgeName:$("#JudgeId").find("option:selected").text()
             }
             $.post(url, { input: input }, function (resp) {
 

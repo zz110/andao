@@ -11,6 +11,7 @@ using System.Data.Entity;
 using System.Collections.Generic;
 using OpenAuth.Repository.Domain;
 using OpenAuth.Repository.Mapping;
+using Cp.Data.Mapping;
 
 namespace OpenAuth.Repository
 {
@@ -52,6 +53,7 @@ namespace OpenAuth.Repository
         public System.Data.Entity.DbSet<Stock> Stocks { get; set; }
         public System.Data.Entity.DbSet<Test> Tests { get; set; }
         public System.Data.Entity.DbSet<User> Users { get; set; }
+        public System.Data.Entity.DbSet<PerformanceAppraisal> PerformanceAppraisal { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -79,6 +81,7 @@ namespace OpenAuth.Repository
             modelBuilder.Configurations.Add(new StockMap());
             modelBuilder.Configurations.Add(new TestMap());
             modelBuilder.Configurations.Add(new UserMap());
+            modelBuilder.Configurations.Add(new PerformanceAppraisalMap()); 
 
            // InitializeMapping(modelBuilder);
         }
