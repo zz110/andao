@@ -141,6 +141,7 @@
     <Compile Include="Response\FormResp.cs" />
     <Compile Include="Response\TableData.cs" />
     <Compile Include="RevelanceManagerApp.cs" />
+    <Compile Include="StatisticalAnalysisApp.cs" />
     <Compile Include="SystemAuthService.cs" />
     <Compile Include="RoleApp.cs" />
     <Compile Include="FlowInstanceApp.cs" />
