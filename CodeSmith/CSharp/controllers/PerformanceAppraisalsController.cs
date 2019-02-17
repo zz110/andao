@@ -6,7 +6,6 @@ using OpenAuth.App;
 using OpenAuth.App.Request;
 using OpenAuth.App.Response;
 using OpenAuth.Mvc.Models;
-using OpenAuth.Repository.Domain;
 
 namespace OpenAuth.Mvc.Controllers
 {
@@ -14,7 +13,8 @@ namespace OpenAuth.Mvc.Controllers
     {
         public PerformanceAppraisalApp App { get; set; }
 
-        
+        //
+        [Authenticate]
         public ActionResult Index()
         {
             return View();
@@ -22,15 +22,19 @@ namespace OpenAuth.Mvc.Controllers
 
         //添加或修改
         [System.Web.Mvc.HttpPost]
-        public ActionResult Add(PerformanceAppraisal input)
+        public string Add(PerformanceAppraisal obj)
         {
-            Response<object> response = new Response<object>("服务器错误");
-            input.Optime = DateTime.Now;
-            string sql = " insert into PerformanceAppraisal (JudgeId,AccessmentScore) values('" + input.JudgeId+"','"+input.AccessmentScore+"')";
-           
-            response.Message = "";
-            response.Code = Response<object>.SUCCESS_CODE;
-            return Json(response);
+            try
+            {
+                App.Add(obj);
+
+            }
+            catch (Exception ex)
+            {
+                Result.Code = 500;
+                Result.Message = ex.Message;
+            }
+            return JsonHelper.Instance.Serialize(Result);
         }
 
         //添加或修改
@@ -72,11 +76,6 @@ namespace OpenAuth.Mvc.Controllers
             }
 
             return JsonHelper.Instance.Serialize(Result);
-        }
-
-        public ActionResult PerformanceForm()
-        {
-            return View();
         }
     }
 }

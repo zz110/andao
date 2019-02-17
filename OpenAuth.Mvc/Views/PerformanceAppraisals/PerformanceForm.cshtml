@@ -1,0 +1,164 @@
+﻿
+@{
+    ViewBag.Title = "PerformanceForm";
+    Layout = "~/Views/Shared/_adminLTELayout.cshtml";
+}
+
+@section css
+{
+    <link rel="stylesheet" href="~/static/assets/plugins/jquery-ztree/css/zTreeStyle/zTreeStyle.min.css" />
+}
+
+<div class="container" ng-app="myApp" ng-controller="appController">
+
+    <div class="box box-warning" id="warningbox" style="display:none">
+        <div class="box-header with-border">
+            <h4 class="box-title">警告！</h4>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" ng-click="show_box_warning(0)"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="alert alert-warning alert-dismissible">
+                <ul>
+                    <li ng-repeat="item in ErrList">
+                        <h4>{{item}}</h4>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <form class="form-horizontal" id="inputForm">
+        <input type="hidden" name="Id" ng-model="model.Id" />
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">部门:</label>
+                    <div class="col-sm-10">
+                        <input type="text"
+                               id="OrgName"
+                               ng-click="OrgClick()"
+                               data-toggle="modal"
+                               data-target="#modal-default"
+                               maxlength="10"
+                               minlength="2"
+                               class="form-control required"
+                               placeholder="请选择部门" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">姓名:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control required" name="JudgeId" id="JudgeId" ng-model="model.JudgeId" ng-change="UserSelected(model.JudgeId)">
+                            <option value="" ng-selected="'' == model.JudgeId">--请选择--</option>
+                            <option ng-repeat="item in UserList"
+                                    ng-selected="item.Id == model.JudgeId"
+                                    value="{{item.Id}}">
+                                {{item.Name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">成绩:</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="AccessmentScore"
+                               name="Score"
+                               ng-model="model.AccessmentScore"
+                               class="form-control required" placeholder="" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-10">
+                        <button class="btn  btn-warning" ng-click="Close()">关闭</button>
+                        <button class="btn  btn-success" onclick="SubmitTo()">保存</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">请选择</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="modal-message"><ul id='myTree' class='ztree'></ul></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
+                    <button ng-click="OrgSelected()" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</div>
+
+
+
+
+@section scripts
+{
+    <script src="~/static/assets/plugins/jquery-ztree/js/jquery.ztree.core-3.5.min.js"></script>
+    <script>
+         var Id="@ViewBag.Id";
+    </script>
+    <script>
+        function SubmitTo() {
+            var url = "/PerformanceAppraisals/Add";
+            var input = {
+                AccessmentScore: $("#AccessmentScore").val(), JudgeId: $("#JudgeId").val()
+            }
+            $.post(url, { input: input }, function (resp) {
+
+                if (resp.Code === 200) {
+                    $scope.show_box_warning(0);
+                    $scope.model.Id = resp.Result;
+                    $scope.$apply();
+                    $scope.Close();
+                }
+                else {
+                    $scope.show_box_warning(1);
+                    $scope.ErrList = [];
+                    var errList = resp.Message.split(',');
+                    $.each(errList, function (idx, item) {
+                        if (item != "") {
+                            $scope.ErrList.push(item);
+                        }
+                    });
+                    $scope.$apply();
+                }
+            });
+        }
+    </script>
+    <script src="~/static/app/app.js"></script>
+    <script src="~/static/app/MonthlyAssessmentForm.js"></script>
+
+}
+

@@ -24,7 +24,7 @@ namespace OpenAuth.Mvc.Controllers
         {
             PerformanceAppraisalQueryInput input = new PerformanceAppraisalQueryInput();
             //var result = App.List("970edfb5-53c7-4dc8-a086-08a28ba4686a", "2019", input);
-            var result = App.List(year, input);
+            var result = App.List(year, type);
             List<PerformanceAppraisalOutPut> list = result as List<PerformanceAppraisalOutPut>;
             for (int i = 0; i < list.Count; i++)
             {

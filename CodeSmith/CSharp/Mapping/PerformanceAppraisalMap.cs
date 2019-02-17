@@ -60,3 +60,4 @@ namespace Cp.Data.Mapping
         }
     }
 }
+

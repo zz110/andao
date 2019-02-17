@@ -1,0 +1,108 @@
+﻿@section header
+{
+    <link rel="stylesheet" href="/css/treetable.css" />
+}
+<blockquote class="layui-elem-quote news_search toolList" id="menus">
+</blockquote>
+
+    <div class="layui-row">
+        <div class="layui-col-xs2">
+            <ul id="tree" class="ztree"
+                style="padding: 2px; border: 1px solid #ddd; overflow: auto;">
+            </ul>
+        </div>
+        <div class="layui-col-xs10">
+            <table class="layui-table"
+                lay-data="{height: 'full-80', page:true, id:'mainList'}"
+                lay-filter="list"  lay-size="sm">
+                <thead>
+                <tr>
+                    <th lay-data="{checkbox:true, fixed: true}"></th>
+                    <th lay-data="{field:'Id', width:150}">Id</th>
+                    <th lay-data="{field:'AccessmentScore', width:150}">AccessmentScore</th>
+                    <th lay-data="{field:'RatersId', width:150}">RatersId</th>
+                    <th lay-data="{field:'RatersName', width:150}">RatersName</th>
+                    <th lay-data="{field:'JudgeId', width:150}">JudgeId</th>
+                    <th lay-data="{field:'JudgeName', width:150}">JudgeName</th>
+                    <th lay-data="{field:'Optime', width:150}">Optime</th>
+                    <th lay-data="{field:'State', width:150}">State</th>
+                    <th lay-data="{fixed: 'right', width:160, align:'center', toolbar: '#barList'}"></th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+<script type="text/html" id="barList">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+</script>
+
+
+<!--添加/编辑窗口-->
+<div id="divEdit" style="display: none">
+    <form class="layui-form" action=""  id="formEdit">
+    <input type="hidden" name="Id" v-model="Id" />
+    <div class="layui-form-item">
+        <label class="layui-form-label">AccessmentScore</label>
+        <div class="layui-input-block">
+            <input type="text" name="AccessmentScore" v-model="AccessmentScore" required lay-verify="required"
+                placeholder="AccessmentScore" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">RatersId</label>
+        <div class="layui-input-block">
+            <input type="text" name="RatersId" v-model="RatersId" required lay-verify="required"
+                placeholder="RatersId" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">RatersName</label>
+        <div class="layui-input-block">
+            <input type="text" name="RatersName" v-model="RatersName" required lay-verify="required"
+                placeholder="RatersName" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">JudgeId</label>
+        <div class="layui-input-block">
+            <input type="text" name="JudgeId" v-model="JudgeId" required lay-verify="required"
+                placeholder="JudgeId" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">JudgeName</label>
+        <div class="layui-input-block">
+            <input type="text" name="JudgeName" v-model="JudgeName" required lay-verify="required"
+                placeholder="JudgeName" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">Optime</label>
+        <div class="layui-input-block">
+            <input type="text" name="Optime" v-model="Optime" required lay-verify="required"
+                placeholder="Optime" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">State</label>
+        <div class="layui-input-block">
+            <input type="text" name="State" v-model="State" required lay-verify="required"
+                placeholder="State" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+
+     <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formSubmit">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="/layui/layui.js"></script>
+<script type="text/javascript" src="/userJs/PerformanceAppraisals.js"></script>
+
+

@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Add";
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_adminLTELayout.cshtml";
 }
 
@@ -13,6 +13,7 @@
                     <div class="col-xs-2" id="menuList">
                         <button class="btn btn-sm btn-default" id="btnAdd">新增</button>
                         <button class="btn btn-sm btn-info" id="btnEdit">编辑</button>
+                        <button class="btn btn-sm btn-danger" id="btnDelele">删除</button>
                     </div>
                     <div class="col-xs-1">
                         <input type="text" id="EvaluateYear" autocomplete="off" class="form-control" placeholder="请输入年份">
@@ -90,21 +91,15 @@
                         visible: false,
                         field: 'Id'
                     },{
-                        field: 'UserName',
+                        field: 'JudgeName',
                         title: '姓名'
                     }, {
-                        field: 'OrgName',
-                        title: '部门'
-                    }, {
-                        field: 'EvaluateYear',
+                        field: 'Optime',
                         title: '年'
-                    },
+                    }, 
                     {
-                        field: 'Score',
-                        title: '得分'
-                    }, {
-                        field: 'CreateTime',
-                        title: '创建时间'
+                        field: 'AccessmentScore',
+                        title: '成绩'
                     }]
             };
 
@@ -112,10 +107,11 @@
                 title: '月度考核成绩',
                 width: '75%',
                 height: '95%',
-                form_url: '/MonthlyAssessments/MonthlyAssessmentAdd/'
+                form_url: '/PerformanceAppraisals/PerformanceForm/',
+                delete_url: '/PerformanceAppraisals/Delete'
             });
 
-            _dataTable = App.initTable('/MonthlyAssessments/page', tbOptions);
+            _dataTable = App.initTable('/PerformanceAppraisals/page', tbOptions);
 
             _dataTable.SetParameters({
                 EvaluateYear: fullYear,
@@ -153,5 +149,3 @@
     </script>
 
 }
-
-

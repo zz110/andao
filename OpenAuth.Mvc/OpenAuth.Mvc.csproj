@@ -8237,6 +8237,8 @@
     <Content Include="Views\MonthlyAssessments\MonthStatistics.cshtml" />
     <Content Include="Views\CheckAndEvaluate\Add.cshtml" />
     <Content Include="Views\MonthlyAssessments\MonthlyAssessmentAdd.cshtml" />
+    <Content Include="Views\PerformanceAppraisals\Index.cshtml" />
+    <Content Include="Views\PerformanceAppraisals\PerformanceForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="layui\lay\modules\mobile\" />
