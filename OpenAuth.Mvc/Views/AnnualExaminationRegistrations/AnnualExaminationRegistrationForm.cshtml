@@ -4,6 +4,10 @@
     Layout = "~/Views/Shared/_adminLTELayout.cshtml";
 }
 
+@section css
+{
+    <link rel="stylesheet" href="~/static/assets/plugins/jquery-ztree/css/zTreeStyle/zTreeStyle.min.css" />
+}
 
 <div class="container" ng-app="myApp" ng-controller="appController">
 
@@ -34,18 +38,33 @@
         <div class="row">
             <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
-                    <label class="col-sm-3 col-sm-pull-1 control-label">部门:</label>
-                    <div class="col-sm-8 col-sm-pull-1">
-                        <select class="form-control" name="OrgId" ng-model="model.OrgId">
-                            <option value="" ng-selected="'' == model.OrgId">--请选择--</option>
-                            <option ng-repeat="item in DeptList"
-                                    ng-selected="item.Id == model.OrgId"
-                                    value="{{item.Id}}">
-                                {{item.Name}}
-                            </option>
-                        </select>
+                    <label class="col-sm-2 control-label">部门:</label>
+                    <div class="col-sm-10">
+                        <input type="text"
+                               id="OrgName"
+                               ng-click="OrgClick()"
+                               ng-model="model.OrgName"
+                               data-toggle="modal"
+                               data-target="#modal-default"
+                               maxlength="10"
+                               minlength="2"
+                               class="form-control required"
+                               placeholder="请选择部门" />
                     </div>
                 </div>
+                @*<div class="form-group">
+                        <label class="col-sm-3 col-sm-pull-1 control-label">部门:</label>
+                        <div class="col-sm-8 col-sm-pull-1">
+                            <select class="form-control" name="OrgId" ng-model="model.OrgId">
+                                <option value="" ng-selected="'' == model.OrgId">--请选择--</option>
+                                <option ng-repeat="item in DeptList"
+                                        ng-selected="item.Id == model.OrgId"
+                                        value="{{item.Id}}">
+                                    {{item.Name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>*@
             </div>
 
             <div class="col-xs-12 col-sm-6">
@@ -393,7 +412,7 @@
                                                 <div class="col-sm-6">
                                                     <label class="control-label">同意该同志考核评定为：</label>
                                                     <label>
-                                                        <input type="radio"  name="Officialadvice" value="1" ng-checked="model.Officialadvice==1" class="minimal">
+                                                        <input type="radio" name="Officialadvice" value="1" ng-checked="model.Officialadvice==1" class="minimal">
                                                         优秀
                                                     </label>
                                                     <label>
@@ -608,12 +627,39 @@
             </div>
         </div>
     </form>
+
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">请选择</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="modal-message"><ul id='myTree' class='ztree'></ul></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
+                    <button ng-click="OrgSelected()" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
 </div>
 
 @section scripts
 {
+    <script src="~/static/assets/plugins/jquery-ztree/js/jquery.ztree.core-3.5.min.js"></script>
+
     <script>
         var Id = "@ViewBag.Id";
+
+        var UserId = "@ViewBag.UserId";
 
         $(function () {
             //iCheck for checkbox and radio inputs
@@ -621,9 +667,11 @@
                 checkboxClass: 'icheckbox_minimal-blue',
                 radioClass: 'iradio_minimal-blue'
             });
-        })
-
+        });
     </script>
+
+    <script src="~/static/app/app.js"></script>
+
     <script src="~/static/app/AnnualExaminationRegistrationForm.js"></script>
 
 }

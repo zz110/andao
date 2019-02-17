@@ -21,7 +21,7 @@ app.controller('appController', function ($scope) {
         if (clsName.indexOf('created') != -1) {
             $scope.model.Created = result;
         }
-       
+
     }
 
     //初始化时间控件
@@ -66,7 +66,7 @@ app.controller('appController', function ($scope) {
         $.get('/Authorise/GetUserListByCurrentUserOrgIds',
             function (resp) {
                 if (resp.Code === 200) {
-                    
+
                     $scope.UserList = resp.Result;
                     $scope.$apply();//通知更新，否则表单数据无法显示
                 }
@@ -84,7 +84,7 @@ app.controller('appController', function ($scope) {
         $.get('/Authorise/GetOrgByUserId/' + value,
             function (resp) {
                 if (resp.Code === 200) {
-                    
+
                     $scope.DeptList = resp.Result;
                     if ($scope.DeptList.length == 1) {
                         $scope.model.OrgId = $scope.DeptList[0].Id;
@@ -98,20 +98,76 @@ app.controller('appController', function ($scope) {
     /**
      * 获取组织结构列表
      * */
-    $scope.GetOrgList = function (id) {
-        
-        $.get('/Authorise/GetOrgByUserId/' + id,
+    //$scope.GetOrgList = function (id) {
+
+    //    $.get('/Authorise/GetOrgByUserId/' + id,
+    //        function (resp) {
+    //            if (resp.Code === 200) {
+
+    //                $scope.DeptList = resp.Result;
+    //                if ($scope.DeptList.length == 1) {
+    //                    $scope.model.OrgId = $scope.DeptList[0].Id;
+    //                }
+    //                $scope.$apply();//通知更新，否则表单数据无法显示
+    //            }
+    //        });
+
+    //}
+
+    /**
+     * 通过角色名称获取部门列表
+     * @param {any} orgid
+     */
+    $scope.GetUserByOrgId = function (orgid) {
+        $scope.UserList = [];
+        $.get('/Authorise/GetUserListByOrgId?orgid=' + orgid,
             function (resp) {
                 if (resp.Code === 200) {
-
-                    $scope.DeptList = resp.Result;
-                    if ($scope.DeptList.length == 1) {
-                        $scope.model.OrgId = $scope.DeptList[0].Id;
-                    }
+                    $scope.UserList = resp.Result;
                     $scope.$apply();//通知更新，否则表单数据无法显示
                 }
             });
+    }
 
+    /**
+         * zTree节点点击事件
+         * @param {any} event
+         * @param {any} treeId
+         * @param {any} treeNode
+         */
+    $scope.zTreeOnClick = function (event, treeId, treeNode) {
+
+        $scope.OrgId = treeNode.Id;
+        $scope.OrgName = treeNode.Name;
+    }
+
+    /**
+         * 部门选择事件
+         * @param {any} value
+         */
+    $scope.OrgSelected = function () {
+
+        if ($scope.OrgId != '') {
+
+            $scope.model.OrgId = $scope.OrgId;
+            $scope.model.OrgName = $scope.OrgName;
+            $scope.$apply();
+
+            $scope.GetUserByOrgId($scope.model.OrgId);
+        }
+        $("#modal-default").modal("hide");
+    }
+
+    /**
+         * 部门点击事件
+         * */
+    $scope.OrgClick = function () {
+
+        $scope.OrgId = '';
+        $scope.OrgName = '';
+        App.initZTree({
+            onClick: $scope.zTreeOnClick
+        });
     }
 
 
@@ -123,11 +179,11 @@ app.controller('appController', function ($scope) {
         if (window.parent._dataTable) {
             window.parent._dataTable.Refresh();
         }
-        
+
         if (window.parent.layer) {
             window.parent.layer.closeAll();
         }
-      
+
     }
 
     /**
@@ -160,5 +216,5 @@ app.controller('appController', function ($scope) {
 
 
     $scope.init(Id);
-    
+
 });
