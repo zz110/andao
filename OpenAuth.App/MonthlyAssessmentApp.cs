@@ -83,6 +83,116 @@ namespace OpenAuth.App
             };
         }
 
+        public object GetMonthlyStatisticsAssessment(int limit, int offset, MonthlyPostAssessmentQueryInput input)
+        {
+
+            string sql = @"  if object_id('tempdb..##ttemp') is not null  
+	drop table ##ttemp 
+create table ##ttemp(gid nvarchar(50),username nvarchar(50),
+    evaluateyear int,EvaluateMonth int,core numeric(18, 4),Reason1 nvarchar(550),Reason2 nvarchar(550),ge nvarchar(50))   
+      
+insert into ##ttemp     
+
+select NEWID(),*,case when core>=95 then '优秀' when core > 75 and core <95 then '合格' else '失格' end ge from (
+select username,evaluateyear,EvaluateMonth,(Score+DepartmentMonthlyScore)*0.5 core,Reason1,Reason2 from (
+
+select d.Name as UserName,c.Name as OrgName,a.EvaluateYear,a.EvaluateMonth,isnull(a.Score,0.00) as Score,isnull(b.Score,0.00) as DepartmentMonthlyScore,Reason1,Reason2 
+                            FROM MonthlyAssessment a left join DepartmentMonthlyEvaluation b
+                            on a.OrgId=b.OrgId and a.EvaluateYear=b.EvaluateYear and a.EvaluateMonth=b.EvaluateMonth
+                            left join Org c
+                            on a.OrgId=c.Id
+                            left join [User] as d
+                            on a.UserId=d.Id  
+where (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null) and 
+                             (c.Name like '%'+@OrgName+'%' or @OrgName is null)
+                            and (a.UserId in(
+                                select distinct a.FirstId from Relevance a  join [Role] b
+                                on a.SecondId=b.Id
+                                where a.[Key]='UserRole' and b.Name=@role
+
+                            ) or @role is null)
+                            and (c.BizCode=@DeptType or (@DeptType='' or @DeptType is null or @DeptType=''))  
+                             ) as a  ) as a
+                            
+     select SUM(统计) 统计,ge 结果,MAX(s.[1]) as 一,MAX(s.[2]) as 二,MAX(s.[3]) as 三,MAX(s.[4]) as 四,MAX(s.[5]) as 五
+     ,MAX(s.[6]) as 六,MAX(s.[7]) as 七,MAX(s.[8]) as 八,MAX(s.[9]) as 九
+     ,MAX(s.[10]) as 十,MAX(s.[11]) as 十一,MAX(s.[12]) as 十二 from (                      
+   select * from (   
+      select * from (  
+     select COUNT(*) 统计,
+  EvaluateMonth,ge,
+     Names=stuff((select ','+username from ##ttemp t  
+     where t.EvaluateMonth=##ttemp.EvaluateMonth  and t.ge=##ttemp.ge   
+     for xml path('')), 1, 1, ''),Names1=stuff((select '/'+username from ##ttemp t  
+     where t.EvaluateMonth=##ttemp.EvaluateMonth  and t.ge=##ttemp.ge   
+     for xml path('')), 1, 1, '')   
+from  
+##ttemp 
+group by 
+EvaluateMonth,ge  
+ )  as p  
+                           
+PIVOT 
+(
+   max(Names) FOR 
+    p.EvaluateMonth IN ([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
+) AS T ) t ) as s group by ge   union all    select COUNT(*) 统计,'不合格原因',MAX(s.[1]) as 一,MAX(s.[2]) as 二,MAX(s.[3]) as 三,MAX(s.[4]) as 四,MAX(s.[5]) as 五
+     ,MAX(s.[6]) as 六,MAX(s.[7]) as 七,MAX(s.[8]) as 八,MAX(s.[9]) as 九
+     ,MAX(s.[10]) as 十,MAX(s.[11]) as 十一,MAX(s.[12]) as 十二 from (                      
+   select * from (   
+      select * from (  
+     select COUNT(*) 统计,
+  EvaluateMonth,ge,
+     Names=stuff((select ','+username+':'+Reason2 from ##ttemp t  
+     where t.EvaluateMonth=##ttemp.EvaluateMonth  and t.ge=##ttemp.ge   
+     for xml path('')), 1, 1, ''),Names1=stuff((select '/'+username from ##ttemp t  
+     where t.EvaluateMonth=##ttemp.EvaluateMonth  and t.ge=##ttemp.ge   
+     for xml path('')), 1, 1, '')   
+from  
+##ttemp 
+group by 
+EvaluateMonth,ge  
+ )  as p  
+                           
+PIVOT 
+(
+   max(Names) FOR 
+    p.EvaluateMonth IN ([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
+) AS T ) t ) as s group by ge  union all    select COUNT(*) 统计,'减分原因',MAX(s.[1]) as 一,MAX(s.[2]) as 二,MAX(s.[3]) as 三,MAX(s.[4]) as 四,MAX(s.[5]) as 五
+     ,MAX(s.[6]) as 六,MAX(s.[7]) as 七,MAX(s.[8]) as 八,MAX(s.[9]) as 九
+     ,MAX(s.[10]) as 十,MAX(s.[11]) as 十一,MAX(s.[12]) as 十二 from (                      
+   select * from (   
+      select * from (  
+     select COUNT(*) 统计,
+  EvaluateMonth,ge,
+     Names=stuff((select ','+username+':'+Reason1 from ##ttemp t  
+     where t.EvaluateMonth=##ttemp.EvaluateMonth  and t.ge=##ttemp.ge   
+     for xml path('')), 1, 1, ''),Names1=stuff((select '/'+username from ##ttemp t  
+     where t.EvaluateMonth=##ttemp.EvaluateMonth  and t.ge=##ttemp.ge   
+     for xml path('')), 1, 1, '')   
+from  
+##ttemp 
+group by 
+EvaluateMonth,ge  
+ )  as p  
+                           
+PIVOT 
+(
+   max(Names) FOR 
+    p.EvaluateMonth IN ([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
+) AS T ) t ) as s group by ge  
+
+
+";
+
+            var rows = Repository.ExecuteQuerySql<MonthStatistics>(sql, input.ToParameters()).ToList();
+            return new
+            {
+                total = 10000,
+                rows = rows
+            };
+        }
+
 
         public MonthlyAssessmentOutput get(string id)
         {
