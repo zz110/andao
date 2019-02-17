@@ -64,6 +64,14 @@ namespace OpenAuth.Repository.Mapping
             Property(t => t.Updated)
                 .HasColumnName("Updated")
                 .IsOptional();
+            Property(t => t.Reason1)
+                .HasColumnName("Reason1")
+                .HasMaxLength(200)
+                .IsOptional();
+            Property(t => t.Reason2)
+                .HasColumnName("Reason2")
+                .HasMaxLength(200)
+                .IsOptional();
 
             // Relationships
         }

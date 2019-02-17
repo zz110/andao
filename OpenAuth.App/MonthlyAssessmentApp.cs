@@ -21,7 +21,7 @@ namespace OpenAuth.App
 
             offset += 1;
             string sql = $@"select top {limit} * from(
-                              select row_number() over(order by a.created) as num,a.*,b.Name as OrgName,c.Name as UserName 
+                              select row_number() over(order by a.created) as num,a.*,b.Name as OrgName,c.Name as UserName
                                                        from MonthlyAssessment a left join Org b
                                                        on a.OrgId=b.Id
                                                        left join [User] c
@@ -54,9 +54,10 @@ namespace OpenAuth.App
             };
         }
 
-        public object GetMonthlyPostAssessment(int limit, int offset, MonthlyPostAssessmentQueryInput input) {
+        public object GetMonthlyPostAssessment(int limit, int offset, MonthlyPostAssessmentQueryInput input)
+        {
 
-            string sql = @"select d.Name as UserName,c.Name as OrgName,a.EvaluateYear,a.EvaluateMonth,isnull(a.Score,0.00) as Score,isnull(b.Score,0.00) as DepartmentMonthlyScore
+            string sql = @"select d.Name as UserName,c.Name as OrgName,a.EvaluateYear,a.EvaluateMonth,isnull(a.Score,0.00) as Score,isnull(b.Score,0.00) as DepartmentMonthlyScore,a.Reason1,a.Reason2
                             FROM MonthlyAssessment a left join DepartmentMonthlyEvaluation b
                             on a.OrgId=b.OrgId and a.EvaluateYear=b.EvaluateYear and a.EvaluateMonth=b.EvaluateMonth
                             left join Org c
@@ -234,7 +235,7 @@ PIVOT
         {
             return Repository.AddAndReturnId(obj);
         }
-        
+
         public void Update(MonthlyAssessment obj)
         {
             UnitWork.Update<MonthlyAssessment>(u => u.Id == obj.Id, u => new MonthlyAssessment
@@ -247,7 +248,9 @@ PIVOT
                 EvaluateYear = obj.EvaluateYear,
                 OrgId = obj.OrgId,
                 UserId = obj.UserId,
-                Updated = DateTime.Now
+                Updated = DateTime.Now,
+                Reason1 = obj.Reason1,
+                Reason2 = obj.Reason2
             });
 
         }

@@ -10,10 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace OpenAuth.Repository.Mapping
+namespace Cp.Data.Mapping
 {
     public partial class ResourceMap
-        : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<OpenAuth.Repository.Domain.Resource>
+        : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Cp.Data.Entities.Resource>
     {
         public ResourceMap()
         {
