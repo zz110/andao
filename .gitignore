@@ -3,11 +3,13 @@
 ################################################################################
 
 /OpenAuth.Mvc/bin
+/OpenAuth.Mvc/Web.config
 /OpenAuth.Repository/bin/Debug
 /OpenAuth.Repository/obj/Debug
 /OpenAuth.UnitTest/bin/Debug
 /OpenAuth.UnitTest/obj/Debug
 /OpenAuth.WebApi/bin
+/OpenAuth.WebApi/Web.config
 /OpenAuth.WebTest/bin
 /OpenAuth.WebTest/obj/Debug
 /packages

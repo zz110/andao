@@ -79,6 +79,7 @@
     <Compile Include="Domain\Relevance.cs" />
     <Compile Include="Domain\Resource.cs" />
     <Compile Include="Domain\Role.cs" />
+    <Compile Include="Domain\StatisticalAnalysis.cs" />
     <Compile Include="Domain\Stock.cs" />
     <Compile Include="Domain\Test.cs" />
     <Compile Include="Domain\User.cs" />
@@ -91,6 +92,10 @@
     <Compile Include="Dto\EvaluateAverageScore\EvaluateAverageScoreOutput.cs" />
     <Compile Include="Dto\EvaluateAverageScore\EvaluateStatisticAnalysisQueryInput.cs" />
     <Compile Include="Dto\EvaluateAverageScore\EvaluateStatisticAnalysisOutput.cs" />
+    <Compile Include="Dto\StatisticalAnalysis\EvaluationTotalscoreOutput.cs" />
+    <Compile Include="Dto\StatisticalAnalysis\EvaluationIntegrationOutput.cs" />
+    <Compile Include="Dto\StatisticalAnalysis\EvaluationscoreOutput.cs" />
+    <Compile Include="Dto\StatisticalAnalysis\EvaluationscoreQueryInput.cs" />
     <Compile Include="Dto\MonthlyAssessment\MonthlyAssessmentQueryInput.cs" />
     <Compile Include="Dto\MonthlyAssessment\MonthlyAssessmentOutput.cs" />
     <Compile Include="Dto\MonthlyEvaluation\MonthlyEvaluationQueryInput.cs" />
