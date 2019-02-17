@@ -24,7 +24,7 @@ namespace OpenAuth.App
                 data = Repository.Find(request.page, request.limit, "Id desc")
             };
         }
-        public List<PerformanceAppraisalOutPut> List(string year,string type, PerformanceAppraisalQueryInput input)
+        public List<PerformanceAppraisalOutPut> List(string year,string type)
         {
             string sql = $@"select top 1000 JudgeId,JudgeName,
                             (select SUM(Score)/12 from MonthlyAssessment 
