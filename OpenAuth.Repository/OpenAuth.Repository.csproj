@@ -75,6 +75,7 @@
     <Compile Include="Domain\MonthlyAssessment.cs" />
     <Compile Include="Domain\MonthlyEvaluation.cs" />
     <Compile Include="Domain\Org.cs" />
+    <Compile Include="Domain\PerformanceAppraisal.cs" />
     <Compile Include="Domain\Plan.cs" />
     <Compile Include="Domain\Relevance.cs" />
     <Compile Include="Domain\Resource.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Mapping\FormMap.cs" />
     <Compile Include="Mapping\MonthlyAssessmentMap.cs" />
     <Compile Include="Mapping\MonthlyEvaluationMap.cs" />
+    <Compile Include="Mapping\PerformanceAppraisalMap.cs" />
     <Compile Include="Mapping\PlanMap.cs" />
     <Compile Include="Mapping\TestMap.cs" />
     <Compile Include="UnitWork.cs" />
