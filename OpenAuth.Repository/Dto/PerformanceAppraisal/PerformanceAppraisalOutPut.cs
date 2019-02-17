@@ -37,5 +37,6 @@ namespace OpenAuth.Repository.Dto
         public decimal MonthlyAVG { get; set; }
         public decimal pingcedefenavg { get; set; }
         public decimal kaopingdefen { get; set; }
+        public int Index { get; set; }
     }
 }

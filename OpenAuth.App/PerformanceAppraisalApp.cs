@@ -24,7 +24,7 @@ namespace OpenAuth.App
                 data = Repository.Find(request.page, request.limit, "Id desc")
             };
         }
-        public List<PerformanceAppraisalOutPut> List(string year, PerformanceAppraisalQueryInput input)
+        public List<PerformanceAppraisalOutPut> List(string year,string type, PerformanceAppraisalQueryInput input)
         {
             string sql = $@"select top 1000 JudgeId,JudgeName,
                             (select SUM(Score)/12 from MonthlyAssessment 
@@ -98,7 +98,7 @@ namespace OpenAuth.App
                             ) as t 
                             left join Relevance r on r.FirstId = t.JudgeId 
                             inner join [Role] ro on ro.Id = r.SecondId 
-                            where num > 0 and ro.Name = '{ type }' and ro.Name 
+                            where num > 0 and (ro.Name = '{ type }' or '{ type }' = '') 
                             group by JudgeId,JudgeName";
             var rows = Repository.ExecuteQuerySql<PerformanceAppraisalOutPut>(sql).ToList();
 

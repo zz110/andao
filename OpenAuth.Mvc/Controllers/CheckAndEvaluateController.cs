@@ -36,10 +36,22 @@ namespace OpenAuth.Mvc.Controllers
                 {
                     list[i].pingce = list[i].q6;
                 }
+
+                list[i].pingce = Math.Round(Convert.ToDecimal(list[i].pingce), 2, MidpointRounding.AwayFromZero);
+                list[i].MonthlyAVG = Math.Round(Convert.ToDecimal(list[i].MonthlyAVG), 2, MidpointRounding.AwayFromZero);
+                list[i].AccessmentScore = Math.Round(Convert.ToDecimal(list[i].AccessmentScore), 2, MidpointRounding.AwayFromZero);
+
                 list[i].kaopingdefen = list[i].pingce * (decimal)0.4 +
                     (list[i].MonthlyAVG + list[i].AccessmentScore) * (decimal)0.3;
+
+                list[i].kaopingdefen = Math.Round(Convert.ToDecimal(list[i].kaopingdefen), 2, MidpointRounding.AwayFromZero);
+
             }
-            list.Sort((a, b) => a.kaopingdefen.CompareTo(b.kaopingdefen));
+            list.Sort((a, b) => b.kaopingdefen.CompareTo(a.kaopingdefen));
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i].Index = i + 1;
+            }
             return Json(new { total = 10000, rows = list }, JsonRequestBehavior.AllowGet);
         }
     }
