@@ -10,10 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace OpenAuth.Repository.Mapping
+namespace Cp.Data.Mapping
 {
     public partial class OrgMap
-        : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<OpenAuth.Repository.Domain.Org>
+        : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Cp.Data.Entities.Org>
     {
         public OrgMap()
         {

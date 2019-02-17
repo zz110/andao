@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenAuth.Repository.Domain
+namespace Cp.Data.Entities
 {
     /// <summary>
 	/// 
@@ -25,6 +25,8 @@ namespace OpenAuth.Repository.Domain
           this.Creator= string.Empty;
           this.Created= DateTime.Now;
           this.Updated= DateTime.Now;
+          this.Reason1= string.Empty;
+          this.Reason2= string.Empty;
         }
 
         /// <summary>
@@ -67,6 +69,14 @@ namespace OpenAuth.Repository.Domain
 	    /// 
 	    /// </summary>
         public System.DateTime? Updated { get; set; }
+        /// <summary>
+	    /// 减分原因
+	    /// </summary>
+        public string Reason1 { get; set; }
+        /// <summary>
+	    /// 不合格原因
+	    /// </summary>
+        public string Reason2 { get; set; }
 
     }
 }

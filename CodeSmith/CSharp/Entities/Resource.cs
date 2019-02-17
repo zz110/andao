@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenAuth.Repository.Domain
+namespace Cp.Data.Entities
 {
     /// <summary>
 	/// 资源表
