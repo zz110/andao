@@ -5,6 +5,7 @@ using Infrastructure;
 using OpenAuth.App;
 using OpenAuth.App.Request;
 using OpenAuth.App.Response;
+using OpenAuth.App.SSO;
 using OpenAuth.Mvc.Models;
 using OpenAuth.Repository.Domain;
 
@@ -20,14 +21,22 @@ namespace OpenAuth.Mvc.Controllers
             return View();
         }
 
+        [System.Web.Mvc.HttpGet]
+        public ActionResult page(int limit, int offset, PerformanceAppraisal input)
+        {
+            var result = App.page(limit, offset, input);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         //添加或修改
         [System.Web.Mvc.HttpPost]
         public ActionResult Add(PerformanceAppraisal input)
         {
             Response<object> response = new Response<object>("服务器错误");
             input.Optime = DateTime.Now;
-            string sql = " insert into PerformanceAppraisal (JudgeId,AccessmentScore) values('" + input.JudgeId+"','"+input.AccessmentScore+"')";
-            //App.Update(input);
+            input.RatersId = AuthUtil.GetCurrentUser().User.Id;
+            input.RatersName = AuthUtil.GetCurrentUser().User.Name;
+            App.Add(input);
             response.Message = "";
             response.Code = Response<object>.SUCCESS_CODE;
             return Json(response);
@@ -39,7 +48,7 @@ namespace OpenAuth.Mvc.Controllers
         {
             try
             {
-                //App.Update(obj);
+                App.Update(obj);
 
             }
             catch (Exception ex)

@@ -133,12 +133,12 @@
         function SubmitTo() {
             var url = "/PerformanceAppraisals/Add";
             var input = {
-                AccessmentScore: $("#AccessmentScore").val(), JudgeId: $("#JudgeId").val(),  JudgeName:$("#JudgeId").find("option:selected").text()
+                AccessmentScore: $("#AccessmentScore").val(), JudgeId: $("#JudgeId").val()
             }
             $.post(url, { input: input }, function (resp) {
 
                 if (resp.Code === 200) {
-                    $scope.show_box_warning(0);
+                    //$scope.show_box_warning(0);
                     $scope.model.Id = resp.Result;
                     $scope.$apply();
                     $scope.Close();
