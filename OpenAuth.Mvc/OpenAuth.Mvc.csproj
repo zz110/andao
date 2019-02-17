@@ -8232,6 +8232,7 @@
     <Content Include="Views\AnnualExaminationRegistrations\Index.cshtml" />
     <Content Include="Views\Judge\Index.cshtml" />
     <Content Include="Views\CheckAndEvaluate\Index.cshtml" />
+    <Content Include="Views\MonthlyAssessments\MonthStatistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="layui\lay\modules\mobile\" />

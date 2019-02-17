@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenAuth.Repository.Domain
+namespace Cp.Data.Entities
 {
     /// <summary>
 	/// 
@@ -26,6 +26,8 @@ namespace OpenAuth.Repository.Domain
           this.Q2= string.Empty;
           this.Q3= string.Empty;
           this.Q4= string.Empty;
+          this.Q5= string.Empty;
+          this.Q6= string.Empty;
           this.Optime= DateTime.Now;
           this.State= string.Empty;
           this.PlanId= string.Empty;
@@ -56,6 +58,14 @@ namespace OpenAuth.Repository.Domain
 	    /// 答题4
 	    /// </summary>
         public string Q4 { get; set; }
+        /// <summary>
+	    /// 
+	    /// </summary>
+        public string Q5 { get; set; }
+        /// <summary>
+	    /// 
+	    /// </summary>
+        public string Q6 { get; set; }
         /// <summary>
 	    /// 答题完成时间
 	    /// </summary>

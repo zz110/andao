@@ -93,6 +93,7 @@
     <Compile Include="Dto\EvaluateAverageScore\EvaluateStatisticAnalysisOutput.cs" />
     <Compile Include="Dto\MonthlyAssessment\MonthlyAssessmentQueryInput.cs" />
     <Compile Include="Dto\MonthlyAssessment\MonthlyAssessmentOutput.cs" />
+    <Compile Include="Dto\MonthlyAssessment\MonthStatistics.cs" />
     <Compile Include="Dto\MonthlyEvaluation\MonthlyEvaluationQueryInput.cs" />
     <Compile Include="Dto\MonthlyEvaluation\MonthlyEvaluationOutput.cs" />
     <Compile Include="Dto\MonthlyAssessment\MonthlyPostAssessmentQueryInput.cs" />

@@ -10,10 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace OpenAuth.Repository.Mapping
+namespace Cp.Data.Mapping
 {
     public partial class MonthlyAssessmentMap
-        : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<OpenAuth.Repository.Domain.MonthlyAssessment>
+        : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Cp.Data.Entities.MonthlyAssessment>
     {
         public MonthlyAssessmentMap()
         {
@@ -63,6 +63,14 @@ namespace OpenAuth.Repository.Mapping
                 .IsOptional();
             Property(t => t.Updated)
                 .HasColumnName("Updated")
+                .IsOptional();
+            Property(t => t.Reason1)
+                .HasColumnName("Reason1")
+                .HasMaxLength(200)
+                .IsOptional();
+            Property(t => t.Reason2)
+                .HasColumnName("Reason2")
+                .HasMaxLength(200)
                 .IsOptional();
 
             // Relationships

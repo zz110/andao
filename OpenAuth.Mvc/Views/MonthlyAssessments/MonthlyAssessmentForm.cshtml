@@ -140,6 +140,34 @@
            <div class="row">
                <div class="col-xs-12 col-sm-6">
                    <div class="form-group">
+                       <label class="col-sm-2 control-label">减分原因:</label>
+                       <div class="col-sm-10">
+                           <input type="text"
+                                  name="Reason1"
+                                  autocomplete="off"
+                                  ng-model="model.Reason1"
+                                  class="form-control required" placeholder="请输入减分原因" />
+                       </div>
+                   </div>
+               </div>
+
+               <div class="col-xs-12 col-sm-6">
+                   <div class="form-group">
+                       <label class="col-sm-2 control-label">不合格原因:</label>
+                       <div class="col-sm-10">
+                           <input type="text"
+                                  name="Reason2"
+                                  autocomplete="off"
+                                  ng-model="model.Reason2"
+                                  class="form-control required" placeholder="请输入不合格原因" />
+                       </div>
+                   </div>
+               </div>
+           </div>
+
+           <div class="row">
+               <div class="col-xs-12 col-sm-6">
+                   <div class="form-group">
                        <label class="col-sm-2 control-label">总成绩:</label>
                        <div class="col-sm-10">
                            <input type="text"
@@ -178,6 +206,7 @@
                </div>
            </div>
        </form>
+
        <div class="modal fade" id="modal-default">
            <div class="modal-dialog">
                <div class="modal-content">

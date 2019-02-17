@@ -10,10 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace OpenAuth.Repository.Mapping
+namespace Cp.Data.Mapping
 {
     public partial class AnswerMap
-        : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<OpenAuth.Repository.Domain.Answer>
+        : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Cp.Data.Entities.Answer>
     {
         public AnswerMap()
         {
@@ -50,6 +50,14 @@ namespace OpenAuth.Repository.Mapping
                 .IsOptional();
             Property(t => t.Q4)
                 .HasColumnName("Q4")
+                .HasMaxLength(50)
+                .IsOptional();
+            Property(t => t.Q5)
+                .HasColumnName("Q5")
+                .HasMaxLength(50)
+                .IsOptional();
+            Property(t => t.Q6)
+                .HasColumnName("Q6")
                 .HasMaxLength(50)
                 .IsOptional();
             Property(t => t.Optime)

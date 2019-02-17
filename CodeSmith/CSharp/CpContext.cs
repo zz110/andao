@@ -9,10 +9,10 @@
 using System;
 using System.Data.Entity;
 using System.Collections.Generic;
-using OpenAuth.Repository.Domain;
-using OpenAuth.Repository.Mapping;
+using Cp.Data.Entities;
+using Cp.Data.Mapping;
 
-namespace OpenAuth.Repository
+namespace Cp.Data
 {
     public partial class CpContext: DbContext
     {
@@ -45,6 +45,7 @@ namespace OpenAuth.Repository
         public System.Data.Entity.DbSet<MonthlyAssessment> MonthlyAssessments { get; set; }
         public System.Data.Entity.DbSet<MonthlyEvaluation> MonthlyEvaluations { get; set; }
         public System.Data.Entity.DbSet<Org> Orgs { get; set; }
+        public System.Data.Entity.DbSet<PerformanceAppraisal> PerformanceAppraisals { get; set; }
         public System.Data.Entity.DbSet<Plan> Plans { get; set; }
         public System.Data.Entity.DbSet<Relevance> Relevances { get; set; }
         public System.Data.Entity.DbSet<Resource> Resources { get; set; }
@@ -72,6 +73,7 @@ namespace OpenAuth.Repository
             modelBuilder.Configurations.Add(new MonthlyAssessmentMap());
             modelBuilder.Configurations.Add(new MonthlyEvaluationMap());
             modelBuilder.Configurations.Add(new OrgMap());
+            modelBuilder.Configurations.Add(new PerformanceAppraisalMap());
             modelBuilder.Configurations.Add(new PlanMap());
             modelBuilder.Configurations.Add(new RelevanceMap());
             modelBuilder.Configurations.Add(new ResourceMap());
