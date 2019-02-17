@@ -20,8 +20,10 @@
                     </div>
                     <div class="col-xs-2">
                         <select class="form-control" id="positionSelect">
+                            <option value="">全部</option>
                             <option value="正职" selected="selected">正职</option>
-                            <option value="其他" selected="selected">其他</option>
+                            <option value="副职">副职</option>
+                            <option value="一般干部">一般干部</option>
                         </select>
                     </div>
                     @*<div class="col-xs-1">
@@ -52,7 +54,7 @@
     <script>
         var _dataTable;
         $(function () {
-            $("#menuList").loadMenus("MonthlyAssessment");
+            $("#menuList").loadMenus("CheckAndEvaluate");
             var tbOptions = {
                 pageList: [10000],
                 pageSize: 10000,
@@ -78,7 +80,7 @@
                         field: 'kaopingdefen',
                         title: '考评得分'
                     }, {
-                        field: 'index',
+                        field: 'Index',
                         title: '排名'
                     }]
             };
@@ -110,6 +112,10 @@
                 });
 
                 _dataTable.Refresh();
+            });
+
+            $("#btnAdd").click(function () {
+                PerformanceForm();
             });
         })
     </script>
