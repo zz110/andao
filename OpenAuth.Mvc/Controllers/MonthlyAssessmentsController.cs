@@ -166,5 +166,17 @@ namespace OpenAuth.Mvc.Controllers
 
             return JsonHelper.Instance.Serialize(Result);
         }
+
+        public ActionResult MonthStatistics()
+        {
+            return View();
+        }
+
+        public JsonResult GetMonthStatistics(int limit, int offset, MonthlyPostAssessmentQueryInput input)
+        {
+            var result = App.GetMonthlyStatisticsAssessment(limit, offset, input);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

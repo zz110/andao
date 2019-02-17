@@ -199,6 +199,65 @@ app.controller('appController', function ($scope) {
     }
 
 
+
+
+    /**
+     * 通过角色名称获取部门列表
+     * @param {any} orgid
+     */
+    $scope.GetUserByOrgId = function (orgid) {
+        $scope.UserList = [];
+        $.get('/Authorise/GetUserListByOrgId?orgid=' + orgid,
+            function (resp) {
+                if (resp.Code === 200) {
+                    $scope.UserList = resp.Result;
+                    $scope.$apply();//通知更新，否则表单数据无法显示
+                }
+            });
+    }
+
+    /**
+     * zTree节点点击事件
+     * @param {any} event
+     * @param {any} treeId
+     * @param {any} treeNode
+     */
+    $scope.zTreeOnClick = function (event, treeId, treeNode) {
+
+        $scope.OrgId = treeNode.Id;
+        $scope.OrgName = treeNode.Name;
+    }
+
+    /**
+     * 部门选择事件
+     * @param {any} value
+     */
+    $scope.OrgSelected = function () {
+
+        if ($scope.OrgId != '') {
+
+            $scope.model.OrgId = $scope.OrgId;
+            $scope.model.OrgName = $scope.OrgName;
+            $scope.$apply();
+
+            $scope.GetUserByOrgId($scope.model.OrgId);
+        }
+        $("#modal-default").modal("hide");
+    }
+
+    /**
+     * 部门点击事件
+     * */
+    $scope.OrgClick = function () {
+
+        $scope.OrgId = '';
+        $scope.OrgName = '';
+        App.initZTree({
+            onClick: $scope.zTreeOnClick
+        });
+    }
+
+
     $scope.init(Id);
     
 });

@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenAuth.Repository.Domain
+namespace Cp.Data.Entities
 {
     /// <summary>
 	/// 模块元素表(需要权限控制的按钮)

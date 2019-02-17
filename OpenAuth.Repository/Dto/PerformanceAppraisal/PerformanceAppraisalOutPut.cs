@@ -23,5 +23,19 @@ namespace OpenAuth.Repository.Dto
         public DateTime Optime { get; set; }
 
         public int State { get; set; }
+
+        //
+        public decimal q1 { get; set; }
+        public decimal q2 { get; set; }
+        public decimal q3 { get; set; }
+        public decimal q4 { get; set; }
+        public decimal q5 { get; set; }
+        public decimal q6 { get; set; }
+        public int q6count { get; set; }
+
+        public decimal pingce { get; set; }
+        public decimal MonthlyAVG { get; set; }
+        public decimal pingcedefenavg { get; set; }
+        public decimal kaopingdefen { get; set; }
     }
 }

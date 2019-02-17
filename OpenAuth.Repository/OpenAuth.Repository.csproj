@@ -75,6 +75,7 @@
     <Compile Include="Domain\MonthlyAssessment.cs" />
     <Compile Include="Domain\MonthlyEvaluation.cs" />
     <Compile Include="Domain\Org.cs" />
+    <Compile Include="Domain\PerformanceAppraisal.cs" />
     <Compile Include="Domain\Plan.cs" />
     <Compile Include="Domain\Relevance.cs" />
     <Compile Include="Domain\Resource.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Dto\StatisticalAnalysis\EvaluationscoreQueryInput.cs" />
     <Compile Include="Dto\MonthlyAssessment\MonthlyAssessmentQueryInput.cs" />
     <Compile Include="Dto\MonthlyAssessment\MonthlyAssessmentOutput.cs" />
+    <Compile Include="Dto\MonthlyAssessment\MonthStatistics.cs" />
     <Compile Include="Dto\MonthlyEvaluation\MonthlyEvaluationQueryInput.cs" />
     <Compile Include="Dto\MonthlyEvaluation\MonthlyEvaluationOutput.cs" />
     <Compile Include="Dto\MonthlyAssessment\MonthlyPostAssessmentQueryInput.cs" />
@@ -119,6 +121,7 @@
     <Compile Include="Mapping\FormMap.cs" />
     <Compile Include="Mapping\MonthlyAssessmentMap.cs" />
     <Compile Include="Mapping\MonthlyEvaluationMap.cs" />
+    <Compile Include="Mapping\PerformanceAppraisalMap.cs" />
     <Compile Include="Mapping\PlanMap.cs" />
     <Compile Include="Mapping\TestMap.cs" />
     <Compile Include="UnitWork.cs" />

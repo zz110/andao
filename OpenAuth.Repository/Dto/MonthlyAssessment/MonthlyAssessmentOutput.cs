@@ -66,5 +66,9 @@ namespace OpenAuth.Repository.Dto
                 return "";
             }
         }
+
+        public string Reason1 { get; set; }
+
+        public string Reason2 { get; set; }
     }
 }

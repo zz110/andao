@@ -20,11 +20,11 @@ namespace OpenAuth.Repository.Domain
     {
         public MonthlyAssessment()
         {
-          this.UserId= string.Empty;
-          this.OrgId= string.Empty;
-          this.Creator= string.Empty;
-          this.Created= DateTime.Now;
-          this.Updated= DateTime.Now;
+            this.UserId = string.Empty;
+            this.OrgId = string.Empty;
+            this.Creator = string.Empty;
+            this.Created = DateTime.Now;
+            this.Updated = DateTime.Now;
         }
 
         /// <summary>
@@ -68,5 +68,14 @@ namespace OpenAuth.Repository.Domain
 	    /// </summary>
         public System.DateTime? Updated { get; set; }
 
+        /// <summary>
+        /// 减分原因
+        /// </summary>
+        public string Reason1 { get; set; }
+
+        /// <summary>
+        /// 不合格原因
+        /// </summary>
+        public string Reason2 { get; set; }
     }
 }
