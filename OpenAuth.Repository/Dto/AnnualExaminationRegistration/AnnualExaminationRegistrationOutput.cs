@@ -171,7 +171,7 @@ namespace OpenAuth.Repository.Dto
             }
         }
 
-      
+        
 
         public string _Officetime
         {
@@ -199,7 +199,20 @@ namespace OpenAuth.Repository.Dto
             }
         }
 
-       
+
+        public string RegistrationTime_
+        {
+            get
+            {
+                if (RegistrationTime.HasValue)
+                {
+                    return RegistrationTime.Value.ToString("yyyy年MM月dd日");
+                }
+                return "";
+            }
+        }
+
+
 
         public string _OfficialTime
         {
@@ -252,6 +265,48 @@ namespace OpenAuth.Repository.Dto
                     return Created.Value.ToString("yyyy-MM-dd");
                 }
                 return "";
+            }
+        }
+
+        public string _Officialadvice {
+            get {
+                
+                if (Officialadvice == 1) return "同意该同志考核评定为:优秀";
+                if (Officialadvice == 2) return "同意该同志考核评定为:称职";
+                if (Officialadvice == 3) return "同意该同志考核评定为:基本称职";
+                if (Officialadvice == 4) return "同意该同志考核评定为:不称职";
+                return "";
+            }
+        }
+
+
+        public string HRAdvice_
+        {
+            get
+            {
+                return $"依据唐山供电段《干部综合考核评价实施办法》，该同志考核评定为：{HRAdvice}";
+            }
+        }
+        
+
+
+        public string RewardPunishment {
+
+            get {
+
+                string result = "";
+
+                if (RegistrationTime.HasValue)
+                {
+                    result += $"{RegistrationTime.Value.ToString("yyyy-MM-dd")},因{RewardReasons},获得{Reward}" + Environment.NewLine;
+                }
+
+                if (PenaltyTime.HasValue)
+                {
+                    result += $"{PenaltyTime.Value.ToString("yyyy-MM-dd")},因{PenaltyReasons},受{Penalty}" + Environment.NewLine;
+                }
+
+                return result;
             }
         }
     }

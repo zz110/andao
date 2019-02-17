@@ -18,6 +18,7 @@
                     </div>
                     <div class="col-xs-1">
                         <button class="btn btn-sm btn-primary" id="btnSearch">搜索</button>
+                        <button class="btn btn-sm btn-success" id="btnExportWord">导出</button>
                     </div>
 
                 </div>
@@ -144,6 +145,17 @@
                 _dataTable.Refresh();
             });
 
+            $("#btnExportWord").click(function () {
+                debugger
+                var rows = _dataTable.GetSelections();
+                if (rows.length == 0) {
+                    swal("提示", "请选择要导出得数据！", "warning");
+                    return;
+
+                }
+                console.log(rows[0].Id);
+                window.location.href = "/AnnualExaminationRegistrations/ExportWord/" + rows[0].Id;
+            });
 
         });
 

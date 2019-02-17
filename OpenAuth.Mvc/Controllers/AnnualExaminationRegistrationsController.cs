@@ -6,6 +6,7 @@ using OpenAuth.App;
 using OpenAuth.App.Request;
 using OpenAuth.App.Response;
 using OpenAuth.Mvc.Models;
+using OpenAuth.Mvc.Utils;
 using OpenAuth.Repository.Domain;
 using OpenAuth.Repository.Dto;
 
@@ -112,6 +113,44 @@ namespace OpenAuth.Mvc.Controllers
             return Json(response);
         }
 
+
+        public FileContentResult ExportWord(string id = "") {
+
+
+            if (string.IsNullOrEmpty(id)) return null;
+
+             var result = App.get(id);
+
+            string FileLocation = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
+            //模板路径
+            string TemplatePath = FileLocation + "\\template\\evaluation_export_template.docx";
+
+            ExportWord Word = new ExportWord(TemplatePath);
+            try
+            {
+                Word.FillTable(result);
+                Word.ReplaceKey("OrgName", result.OrgName);
+                Word.ReplaceKey("RegistrationTime", result.RegistrationTime_);
+                Word.ReplaceKey("_Officialadvice", result._Officialadvice);
+                Word.ReplaceKey("HRAdvice_", result.HRAdvice);
+                Word.ReplaceKey("Notes", result.Notes);
+                Word.ReplaceKey("RewardPunishment", result.RewardPunishment);
+                
+           
+                var doc = Word.GetWord();
+
+                return File(doc, "application/octet-stream", Server.UrlEncode("管理人员和专业技术人员年度考核登记表.doc"));
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            finally
+            {
+                Word.Close();
+            }
+
+        }
 
 
 
