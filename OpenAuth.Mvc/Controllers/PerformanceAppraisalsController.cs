@@ -27,7 +27,7 @@ namespace OpenAuth.Mvc.Controllers
             Response<object> response = new Response<object>("服务器错误");
             input.Optime = DateTime.Now;
             string sql = " insert into PerformanceAppraisal (JudgeId,AccessmentScore) values('" + input.JudgeId+"','"+input.AccessmentScore+"')";
-            App.Update(input);
+            //App.Update(input);
             response.Message = "";
             response.Code = Response<object>.SUCCESS_CODE;
             return Json(response);
@@ -39,7 +39,7 @@ namespace OpenAuth.Mvc.Controllers
         {
             try
             {
-                App.Update(obj);
+                //App.Update(obj);
 
             }
             catch (Exception ex)
