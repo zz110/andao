@@ -6,7 +6,9 @@ using Infrastructure;
 using OpenAuth.App;
 using OpenAuth.App.Request;
 using OpenAuth.App.Response;
+using OpenAuth.App.SSO;
 using OpenAuth.Mvc.Models;
+using OpenAuth.Repository.Domain;
 
 namespace OpenAuth.Mvc.Controllers
 {
@@ -92,5 +94,21 @@ namespace OpenAuth.Mvc.Controllers
             return JsonHelper.Instance.Serialize(result);
         }
         #endregion
+
+
+        public ActionResult ChangePwd()
+        {
+            return View();
+        }
+
+        public JsonResult ChangeUserPwd(string Password)
+        {
+            string Account = AuthUtil.GetCurrentUser().User.Account;
+            User u = App.Get(Account);
+            u.Password = Password;
+            App.ChangePwd(u);
+            return Json(Result);
+        }
+
     }
 }

@@ -32,6 +32,7 @@ namespace OpenAuth.Repository.Domain
             this.State = string.Empty;
             this.PlanId = string.Empty;
             this.PlanName = string.Empty;
+            this.RatersName = string.Empty;
         }
 
         /// <summary>
@@ -82,6 +83,10 @@ namespace OpenAuth.Repository.Domain
 	    /// 方案名称
 	    /// </summary>
         public string PlanName { get; set; }
+
+        public string RatersName { get; set; }
+
+        public string JudgeName { get; set; }
 
     }
 }

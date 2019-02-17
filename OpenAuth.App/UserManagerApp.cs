@@ -60,6 +60,11 @@ namespace OpenAuth.App
             };
         }
 
+        public void ChangePwd(User user)
+        {
+            Repository.Update(user);
+        }
+
         public void AddOrUpdate(UserView view)
         {
             if (string.IsNullOrEmpty(view.OrganizationIds))
@@ -96,6 +101,9 @@ namespace OpenAuth.App
             ReleManagerApp.DeleteBy(Define.USERORG, user.Id);
             ReleManagerApp.AddRelevance(Define.USERORG, orgIds.ToLookup(u => user.Id));
         }
+
+        
+
 
         /// <summary>
         /// 加载用户的所有机构

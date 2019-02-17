@@ -133,7 +133,7 @@ namespace OpenAuth.App
 	                            else 0 
 	                            end
                             ) q6count,
-                            (select AccessmentScore from PerformanceAppraisal 
+                            (select top 1 AccessmentScore from PerformanceAppraisal 
                             where JudgeId = JudgeId and YEAR(Optime) = { year }) AccessmentScore 
                             from(
                               select row_number() over(order by a.Optime) as num,

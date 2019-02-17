@@ -137,7 +137,7 @@ PIVOT
 (
    max(Names) FOR 
     p.EvaluateMonth IN ([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
-) AS T ) t ) as s group by ge   union all    select COUNT(*) 统计,'不合格原因',MAX(s.[1]) as 一,MAX(s.[2]) as 二,MAX(s.[3]) as 三,MAX(s.[4]) as 四,MAX(s.[5]) as 五
+) AS T ) t ) as s group by ge   union all    select COUNT(*)-1 统计,'不合格原因',MAX(s.[1]) as 一,MAX(s.[2]) as 二,MAX(s.[3]) as 三,MAX(s.[4]) as 四,MAX(s.[5]) as 五
      ,MAX(s.[6]) as 六,MAX(s.[7]) as 七,MAX(s.[8]) as 八,MAX(s.[9]) as 九
      ,MAX(s.[10]) as 十,MAX(s.[11]) as 十一,MAX(s.[12]) as 十二 from (                      
    select * from (   
@@ -159,7 +159,7 @@ PIVOT
 (
    max(Names) FOR 
     p.EvaluateMonth IN ([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
-) AS T ) t ) as s group by ge  union all    select COUNT(*) 统计,'减分原因',MAX(s.[1]) as 一,MAX(s.[2]) as 二,MAX(s.[3]) as 三,MAX(s.[4]) as 四,MAX(s.[5]) as 五
+) AS T ) t ) as s group by ge  union all    select COUNT(*)-1 统计,'减分原因',MAX(s.[1]) as 一,MAX(s.[2]) as 二,MAX(s.[3]) as 三,MAX(s.[4]) as 四,MAX(s.[5]) as 五
      ,MAX(s.[6]) as 六,MAX(s.[7]) as 七,MAX(s.[8]) as 八,MAX(s.[9]) as 九
      ,MAX(s.[10]) as 十,MAX(s.[11]) as 十一,MAX(s.[12]) as 十二 from (                      
    select * from (   

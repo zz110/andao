@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Infrastructure;
 using OpenAuth.App.Request;
 using OpenAuth.App.Response;
 using OpenAuth.App.SSO;
@@ -12,6 +13,32 @@ namespace OpenAuth.App
     public class AnswerApp : BaseApp<Answer>
     {
         public RevelanceManagerApp ReleManagerApp { get; set; }
+
+        public object page(int limit, int offset, Answer input)
+        {
+
+            offset += 1;
+            string sql = $@"select top {limit} * from(
+                              select row_number() over(order by a.id) as num,a.*,c.Name as RatersName,c1.Name as JudgeName
+                                                       from Answer a 
+                                                       left join [User] c
+                                                       on a.RatersId=c.Id left join [User] c1 on a.JudgeId = c1.Id 
+                                                       
+                                                       
+                            ) as t where num > ({limit}*({offset}-1))";
+
+            var rows = Repository.ExecuteQuerySql<Answer>(sql, input.ToParameters()).ToList();
+
+            sql = @"select count(*) from Answer ";
+
+            int total = Repository.ExecuteQuerySql<int>(sql, input.ToParameters()).FirstOrDefault();
+
+            return new TableData
+            {
+                count = total,
+                data = rows
+            };
+        }
 
         /// <summary>
         /// 加载列表

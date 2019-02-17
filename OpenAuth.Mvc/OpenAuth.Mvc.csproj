@@ -8242,6 +8242,7 @@
     <Content Include="Views\StatisticalAnalysis\evaluationscore.cshtml" />
     <Content Include="Views\StatisticalAnalysis\integrationscore.cshtml" />
     <Content Include="Views\StatisticalAnalysis\totalscore.cshtml" />
+    <Content Include="Views\UserManager\ChangePwd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="layui\lay\modules\mobile\" />
