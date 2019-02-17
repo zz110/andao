@@ -143,6 +143,7 @@
     <Compile Include="Controllers\AuthoriseController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ApplicationsController.cs" />
+    <Compile Include="Controllers\CheckAndEvaluateController.cs" />
     <Compile Include="Controllers\EvaluateAverageScoresController.cs" />
     <Compile Include="Controllers\JudgeController.cs" />
     <Compile Include="Controllers\MonthlyAssessmentsController.cs" />
@@ -8230,6 +8231,7 @@
     <Content Include="Views\AnnualExaminationRegistrations\AnnualExaminationRegistrationForm.cshtml" />
     <Content Include="Views\AnnualExaminationRegistrations\Index.cshtml" />
     <Content Include="Views\Judge\Index.cshtml" />
+    <Content Include="Views\CheckAndEvaluate\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="layui\lay\modules\mobile\" />
