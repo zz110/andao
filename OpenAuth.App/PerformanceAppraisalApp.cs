@@ -23,7 +23,7 @@ namespace OpenAuth.App
                 rows = rows
             };
         }
-        public List<PerformanceAppraisalOutPut> List(string year, PerformanceAppraisalQueryInput input)
+        public List<PerformanceAppraisalOutPut> List(string year,string type)
         {
             string sql = $@"select top 1000 JudgeId,JudgeName,
                             (select SUM(Score)/12 from MonthlyAssessment 
@@ -86,19 +86,20 @@ namespace OpenAuth.App
 	                            end
                             ) q6count,
                             (select AccessmentScore from PerformanceAppraisal 
-                            where JudgeId = JudgeId) AccessmentScore 
+                            where JudgeId = JudgeId and YEAR(Optime) = { year }) AccessmentScore 
                             from(
                               select row_number() over(order by a.Optime) as num,
                               a.RatersId,a.JudgeId,uj.Name as RatersName,ur.Name as JudgeName,
                               a.q1,a.q2,a.q3,a.q4,a.q5,a.q6 from Answer a 
                               inner join [user] ur on ur.Id = a.JudgeId 
                               inner join [user] uj on uj.Id = a.RatersId 
+                              where YEAR(a.Optime) = { year } and a.State = '已提交'
                             ) as t 
                             left join Relevance r on r.FirstId = t.JudgeId 
                             inner join [Role] ro on ro.Id = r.SecondId 
-                            where num > 0 and ro.Name = '正职' 
+                            where num > 0 and ro.Name = '{ type }' and ro.Name 
                             group by JudgeId,JudgeName";
-            var rows = Repository.ExecuteQuerySql<PerformanceAppraisalOutPut>(sql, input.ToParameters()).ToList();
+            var rows = Repository.ExecuteQuerySql<PerformanceAppraisalOutPut>(sql).ToList();
 
             return rows;
         }

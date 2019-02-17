@@ -22,9 +22,7 @@ namespace OpenAuth.Mvc.Controllers
         //int limit, int offset, PerformanceAppraisalQueryInput input
         public ActionResult List(string year,string type)
         {
-            PerformanceAppraisalQueryInput input = new PerformanceAppraisalQueryInput();
-            //var result = App.List("970edfb5-53c7-4dc8-a086-08a28ba4686a", "2019", input);
-            var result = App.List(year, input);
+            var result = App.List(year,type);
             List<PerformanceAppraisalOutPut> list = result as List<PerformanceAppraisalOutPut>;
             for (int i = 0; i < list.Count; i++)
             {
@@ -41,7 +39,8 @@ namespace OpenAuth.Mvc.Controllers
                 list[i].kaopingdefen = list[i].pingce * (decimal)0.4 +
                     (list[i].MonthlyAVG + list[i].AccessmentScore) * (decimal)0.3;
             }
-            return Json(new { total = 10000, rows = result }, JsonRequestBehavior.AllowGet);
+            list.Sort((a, b) => a.kaopingdefen.CompareTo(b.kaopingdefen));
+            return Json(new { total = 10000, rows = list }, JsonRequestBehavior.AllowGet);
         }
     }
 }
