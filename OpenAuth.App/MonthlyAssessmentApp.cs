@@ -8,6 +8,9 @@ using OpenAuth.App.SSO;
 using OpenAuth.Repository.Domain;
 using OpenAuth.Repository.Dto;
 
+using System.Data.SqlClient;
+using System.Data;
+
 namespace OpenAuth.App
 {
     public class MonthlyAssessmentApp : BaseApp<MonthlyAssessment>
@@ -82,6 +85,36 @@ namespace OpenAuth.App
                 total = 10000,
                 rows = rows
             };
+        }
+
+        public object GetMonthlyStatisticsAssessment2(int queryYear)
+        {
+
+
+            try
+            {
+                var connStr = System.Configuration.ConfigurationManager.ConnectionStrings["OpenAuthDBContext"].ToString();
+
+                using (SqlConnection sqlConn = new SqlConnection(connStr))
+                {
+                    sqlConn.Open();
+
+                    SqlCommand sqlComm = new SqlCommand("PROC_TMP1", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+                    sqlComm.Parameters.Add(new SqlParameter("@QueryYear", SqlDbType.Int));
+                    sqlComm.Parameters["@QueryYear"].Value = queryYear;
+
+                    var dt = new DataTable();
+                    SqlDataReader sqlReader = sqlComm.ExecuteReader(CommandBehavior.CloseConnection);
+                    dt.Load(sqlReader);
+                    sqlReader.Close();
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public object GetMonthlyStatisticsAssessment(int limit, int offset, MonthlyPostAssessmentQueryInput input)

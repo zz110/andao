@@ -41,7 +41,8 @@ namespace OpenAuth.Mvc.Controllers
         /// 月度岗位履责考评结果
         /// </summary>
         /// <returns></returns>
-        public ActionResult MonthlyPostAssessment() {
+        public ActionResult MonthlyPostAssessment()
+        {
 
             return View();
         }
@@ -178,5 +179,37 @@ namespace OpenAuth.Mvc.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult MonthStatistics2()
+        {
+            return View();
+        }
+
+        public ContentResult OutDataTmp1(int queryYear)
+        {
+            try
+            {
+                var rslt = App.GetMonthlyStatisticsAssessment2(queryYear) as System.Data.DataTable;
+
+                var tmp = Newtonsoft.Json.JsonConvert.SerializeObject(rslt);
+
+                var rsltStr = "{\"total\":" + rslt.Rows.Count + ",\"rows\":" + tmp + "}";
+
+                return Content(rsltStr);
+
+                //return Json(rslt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+    }
+
+    public class Reply<T>
+    {
+        public int total { get; set; } = 0;
+
+        public System.Collections.Generic.List<T> rows { get; set; } = new System.Collections.Generic.List<T>();
     }
 }
