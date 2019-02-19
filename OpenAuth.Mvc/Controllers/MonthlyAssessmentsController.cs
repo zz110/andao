@@ -168,6 +168,11 @@ namespace OpenAuth.Mvc.Controllers
             return JsonHelper.Instance.Serialize(Result);
         }
 
+        public ActionResult MonthlyPostAssessmentNoDepartmentScore()
+        {
+            return View();
+        }
+
         public ActionResult MonthStatistics()
         {
             return View();

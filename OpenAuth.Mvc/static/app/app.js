@@ -188,7 +188,7 @@
                 onClick: defaultSimpleZTreeOptions.onClick
             }
         };
-
+        
         $.getJSON(defaultSimpleZTreeOptions.url,
             {
                 page: 1, rows: 10000
