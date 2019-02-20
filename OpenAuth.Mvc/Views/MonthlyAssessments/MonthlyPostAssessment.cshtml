@@ -9,6 +9,8 @@
         <div class="row">
             <div class="col-xs-12 col-sm-12">
                 <div class="col-xs-12">
+                    <div class="col-xs-2" id="menuList">
+                    </div>
                     <div class="col-xs-2">
                         <select id="role" onchange="role_select(this.options[this.options.selectedIndex].value)" class="form-control">
                             @*<option value="">请选择职务</option>*@
@@ -81,14 +83,14 @@
         var deptType = '';
         var tbOpts = {
             type: 'csv',
-            fileName: '平均分统计分析',
+            fileName: '岗位履责考评结果',
         }
 
         var QueryObj = {};
 
 
         $(function () {
-
+            $("#menuList").loadMenus("evaluate_statistic_analysis");
             var date = new Date();
             var fullYear = date.getFullYear();
             var month = date.getMonth() + 1;
@@ -124,7 +126,7 @@
                         }
                     }, {
                         field: 'DepartmentMonthlyScore',
-                        title: '讲评得分',
+                        title: '讲评成绩',
                         formatter: function (value, row, index) {
                             return value.toFixed(2);
                         }
@@ -139,6 +141,7 @@
 
             App.init();
 
+            App.setExportOptions(tbOpts);
 
             _dataTable = App.initTable('/MonthlyAssessments/GetMonthlyPostAssessment', tbOptions);
 

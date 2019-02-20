@@ -8262,6 +8262,7 @@
     <Content Include="Views\StatisticalAnalysis\integrationscore.cshtml" />
     <Content Include="Views\StatisticalAnalysis\totalscore.cshtml" />
     <Content Include="Views\MonthlyAssessments\MonthStatistics2.cshtml" />
+    <Content Include="Views\MonthlyAssessments\MonthlyPostAssessmentNoDepartmentScore.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="layui\lay\modules\mobile\" />
