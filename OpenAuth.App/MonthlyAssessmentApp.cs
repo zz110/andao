@@ -87,10 +87,26 @@ namespace OpenAuth.App
             };
         }
 
+        public object GetTableColumns4MonthlyStatisticsAssessment2()
+        {
+            try
+            {
+                var haha = new SqlParameter("@QueryYear", DateTime.Now.Year);
+
+                var sql = "select 'YueFen' as field,'月份' as title,-1 as SortNo union all ";
+                sql += "select '['+[Name]+']' as field,[Name] as title,[SortNo] from [Org] order by [SortNo] ";
+
+                var rows = Repository.ExecuteQuerySql<TableColumns>(sql, haha).ToList();
+                return new { total = 10000, rows = rows };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public object GetMonthlyStatisticsAssessment2(int queryYear)
         {
-
-
             try
             {
                 var connStr = System.Configuration.ConfigurationManager.ConnectionStrings["OpenAuthDBContext"].ToString();

@@ -60,95 +60,113 @@
             $("#EvaluateYear").val(fullYear);
             $("#EvaluateMonth").val(month);
 
-            var tbOptions = {
-                pageList: [10000],
-                pageSize: 10000,
-                columns: [
-                    {
-                        field: 'YueFen',
-                        title: '月份'
-                    },
-                    {
-                        field: '[安全科]',
-                        title: '安全科'
-                    },
-                    {
-                        field: '[办公室]',
-                        title: '办公室'
-                    },
-                    {
-                        field: '[变电科]',
-                        title: '变电科'
-                    },
-                    {
-                        field: '[材料科]',
-                        title: '材料科'
-                    },
-                    {
-                        field: '[财务科]',
-                        title: '财务科'
-                    },
-                    {
-                        field: '[党办]',
-                        title: '党办'
-                    },
-                    {
-                        field: '[调度]',
-                        title: '调度'
-                    },
-                    {
-                        field: '[分析室]',
-                        title: '分析室'
-                    },
-                    {
-                        field: '[工程科]',
-                        title: '工程科'
-                    },
-                    {
-                        field: '[计量室]',
-                        title: '计量室'
-                    },
-                    {
-                        field: '[开发科]',
-                        title: '开发科'
-                    },
-                    {
-                        field: '[劳人科]',
-                        title: '劳人科'
-                    },
-                    {
-                        field: '[设备科]',
-                        title: '设备科'
-                    },
-                    {
-                        field: '[水电科]',
-                        title: '水电科'
-                    },
-                    {
-                        field: '[唐山供电段]',
-                        title: '唐山供电段'
-                    },
-                    {
-                        field: '[网技科]',
-                        title: '网技科'
-                    },
-                    {
-                        field: '[信息科]',
-                        title: '信息科'
-                    },
-                    {
-                        field: '[职教科]',
-                        title: '职教科'
-                    },
-                    {
-                        field: '[综治办]',
-                        title: '综治办'
-                    },
-                    {
-                        field: '[总部]',
-                        title: '总部'
-                    }]
-            }
+            var tbOptions;
+
+            $.ajax({
+                type: "get",
+                url: "/MonthlyAssessments/GetTableColumns4MonthlyStatisticsAssessment2",
+                async: false,
+                data: {},
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    tbOptions = {
+                        pageList: [10000],
+                        pageSize: 10000,
+                        columns: data.rows
+                    };
+                }
+            });
+
+            //var tbOptions = {
+            //    pageList: [10000],
+            //    pageSize: 10000,
+            //    columns: [
+            //        {
+            //            field: 'YueFen',
+            //            title: '月份'
+            //        },
+            //        {
+            //            field: '[安全科]',
+            //            title: '安全科'
+            //        },
+            //        {
+            //            field: '[办公室]',
+            //            title: '办公室'
+            //        },
+            //        {
+            //            field: '[变电科]',
+            //            title: '变电科'
+            //        },
+            //        {
+            //            field: '[材料科]',
+            //            title: '材料科'
+            //        },
+            //        {
+            //            field: '[财务科]',
+            //            title: '财务科'
+            //        },
+            //        {
+            //            field: '[党办]',
+            //            title: '党办'
+            //        },
+            //        {
+            //            field: '[调度]',
+            //            title: '调度'
+            //        },
+            //        {
+            //            field: '[分析室]',
+            //            title: '分析室'
+            //        },
+            //        {
+            //            field: '[工程科]',
+            //            title: '工程科'
+            //        },
+            //        {
+            //            field: '[计量室]',
+            //            title: '计量室'
+            //        },
+            //        {
+            //            field: '[开发科]',
+            //            title: '开发科'
+            //        },
+            //        {
+            //            field: '[劳人科]',
+            //            title: '劳人科'
+            //        },
+            //        {
+            //            field: '[设备科]',
+            //            title: '设备科'
+            //        },
+            //        {
+            //            field: '[水电科]',
+            //            title: '水电科'
+            //        },
+            //        {
+            //            field: '[唐山供电段]',
+            //            title: '唐山供电段'
+            //        },
+            //        {
+            //            field: '[网技科]',
+            //            title: '网技科'
+            //        },
+            //        {
+            //            field: '[信息科]',
+            //            title: '信息科'
+            //        },
+            //        {
+            //            field: '[职教科]',
+            //            title: '职教科'
+            //        },
+            //        {
+            //            field: '[综治办]',
+            //            title: '综治办'
+            //        },
+            //        {
+            //            field: '[总部]',
+            //            title: '总部'
+            //        }]
+            //}
 
             App.init();
 

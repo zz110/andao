@@ -184,6 +184,20 @@ namespace OpenAuth.Mvc.Controllers
             return View();
         }
 
+        public JsonResult GetTableColumns4MonthlyStatisticsAssessment2()
+        {
+            try
+            {
+                var rslt = App.GetTableColumns4MonthlyStatisticsAssessment2();
+
+                return Json(rslt, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public ContentResult OutDataTmp1(int queryYear)
         {
             try

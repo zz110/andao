@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace OpenAuth.Repository.Dto
 {
+    public class TableColumns
+    {
+        public string field { get; set; }
+        public string title { get; set; }
+    }
+
     public class MonthStatistics
     {
         public int 统计 { set; get; }
