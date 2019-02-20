@@ -8263,6 +8263,7 @@
     <Content Include="Views\StatisticalAnalysis\totalscore.cshtml" />
     <Content Include="Views\MonthlyAssessments\MonthStatistics2.cshtml" />
     <Content Include="Views\MonthlyAssessments\MonthlyPostAssessmentNoDepartmentScore.cshtml" />
+    <Content Include="Views\UserManager\ChangePwd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="layui\lay\modules\mobile\" />
