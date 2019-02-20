@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "MonthStatistics";
+    ViewBag.Title = "MonthStatistics2";
     Layout = "~/Views/Shared/_adminLTELayout.cshtml";
 }
 
@@ -28,7 +28,7 @@
 <div class="box box-default">
     <div class="row">
         <div class="col-xs-12 col-sm-12">
-            <table id="tbList" data-reorderable-columns="true" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"></table>
+            <table id="tbList"  class="layui-table" data-reorderable-columns="true" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"></table>
         </div>
     </div>
 </div>
@@ -43,7 +43,7 @@
         var deptType = '';
         var tbOpts = {
             type: 'csv',
-            fileName: '平均分统计分析',
+            fileName: '月度考核首末排名',
         }
 
         var QueryObj = {};

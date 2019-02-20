@@ -8,6 +8,7 @@ layui.config({
     var openauth = layui.openauth;
     var id = $.getUrlParam("id");      //待分配的id
     layui.droptree("/UserSession/GetOrgs", "#Organizations", "#OrganizationIds");
+
    
     //主列表加载，可反复调用进行刷新
     var config= {};  //table的参数，如搜索key，点击tree的id
@@ -32,7 +33,7 @@ layui.config({
                         for (var i = 0; i < res.data.length; i++) {
                             for (var j = 0; j < roles.length; j++) {
                                 if (res.data[i].Id != roles[j]) continue;
-
+                                
                                 //这里才是真正的有效勾选
                                 res.data[i]["LAY_CHECKED"] = true;
                                 //找到对应数据改变勾选样式，呈现出选中效果
@@ -58,6 +59,9 @@ layui.config({
             }
         });
     }
+
+
+
     //左边树状机构列表
     var ztree = function () {
         var url = '/UserSession/GetOrgs';

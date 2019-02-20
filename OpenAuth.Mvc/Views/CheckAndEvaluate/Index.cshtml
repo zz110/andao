@@ -53,8 +53,13 @@
     <script src="~/static/app/app.js"></script>
     <script>
         var _dataTable;
+        var tbOpts = {
+            type: 'csv',
+            fileName: '干部考评分',
+        }
+
         $(function () {
-            $("#menuList").loadMenus("CheckAndEvaluate");
+            $("#menuList").loadMenus("evaluate_statistic_analysis");
             var tbOptions = {
                 pageList: [10000],
                 pageSize: 10000,
@@ -91,6 +96,8 @@
                 form_url: '/CheckAndEvaluate/List/',
                 delete_url: '/CheckAndEvaluate/Delete'
             });
+
+            App.setExportOptions(tbOpts);
 
             _dataTable = App.initTable('/CheckAndEvaluate/List', tbOptions);
 
