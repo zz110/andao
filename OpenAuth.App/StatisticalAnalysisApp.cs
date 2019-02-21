@@ -73,7 +73,12 @@ namespace OpenAuth.App
 				                                sum(case Q5 when 11 then 1 else 0 end) as '廉_中', 
 				                                sum(case Q5 when 12 then 1 else 0 end) as '廉_差'
 			                                from Answer
-			                                where State='已提交' and year(Optime)=@EvaluateYear
+			                                where State='已提交' and year(Optime)=@EvaluateYear and (JudgeId in(
+                                select distinct a.FirstId from Relevance a  join [Role] b
+                                on a.SecondId=b.Id
+                                where a.[Key]='UserRole' and b.Name=@role
+
+                            ) or @role is null) 
 			                                group by JudgeId
 	                                ) as t1 left join [User] as u
 	                                on t1.JudgeId=u.Id
@@ -135,7 +140,12 @@ namespace OpenAuth.App
 												sum(case Q6 when 12 then 1 else 0 end) as '基本称职', 
 												sum(case Q6 when 13 then 1 else 0 end) as '不称职'
 											from Answer as a1
-											where State='已提交' and year(Optime)=@EvaluateYear
+											where State='已提交' and year(Optime)=@EvaluateYear and (JudgeId in(
+                                select distinct a.FirstId from Relevance a  join [Role] b
+                                on a.SecondId=b.Id
+                                where a.[Key]='UserRole' and b.Name=@role
+
+                            ) or @role is null) 
 											group by JudgeId 
 	                                ) as t1 left join [User] as u
 	                                on t1.JudgeId=u.Id
@@ -216,7 +226,12 @@ namespace OpenAuth.App
 				                                                        sum(case Q5 when 11 then 1 else 0 end) as '廉_中', 
 				                                                        sum(case Q5 when 12 then 1 else 0 end) as '廉_差'
 			                                                        from Answer
-			                                                        where State='已提交' and year(Optime)=@EvaluateYear
+			                                                        where State='已提交' and year(Optime)=@EvaluateYear and (JudgeId in(
+                                select distinct a.FirstId from Relevance a  join [Role] b
+                                on a.SecondId=b.Id
+                                where a.[Key]='UserRole' and b.Name=@role
+
+                            ) or @role is null) 
 			                                                        group by JudgeId
 	                                                        ) as t1 left join [User] as u
 	                                                        on t1.JudgeId=u.Id
@@ -260,7 +275,12 @@ namespace OpenAuth.App
 					                        sum(case Q6 when 12 then 1 else 0 end) as '基本称职', 
 					                        sum(case Q6 when 13 then 1 else 0 end) as '不称职'
 				                        from Answer as a1
-				                        where State='已提交' and year(Optime)=@EvaluateYear
+				                        where State='已提交' and year(Optime)=@EvaluateYear and (JudgeId in(
+                                select distinct a.FirstId from Relevance a  join [Role] b
+                                on a.SecondId=b.Id
+                                where a.[Key]='UserRole' and b.Name=@role
+
+                            ) or @role is null) 
 				                        group by JudgeId 
 		                        ) as t1 left join [User] as u
 		                        on t1.JudgeId=u.Id

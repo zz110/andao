@@ -38,10 +38,18 @@
                     </div>
                     <div class="col-xs-2">
                         <select class="form-control" id="Category">
-                            <option value="">请选择类别</option>
-                            <option value="正职">正职</option>
-                            <option value="副职">副职</option>
+                            <option value="">请选择职务</option>
+                            <option value="中层正职">中层正职</option>
+                            <option value="中层副职">中层副职</option>
                             <option value="一般干部">一般干部</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-2">
+                        <select id="DeptType" onchange="dept_type_select(this.options[this.options.selectedIndex].value)" class="form-control">
+                            <option value="">请选择部门类别</option>
+                            <option value="车间">车间</option>
+                            <option value="专业科室">专业科室</option>
+                            <option value="综合科室">综合科室</option>
                         </select>
                     </div>
                     <div class="col-xs-1">
@@ -165,7 +173,7 @@
                 var UserName = $("#UserName").val();
                 var OrgName = $("#OrgName").val();
                 var Category = $("#Category").val();
-
+                var DeptType = $("#DeptType").val();
                 if (isNaN(EvaluateYear) || (EvaluateYear < 1977 || EvaluateYear > 9999)) {
 
                     swal("提示", "请输入合法的年份", "warning");
@@ -177,7 +185,8 @@
                     EvaluateMonth: EvaluateMonth,
                     Category: Category,
                     UserName: UserName,
-                    OrgName: OrgName
+                    OrgName: OrgName,
+                    DeptType: DeptType
                 });
 
                 _dataTable.Refresh();

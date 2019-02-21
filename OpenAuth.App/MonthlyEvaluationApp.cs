@@ -30,7 +30,7 @@ namespace OpenAuth.App
                                                        and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null)
                                                        and (c.Name like '%'+@UserName+'%' or @UserName is null)
                                                        and (b.Name like '%'+@OrgName+'%' or @OrgName is null)
-                                                       
+                                                       and (b.BizCode=@DeptType or (@DeptType='' or @DeptType is null or @DeptType='')) 
                             ) as t where num > ({limit}*({offset}-1))";
 
             var rows = Repository.ExecuteQuerySql<MonthlyEvaluationOutput>(sql, input.ToParameters()).ToList();
@@ -43,7 +43,8 @@ namespace OpenAuth.App
                     and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
                     and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null)
                     and (c.Name like '%'+@UserName+'%'  or @UserName is null)
-                    and (b.Name like '%'+@OrgName+'%' or @OrgName is null)";
+                    and (b.Name like '%'+@OrgName+'%' or @OrgName is null)
+                    and (b.BizCode=@DeptType or (@DeptType='' or @DeptType is null or @DeptType='')) ";
 
             int total = Repository.ExecuteQuerySql<int>(sql, input.ToParameters()).FirstOrDefault();
 

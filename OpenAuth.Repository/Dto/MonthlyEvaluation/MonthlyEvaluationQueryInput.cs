@@ -19,5 +19,7 @@ namespace OpenAuth.Repository.Dto
         public string UserName { get; set; }
 
         public string OrgName { get; set; }
+
+        public string DeptType { get; set; }
     }
 }

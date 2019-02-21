@@ -39,7 +39,12 @@ namespace OpenAuth.App
       ,a.[JudgeId],a.Optime
       , Datename(year,a.[Optime])  State
                                                        from PerformanceAppraisal a left join [User] c
-                                                       on a.JudgeId=c.Id 
+                                                       on a.JudgeId=c.Id where Datename(year,a.[Optime]) =@EvaluateYear and (JudgeId in(
+                                select distinct a.FirstId from Relevance a  join [Role] b
+                                on a.SecondId=b.Id
+                                where a.[Key]='UserRole' and b.Name=@role
+
+                            ) or @role is null) 
  
                                                        
                             ) as t where num > ({limit}*({offset}-1))";
@@ -71,7 +76,7 @@ namespace OpenAuth.App
 
         }
 
-        public List<PerformanceAppraisalOutPut> List(string year,string type)
+        public List<PerformanceAppraisalOutPut> List(string year,string type,string DeptType)
         {
             string sql = $@"select top 1000 JudgeId,JudgeName,
                             (select SUM(Score)/12 from MonthlyAssessment 
@@ -145,7 +150,8 @@ namespace OpenAuth.App
                             ) as t 
                             left join Relevance r on r.FirstId = t.JudgeId 
                             inner join [Role] ro on ro.Id = r.SecondId 
-                            where num > 0 and (ro.Name = '{ type }' or '{ type }' = '') 
+                            inner join Org o on o.Id = r.SecondId 
+                            where num > 0 and (ro.Name = '{ type }' or '{ type }' = '') and (o.BizCode='{DeptType}' or ('{DeptType}'='' or '{DeptType}' is null ))  
                             group by JudgeId,JudgeName";
             var rows = Repository.ExecuteQuerySql<PerformanceAppraisalOutPut>(sql).ToList();
 
