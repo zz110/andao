@@ -83,11 +83,14 @@ layui.config({
         if (!obj.checked) {
             url = "/RelevanceManager/UnAssign";
         }
-        $.post(url, { type: type, firstId: id, secIds: [obj.data.Id] }
-                       , function (data) {
-                           layer.msg(data.Message);
-                       }
-                      , "json");
+        var ids = id.split(',');
+        $.each(ids, function (i, v) {
+            $.post(url, { type: type, firstId: v, secIds: [obj.data.Id] }
+                , function (data) {
+                }
+                , "json");
+        })
+
     });
     //监听页面主按钮操作 end
 })
