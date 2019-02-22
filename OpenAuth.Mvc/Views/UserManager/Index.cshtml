@@ -44,7 +44,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">账号</label>
             <div class="layui-input-block">
-                <input type="text" name="Account" v-model="Account" required lay-verify="required"
+                <input type="text" name="Account" v-model="Account" required lay-verify="required" id="Account"
                        placeholder="请输入登录账号" autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -79,7 +79,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">身份证号</label>
             <div class="layui-input-block">
-                <input type="text" name="CardId" v-model="CardId" required lay-verify="required"
+                <input type="text" name="CardId" id="CardId" v-model="CardId" required lay-verify="required" onblur="showAccountAndPwd(this)"
                        placeholder="身份证号" autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -119,3 +119,9 @@
 
 <script type="text/javascript" src="/layui/layui.js"></script>
 <script type="text/javascript" src="/userJs/users.js"></script>
+
+<script type="text/javascript">
+    function showAccountAndPwd(obj) {
+        document.getElementById("Account").value = document.getElementById("CardId").value;
+    }
+</script>

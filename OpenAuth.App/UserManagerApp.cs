@@ -77,7 +77,7 @@ namespace OpenAuth.App
                     throw new Exception("用户账号已存在");
                 }
                 user.CreateTime = DateTime.Now;
-                user.Password = user.Account; //初始密码与账号相同
+                user.Password = user.Account.Substring(user.Account.Length-6); //初始密码与账号相同
                 Repository.Add(user);
                 view.Id = user.Id;   //要把保存后的ID存入view
             }
