@@ -112,8 +112,17 @@ layui.config({
         console.log(obj.checked); //当前是否选中状态
         console.log(obj.data); //选中行的相关数据
         console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
-        var cc = '<button class="layui-btn name" onclick="rem(this)" style="margin:10px" tag="' + obj.data.Id + '" >' + obj.data.Name + '</button>';
-        $('.layui-card-body').append(cc);
+        debugger;
+        if (obj.type == "all") {
+            var checkStatus = table.checkStatus('mainList');
+            $.each(checkStatus.data, function (i, v) {
+                var cc = '<button class="layui-btn name" onclick="rem(this)" style="margin:10px" tag="' + v.Id + '" >' + v.Name + '</button>';
+                $('.layui-card-body').append(cc);
+            })
+        } else {
+            var cc = '<button class="layui-btn name" onclick="rem(this)" style="margin:10px" tag="' + obj.data.Id + '" >' + obj.data.Name + '</button>';
+            $('.layui-card-body').append(cc);
+        }
     });
     //监听页面主按钮操作 end
 
