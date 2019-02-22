@@ -59,24 +59,36 @@ namespace OpenAuth.Mvc.Controllers
                 for (int i = 0; i < ll.Length; i++)
                 {
                     var temp = ll[i];
+                   
+                    
                     //部门信息
                     var part = Rapp.Repository.FindSingle(d => d.Key == "UserOrg" && d.FirstId == temp).SecondId;
                     var part1 = Oapp.Repository.FindSingle(d => d.Id == part);
                     var user = Uapp.Repository.FindSingle(d => d.Id == temp);
-                    var answer = Aapp.Repository.FindSingle(d =>
-                                                                 d.PlanName == testId &&
-                                                                 d.State != "已提交" &&
-                                                                 d.JudgeId == temp &&
-                                                                 d.RatersId == userId);
-                    if (answer==null)
+
+                    Answer answer = null;
+
+                    try
                     {
-                         ob = new { name = user.Name, part = part1.Name, id = user.Id, state = "待评价" };
+                        answer = Aapp.Repository.FindSingle(d =>
+                                                                     d.PlanName == testId &&
+                                                                     d.State == "已提交" &&
+                                                                     d.JudgeId == temp &&
+                                                                     d.RatersId == userId);
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+
+                    if (answer == null)
+                    {
+                        ob = new { name = user.Name, part = part1.Name, id = user.Id, state = "待评价" };
                     }
                     else
                     {
-                         ob = new { name = user.Name, part = part1.Name, id = user.Id, state =  answer.State  };
+                        ob = new { name = user.Name, part = part1.Name, id = user.Id, state = answer.State };
                     }
-                    
+
                     result.Add(ob);
                 }
                 if (ll.Length > 0)
