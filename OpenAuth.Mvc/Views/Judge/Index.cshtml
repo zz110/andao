@@ -135,8 +135,8 @@
         <script src="~/static/app/app.js"></script>
         <script>
             var userId = '@ViewBag.user.Id';
-            var planid = "";
             var planname = "";
+            var planid = "";
             $(function () {
 
                 $("#btnSearch").click(function () {
@@ -150,15 +150,14 @@
                             rep = JSON.parse(rep);
                             if (rep.code == 1) {
 
-                                planid = rep.planid;
                                 var items = rep.list;
 
                                 var html = "<ul  class='list-group'>";
                                 $.each(rep.list, function (i, v) {
-                                    html = html + "<li  class='list-group-item list-group-item-warning' style='width: 250px'>部门:" + v.part + "<br/>姓名:" + v.name + "<br/>状态:" + v.state ;
+                                    html = html + "<li  class='list-group-item list-group-item-warning' style='width: 250px'>方案名称:" + v.PlanName + "<br/>部门:" + v.part + "<br/>姓名:" + v.name + "<br/>状态:" + v.state;
                                     if (v.state != '已提交')
                                     {
-                                        html = html + "<br /><input type='button' class='btn btn-primary' value='开始评测' onclick=ShowPc('" + v.id + "','" + v.state + "','" + v.name + "','" + v.part + "') /></li>";
+                                        html = html + "<br /><input type='button' class='btn btn-primary' value='开始评测' onclick=ShowPc('" + v.id + "','" + v.state + "','" + v.name + "','" + v.part + "','" + v.planid + "','" + v.PlanName + "') /></li>";
                                     }else {
                                         html = html + "</li>";
                                     }
@@ -177,7 +176,9 @@
             });
 
             var JudgeId = '';
-            function ShowPc(id, state, name, part) {
+            function ShowPc(id, state, name, part, pid, pname) {
+                planid = pid;
+                planname = pname;
                 JudgeId = id;
                 $('input:radio').prop("checked", false);
                 $("#forPc").html("当前被评测人:<br/>部门:" + part + "<br>姓名:" + name);

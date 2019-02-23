@@ -47,7 +47,7 @@
                                data-toggle="modal"
                                data-target="#modal-default"
                                maxlength="10"
-                               minlength="2"
+                               minlength="2" readonly   
                                class="form-control required"
                                placeholder="请选择部门" />
                     </div>
@@ -74,7 +74,7 @@
                         <input type="text"
                                autocomplete="off"
                                name="RegistrationTime"
-                               ng-model="model.RegistrationTime"
+                               ng-model="model.RegistrationTime"  readonly 
                                class="form-control adminlte_datepicker RegistrationTime required" placeholder="请选择登记时间" />
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                         <input type="text"
                                autocomplete="off"
                                name="Name"
-                               ng-model="model.Name"
+                               ng-model="model.Name" value="" id="Name"
                                readonly
                                class="form-control required" />
                     </div>
@@ -99,7 +99,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">性别:</label>
                     <div class="col-sm-9">
-                        <select class="form-control" name="UserId" ng-model="model.Sex" ng-change="UserSelected(model.Sex)">
+                        <select class="form-control" name="UserId" ng-model="model.Sex" ng-change="UserSelected(model.Sex)" readonly >
                             <option value="" ng-selected="'' == model.UserId">--请选择--</option>
                             <option ng-repeat="item in SexList"
                                     ng-selected="item == model.Sex"
@@ -116,8 +116,8 @@
                     <div class="col-sm-9">
                         <input type="text"
                                autocomplete="off"
-                               name="Birthday"
-                               ng-model="model.Birthday"
+                               name="Birthday" readonly 
+                               ng-model="model.Birthday" readonly 
                                class="form-control adminlte_datepicker Birthday required" placeholder="请选择出生日期" />
                     </div>
                 </div>
@@ -667,6 +667,9 @@
                 checkboxClass: 'icheckbox_minimal-blue',
                 radioClass: 'iradio_minimal-blue'
             });
+
+
+
         });
     </script>
 
