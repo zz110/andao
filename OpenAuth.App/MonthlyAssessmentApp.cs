@@ -87,14 +87,17 @@ namespace OpenAuth.App
             };
         }
 
-        public object GetTableColumns4MonthlyStatisticsAssessment2()
+        public object GetTableColumns4MonthlyStatisticsAssessment2(string deptType)
         {
             try
             {
-                var haha = new SqlParameter("@QueryYear", DateTime.Now.Year);
+                var haha = new SqlParameter("@BizCode", DateTime.Now.ToString());
 
                 var sql = "select 'YueFen' as field,'月份' as title,-1 as SortNo union all ";
-                sql += "select '['+[Name]+']' as field,[Name] as title,[SortNo] from [Org] order by [SortNo] ";
+                sql += "select '['+[Name]+']' as field,[Name] as title,[SortNo] from [Org] ";
+                if (!string.IsNullOrEmpty(deptType))
+                    sql += "where [BizCode]='"+ deptType + "' ";
+                sql += "order by [SortNo] ";
 
                 var rows = Repository.ExecuteQuerySql<TableColumns>(sql, haha).ToList();
                 return new { total = 10000, rows = rows };
@@ -105,7 +108,7 @@ namespace OpenAuth.App
             }
         }
 
-        public object GetMonthlyStatisticsAssessment2(int queryYear)
+        public object GetMonthlyStatisticsAssessment2(int queryYear, string role, string DeptType)
         {
             try
             {
@@ -117,8 +120,15 @@ namespace OpenAuth.App
 
                     SqlCommand sqlComm = new SqlCommand("PROC_TMP1", sqlConn);
                     sqlComm.CommandType = CommandType.StoredProcedure;
-                    sqlComm.Parameters.Add(new SqlParameter("@QueryYear", SqlDbType.Int));
-                    sqlComm.Parameters["@QueryYear"].Value = queryYear;
+
+                    sqlComm.Parameters.Add(new SqlParameter("@QueryYear", SqlDbType.VarChar));
+                    sqlComm.Parameters["@QueryYear"].Value = queryYear.ToString();
+
+                    sqlComm.Parameters.Add(new SqlParameter("@RoleType", SqlDbType.NVarChar));
+                    sqlComm.Parameters["@RoleType"].Value = role;
+
+                    sqlComm.Parameters.Add(new SqlParameter("@OrgType", SqlDbType.NVarChar));
+                    sqlComm.Parameters["@OrgType"].Value = DeptType;
 
                     var dt = new DataTable();
                     SqlDataReader sqlReader = sqlComm.ExecuteReader(CommandBehavior.CloseConnection);

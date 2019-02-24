@@ -189,11 +189,11 @@ namespace OpenAuth.Mvc.Controllers
             return View();
         }
 
-        public JsonResult GetTableColumns4MonthlyStatisticsAssessment2(MonthlyPostAssessmentQueryInput input)
+        public JsonResult GetTableColumns4MonthlyStatisticsAssessment2(string deptType)
         {
             try
             {
-                var rslt = App.GetTableColumns4MonthlyStatisticsAssessment2();
+                var rslt = App.GetTableColumns4MonthlyStatisticsAssessment2(deptType);
 
                 return Json(rslt, JsonRequestBehavior.AllowGet);
             }
@@ -203,11 +203,11 @@ namespace OpenAuth.Mvc.Controllers
             }
         }
 
-        public ContentResult OutDataTmp1(int queryYear)
+        public ContentResult OutDataTmp1(int queryYear,string role,string DeptType)
         {
             try
             {
-                var rslt = App.GetMonthlyStatisticsAssessment2(queryYear) as System.Data.DataTable;
+                var rslt = App.GetMonthlyStatisticsAssessment2(queryYear,role,DeptType) as System.Data.DataTable;
 
                 var tmp = Newtonsoft.Json.JsonConvert.SerializeObject(rslt);
 

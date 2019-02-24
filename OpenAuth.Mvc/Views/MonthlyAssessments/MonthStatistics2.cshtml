@@ -17,9 +17,9 @@
                     <div class="col-xs-2">
                         <select id="role" onchange="role_select(this.options[this.options.selectedIndex].value)" class="form-control">
                             <option value="">请选择职务</option>
-                            <option value="中层正职">中层正职</option>
-                            <option value="中层副职">中层副职</option>
-                            <option value="一般干部">一般干部</option>
+                            <option value="正职">中层正职</option>
+                            <option value="副职">中层副职</option>
+                            <option value="一般">一般干部</option>
                         </select>
                     </div>
                     <div class="col-xs-2">
@@ -43,7 +43,7 @@
 <div class="box box-default">
     <div class="row">
         <div class="col-xs-12 col-sm-12">
-            <table id="tbList"  class="layui-table" data-reorderable-columns="true" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"></table>
+            <table id="tbList" class="layui-table" data-reorderable-columns="true" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"></table>
         </div>
     </div>
 </div>
@@ -54,6 +54,8 @@
 
     <script type="text/javascript">
         var _dataTable;
+        var tbOptions;
+
         var role = '';
         var deptType = '';
         var tbOpts = {
@@ -71,129 +73,13 @@
             var date = new Date();
             var fullYear = date.getFullYear();
             var month = date.getMonth() + 1;
-
             $("#EvaluateYear").val(fullYear);
-            $("#EvaluateMonth").val(month);
-
-            var tbOptions;
-
-            $.ajax({
-                type: "get",
-                url: "/MonthlyAssessments/GetTableColumns4MonthlyStatisticsAssessment2",
-                async: false,
-                data: {},
-                dataType: "json",
-                success: function (data) {
-                    console.log(data);
-                    tbOptions = {
-                        pageList: [10000],
-                        pageSize: 10000,
-                        columns: data.rows
-                    };
-                }
-            });
-
-            //var tbOptions = {
-            //    pageList: [10000],
-            //    pageSize: 10000,
-            //    columns: [
-            //        {
-            //            field: 'YueFen',
-            //            title: '月份'
-            //        },
-            //        {
-            //            field: '[安全科]',
-            //            title: '安全科'
-            //        },
-            //        {
-            //            field: '[办公室]',
-            //            title: '办公室'
-            //        },
-            //        {
-            //            field: '[变电科]',
-            //            title: '变电科'
-            //        },
-            //        {
-            //            field: '[材料科]',
-            //            title: '材料科'
-            //        },
-            //        {
-            //            field: '[财务科]',
-            //            title: '财务科'
-            //        },
-            //        {
-            //            field: '[党办]',
-            //            title: '党办'
-            //        },
-            //        {
-            //            field: '[调度]',
-            //            title: '调度'
-            //        },
-            //        {
-            //            field: '[分析室]',
-            //            title: '分析室'
-            //        },
-            //        {
-            //            field: '[工程科]',
-            //            title: '工程科'
-            //        },
-            //        {
-            //            field: '[计量室]',
-            //            title: '计量室'
-            //        },
-            //        {
-            //            field: '[开发科]',
-            //            title: '开发科'
-            //        },
-            //        {
-            //            field: '[劳人科]',
-            //            title: '劳人科'
-            //        },
-            //        {
-            //            field: '[设备科]',
-            //            title: '设备科'
-            //        },
-            //        {
-            //            field: '[水电科]',
-            //            title: '水电科'
-            //        },
-            //        {
-            //            field: '[唐山供电段]',
-            //            title: '唐山供电段'
-            //        },
-            //        {
-            //            field: '[网技科]',
-            //            title: '网技科'
-            //        },
-            //        {
-            //            field: '[信息科]',
-            //            title: '信息科'
-            //        },
-            //        {
-            //            field: '[职教科]',
-            //            title: '职教科'
-            //        },
-            //        {
-            //            field: '[综治办]',
-            //            title: '综治办'
-            //        },
-            //        {
-            //            field: '[总部]',
-            //            title: '总部'
-            //        }]
-            //}
+            $("#EvaluateMonth").val(month);    
 
             App.init();
-
             App.setExportOptions(tbOpts);
 
-            _dataTable = App.initTable('/MonthlyAssessments/OutDataTmp1', tbOptions);
-
-            _dataTable.SetParameters({
-                queryYear: parseInt($("#EvaluateYear").val())
-            });
-
-            _dataTable.Init();
+            InitTable();                        
 
             $("#btnSearch").click(function () {
 
@@ -206,13 +92,77 @@
                 }
 
                 QueryObj = {
-                    queryYear: parseInt($("#EvaluateYear").val())
+                    queryYear: parseInt($("#EvaluateYear").val()),
+                    role: $("#role").val(),
+                    DeptType: $("#DeptType").val()
                 };
 
+                InitTable();
+
                 _dataTable.SetParameters(QueryObj);
-                _dataTable.Refresh();
+                _dataTable.Refresh();                
             });
+            
         });
+
+        function role_select(value) {
+
+            QueryObj = {
+                queryYear: parseInt($("#EvaluateYear").val()),
+                role: $("#role").val(),
+                DeptType: $("#DeptType").val()
+            };
+
+            InitTable();
+
+            _dataTable.SetParameters(QueryObj);
+            _dataTable.Refresh();
+        }
+
+        function dept_type_select(value) {
+
+            QueryObj = {
+                queryYear: parseInt($("#EvaluateYear").val()),
+                role: $("#role").val(),
+                DeptType: $("#DeptType").val()
+            };
+
+            InitTable();
+
+            _dataTable.SetParameters(QueryObj);
+            _dataTable.Refresh();
+        }
+
+        function InitTable() {
+
+            $("#tbList").bootstrapTable('destroy');
+
+            $.ajax({
+                type: "get",
+                url: "/MonthlyAssessments/GetTableColumns4MonthlyStatisticsAssessment2",
+                async: false,
+                data: {
+                    deptType: $("#DeptType").val()
+                },
+                dataType: "json",
+                success: function (data) {
+                    //console.log(data);
+                    tbOptions = {
+                        pageList: [10000],
+                        pageSize: 10000,
+                        columns: data.rows
+                    };
+                }
+            });
+
+            _dataTable = App.initTable('/MonthlyAssessments/OutDataTmp1', tbOptions);
+            _dataTable.SetParameters({
+                queryYear: parseInt($("#EvaluateYear").val()),
+                role: $("#role").val(),
+                DeptType: $("#DeptType").val()
+            });
+            _dataTable.Init();
+        }
     </script>
 }
 
