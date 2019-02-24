@@ -14,7 +14,7 @@ namespace OpenAuth.App
     {
         public RevelanceManagerApp ReleManagerApp { get; set; }
 
-        public object page(int limit, int offset, Answer input)
+        public object page(int limit, int offset, AnswerSearch input)
         {
 
             offset += 1;
@@ -27,7 +27,7 @@ namespace OpenAuth.App
                                                        
                             ) as t where num > ({limit}*({offset}-1))";
 
-            var rows = Repository.ExecuteQuerySql<Answer>(sql, input.ToParameters()).ToList();
+            var rows = Repository.ExecuteQuerySql<AnswerSearch>(sql, input.ToParameters()).ToList();
 
             sql = @"select count(*) from Answer ";
 

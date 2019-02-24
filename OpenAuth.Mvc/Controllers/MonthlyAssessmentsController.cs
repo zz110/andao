@@ -189,7 +189,7 @@ namespace OpenAuth.Mvc.Controllers
             return View();
         }
 
-        public JsonResult GetTableColumns4MonthlyStatisticsAssessment2()
+        public JsonResult GetTableColumns4MonthlyStatisticsAssessment2(MonthlyPostAssessmentQueryInput input)
         {
             try
             {

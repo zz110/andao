@@ -56,7 +56,7 @@ namespace OpenAuth.Mvc.Controllers
         }
 
         [System.Web.Mvc.HttpGet]
-        public ActionResult page(int limit, int offset, Answer input)
+        public ActionResult page(int limit, int offset, AnswerSearch input)
         {
             var result = App.page(limit, offset, input);
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -67,7 +67,7 @@ namespace OpenAuth.Mvc.Controllers
         /// </summary>
         public string Load([FromUri]QueryAnswerListReq request)
         {
-            Answer input = new Answer();
+            AnswerSearch input = new AnswerSearch();
             var result = App.page(1000, 0, input);
             return JsonHelper.Instance.Serialize(result);
         }

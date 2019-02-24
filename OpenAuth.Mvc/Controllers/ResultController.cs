@@ -46,7 +46,7 @@ namespace OpenAuth.Mvc.Controllers
             object ob = null;
 
             var list = Papp.Repository.Find(
-                                                    d => 
+                                                    d => (testId=="" || d.PlanName==testId)&&
                                                     d.State == 1 &&
                                                     d.PlanStart < DateTime.Now &&
                                                     d.PlanEnd > DateTime.Now &&
@@ -55,7 +55,8 @@ namespace OpenAuth.Mvc.Controllers
             {
                 List<object> result = new List<object>();
                 for (int k = 0; k < list.Count(); k++) {
-                    
+                    Plan p = list[k];
+                    string planId = p.Id;
                     //被测评人Ids
                     var ll = list[k].JudgeId.TrimEnd(',').Split(',');
                     for (int i = 0; i < ll.Length; i++)
@@ -68,30 +69,27 @@ namespace OpenAuth.Mvc.Controllers
                         var part1 = Oapp.Repository.FindSingle(d => d.Id == part);
                         var user = Uapp.Repository.FindSingle(d => d.Id == temp);
 
-                        Answer answer = null;
-
-                        try
-                        {
-                            answer = Aapp.Repository.FindSingle(d =>
-
-                                                                         d.State == "已提交" &&
+                        var answer
+                             = Aapp.Repository.FindSingle(d =>
+                                                                         d.PlanId == planId &&
                                                                          d.JudgeId == temp &&
                                                                          d.RatersId == userId);
-                        }
-                        catch (Exception ex)
-                        {
-                        }
 
                         if (answer == null)
                         {
                             ob = new { name = user.Name, part = part1.Name, id = user.Id, state = "待评价", PlanName = list[k].PlanName, planid= list[k].Id };
+                            result.Add(ob);
                         }
                         else
                         {
-                            ob = new { name = user.Name, part = part1.Name, id = user.Id, state = answer.State, PlanName = list[k].PlanName, planid = list[k].Id };
+                            if (answer.State != "已提交")
+                            {
+                                ob = new { name = user.Name, part = part1.Name, id = user.Id, state = answer.State, PlanName = list[k].PlanName, planid = list[k].Id };
+                                result.Add(ob);
+                            }
                         }
 
-                        result.Add(ob);
+                        
                     }
                    
                 }

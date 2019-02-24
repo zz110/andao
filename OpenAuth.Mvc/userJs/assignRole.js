@@ -35,11 +35,12 @@ layui.config({
                                 if (res.data[i].Id != roles[j]) continue;
                                 
                                 //这里才是真正的有效勾选
-                                res.data[i]["LAY_CHECKED"] = true;
+                                res.data[i]["layTableRadio"] = true;
                                 //找到对应数据改变勾选样式，呈现出选中效果
                                 var index = res.data[i]['LAY_TABLE_INDEX'];
-                                $('.layui-table-fixed-l tr[data-index=' + index + '] input[type="checkbox"]').prop('checked', true);
-                                $('.layui-table-fixed-l tr[data-index=' + index + '] input[type="checkbox"]').next().addClass('layui-form-checked');
+                                $('.layui-table tr[data-index=' + index + '] input[name="layTableRadio"]').prop('checked', true);
+
+                                form.render();
                             }
                             
                         }
@@ -105,7 +106,7 @@ layui.config({
 
 
     //分配及取消分配
-    table.on('checkbox(list)', function (obj) {
+    table.on('radio(list)', function (obj) {
         console.log(obj.checked); //当前是否选中状态
         console.log(obj.data); //选中行的相关数据
         console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one

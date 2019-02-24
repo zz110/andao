@@ -84,6 +84,5 @@ namespace OpenAuth.Repository.Domain
 	    /// </summary>
         public string PlanName { get; set; }
 
-
     }
 }
