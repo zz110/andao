@@ -1046,22 +1046,26 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function (exports) {
     //表格选中状态
     table.checkStatus = function (id) {
         var nums = 0
+            , invalidNum = 0
             , arr = []
-            , data = table.cache[id];
-        if (!data) return {};
+            , data = table.cache[id] || [];
         //计算全选个数
-        $.each(data, function (i, item) {
+        layui.each(data, function (i, item) {
+            if (item.constructor === Array) {
+                invalidNum++; //无效数据，或已删除的
+                return;
+            }
             if (item[table.config.checkName]) {
                 nums++;
                 arr.push(table.clearCacheKey(item));
-                return false;
             }
         });
         return {
             data: arr //选中的数据
-            , isAll: nums === data.length //是否全选
+            , isAll: data.length ? (nums === (data.length - invalidNum)) : false //是否全选
         };
     };
+
 
     //表格单选框选中状态
     table.radioStatus = function (id) {
