@@ -97,6 +97,12 @@ namespace OpenAuth.Mvc.Controllers
             App.Repository.Update(d => d.Id == id, d => new Plan { JudgeId = ids });
             return JsonHelper.Instance.Serialize(new { msg = "成功" });
         }
+
+        public JsonResult UpState(string ids)
+        {
+            App.Repository.Update(d => ids.Contains(d.Id), d => new Plan { State = 1 });
+            return Json(new { msg = "成功" });
+        }
         public string LoadUser(string Id)
         {
             var list = App.Repository.FindSingle(d => d.Id == Id).RatersId;

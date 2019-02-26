@@ -247,6 +247,37 @@
                 var A4 = $('input:radio[name="4"]:checked').val();
                 var A5 = $('input:radio[name="5"]:checked').val();
                 var A6 = $('input:radio[name="6"]:checked').val();
+                
+                if(A1==undefined||A1=="")
+                {
+                    alert("请选择第一题");
+                    return;
+                }
+                if(A2==undefined||A2=="")
+                {
+                    alert("请选择第二题");
+                    return;
+                }
+                if(A3==undefined||A3=="")
+                {
+                    alert("请选择第三题");
+                    return;
+                }
+                if(A4==undefined||A4=="")
+                {
+                    alert("请选择第四题");
+                    return;
+                }
+                if(A5==undefined||A5=="")
+                {
+                    alert("请选择第五题");
+                    return;
+                }
+                if(A6==undefined||A6=="")
+                {
+                    alert("请选择第六题");
+                    return;
+                }
                 $.post("/Result/sub", {
                     Q1: A1 == undefined ? '' : A1,
                     Q2: A2 == undefined ? '' : A2,
