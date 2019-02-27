@@ -35,10 +35,10 @@
                             <option value="12">12</option>
                         </select>
                     </div>
-                    <div class="col-xs-1">
+                    <div class="col-xs-2">
                         <input type="text" id="UserName"  autocomplete="off" class="form-control" placeholder="请输入姓名">
                     </div>
-                    <div class="col-xs-1">
+                    <div class="col-xs-2">
                         <input type="text" id="OrgName"  autocomplete="off" class="form-control" placeholder="请输入部门">
                     </div>
                     <div class="col-xs-1">
@@ -121,14 +121,26 @@
                         title: '月'
                     }, {
                         field: 'AnntubeScore',
-                        title: '安管成绩'
+                        title: '安管成绩',
+                        formatter:
+                            function (value, row, index) {
+                                return "<input type='text' value='" + value + "' />";
+                            }
                     }, {
                         field: 'QuantifyScore',
-                        title: '标准化成绩'
+                        title: '标准化成绩',
+                        formatter:
+                            function (value, row, index) {
+                                return "<input type='text' value='" + value + "' />";
+                            }
                     }, 
                     {
                         field: 'Score',
-                        title: '月度考核总成绩'
+                        title: '月度考核总成绩',
+                        formatter:
+                            function (value, row, index) {
+                                return "<input type='text' value='" + value + "' />";
+                            }
                     }, {
                         field: 'CreateTime',
                         title: '创建时间'
