@@ -22,16 +22,15 @@ layui.config({
                 //如果是异步请求数据方式，res即为你接口返回的信息。
                 //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
 
-                $.ajax("/Plans/LoadUser?Id=" + id, {
+                $.ajax("/Plans/LoadJudgeAndDept?Id=" + id, {
                     async: false
                     , dataType: 'json'
                     , success: function (json) {
                         if (json.Code == 500) return;
-                        //var roles = json.Result;
-                        var str = json.split(',');
-                        
-                        for (var i = 0; i < str.length; i++) {
-                            var cc = '<button class="layui-btn name" onclick="rem(this)" style="margin:10px" tag="' + obj.data.Id + '" >' + obj.data.Name + '</button>';
+                        var roles = json.Result;
+
+                        for (var i = 0; i < json.length; i++) {
+                            var cc = '<button class="layui-btn name" onclick="rem(this)" style="margin:10px" tag="' + json[i].Id + '" >' + json[i].Name + '</button>';
                             $('.layui-card-body').append(cc);
                         }
                         

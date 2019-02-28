@@ -21,7 +21,14 @@ namespace OpenAuth.App
 
         public object page(int limit, int offset, MonthlyAssessmentQueryInput input)
         {
-
+            User user = AuthUtil.GetCurrentUser().User;
+            List<Relevance> rli = ReleManagerApp.Repository.Find(i => i.FirstId == user.Id && i.Key == "UserOrg").ToList<Relevance>();
+            string orgids = "";
+            for (int i = 0; i < rli.Count; i++)
+            {
+                orgids = orgids + rli[i].Id + ",";
+            }
+            
             offset += 1;
             string sql = $@"select top {limit} * from(
                               select row_number() over(order by a.created) as num,a.*,b.Name as OrgName,c.Name as UserName

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Mvc;
 using Infrastructure;
@@ -148,6 +149,24 @@ namespace OpenAuth.Mvc.Controllers
             var list = App.Repository.FindSingle(d => d.Id == Id).RatersId;
             var result = list.TrimEnd(',');
             return JsonHelper.Instance.Serialize(result);
+        }
+
+        public string LoadUserAndDept(string Id)
+        {
+            var list = App.Repository.FindSingle(d => d.Id == Id).RatersId;
+            var result = list.TrimEnd(',');
+
+            List<Repository.Domain.User> li = Uapp.Repository.Find(i => list.Contains(i.Id)).MapToList<Repository.Domain.User>();
+            return JsonHelper.Instance.Serialize(li);
+        }
+
+        public string LoadJudgeAndDept(string Id)
+        {
+            var list = App.Repository.FindSingle(d => d.Id == Id).JudgeId;
+            var result = list.TrimEnd(',');
+
+            List<Repository.Domain.User> li = Uapp.Repository.Find(i => list.Contains(i.Id)).MapToList<Repository.Domain.User>();
+            return JsonHelper.Instance.Serialize(li);
         }
     }
 }
