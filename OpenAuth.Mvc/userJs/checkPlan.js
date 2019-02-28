@@ -15,50 +15,26 @@ layui.config({
         if (options != undefined) {
             $.extend(config, options);
         }
+        $.ajax("/Plans/LoadJudgeAndDept?Id=" + id, {
+            async: false
+            , dataType: 'json'
+            , success: function (json) {
+                if (json.Code == 500) return;
+                var roles = json.Result;
+
+                for (var i = 0; i < json.length; i++) {
+                    var cc = '<button class="layui-btn name" onclick="rem(this)" style="margin:10px" tag="' + json[i].Id + '" >' + json[i].Name + '</button>';
+                    $('.layui-card-body').append(cc);
+                }
+
+            }
+        });
         table.reload('mainList', {
             url: '/UserManager/Load',
             where: config
             , done: function (res, curr, count) {
                 //如果是异步请求数据方式，res即为你接口返回的信息。
                 //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
-
-                $.ajax("/Plans/LoadJudgeAndDept?Id=" + id, {
-                    async: false
-                    , dataType: 'json'
-                    , success: function (json) {
-                        if (json.Code == 500) return;
-                        var roles = json.Result;
-
-                        for (var i = 0; i < json.length; i++) {
-                            var cc = '<button class="layui-btn name" onclick="rem(this)" style="margin:10px" tag="' + json[i].Id + '" >' + json[i].Name + '</button>';
-                            $('.layui-card-body').append(cc);
-                        }
-                        
-                        //循环所有数据，找出对应关系，设置checkbox选中状态
-                        //for (var i = 0; i < res.data.length; i++) {
-                        //    for (var j = 0; j < roles.length; j++) {
-                        //        if (res.data[i].Id != roles[j]) continue;
-
-                        //        //这里才是真正的有效勾选
-                        //        res.data[i]["LAY_CHECKED"] = true;
-                        //        //找到对应数据改变勾选样式，呈现出选中效果
-                        //        var index = res.data[i]['LAY_TABLE_INDEX'];
-                        //        $('.layui-table-fixed-l tr[data-index=' + index + '] input[type="checkbox"]').prop('checked', true);
-                        //        $('.layui-table-fixed-l tr[data-index=' + index + '] input[type="checkbox"]').next().addClass('layui-form-checked');
-                        //    }
-
-                        //}
-
-                        ////如果构成全选
-                        //var checkStatus = table.checkStatus('mainList');
-                        //if (checkStatus.isAll) {
-                        //    $('.layui-table-header th[data-field="0"] input[type="checkbox"]').prop('checked', true);
-                        //    $('.layui-table-header th[data-field="0"] input[type="checkbox"]').next().addClass('layui-form-checked');
-                        //}
-                    }
-                });
-
-
 
 
             }
