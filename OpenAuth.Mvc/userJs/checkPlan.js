@@ -9,26 +9,28 @@ layui.config({
     var id = $.getUrlParam("id");      //待分配的id
     layui.droptree("/UserSession/GetOrgs", "#Organizations", "#OrganizationIds");
 
+    $.ajax("/Plans/LoadJudgeAndDept?Id=" + id, {
+        async: false
+    , dataType: 'json'
+    , success: function (json) {
+        if (json.Code == 500) return;
+        var roles = json.Result;
+
+        for (var i = 0; i < json.length; i++) {
+            var cc = '<button class="layui-btn name" onclick="rem(this)" style="margin:10px" tag="' + json[i].Id + '" >' + json[i].Name + '</button>';
+            $('.layui-card-body').append(cc);
+        }
+
+    }
+    });
+
     //主列表加载，可反复调用进行刷新
     var config = {};  //table的参数，如搜索key，点击tree的id
     var mainList = function (options) {
         if (options != undefined) {
             $.extend(config, options);
         }
-        $.ajax("/Plans/LoadJudgeAndDept?Id=" + id, {
-            async: false
-            , dataType: 'json'
-            , success: function (json) {
-                if (json.Code == 500) return;
-                var roles = json.Result;
 
-                for (var i = 0; i < json.length; i++) {
-                    var cc = '<button class="layui-btn name" onclick="rem(this)" style="margin:10px" tag="' + json[i].Id + '" >' + json[i].Name + '</button>';
-                    $('.layui-card-body').append(cc);
-                }
-
-            }
-        });
         table.reload('mainList', {
             url: '/UserManager/Load',
             where: config

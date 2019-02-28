@@ -69,7 +69,7 @@ namespace OpenAuth.App
             string sql = $@"select top {limit} * from(
 
 
-select row_number() over(order by a.created) as num,
+select row_number() over(order by c.Name) as num,
 
  a.[Id]
       ,c.id [UserId]
