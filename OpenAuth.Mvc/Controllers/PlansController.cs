@@ -89,12 +89,52 @@ namespace OpenAuth.Mvc.Controllers
         }
         public string Up(string ids,string id)
         {
-            App.Repository.Update(d => d.Id == id, d => new Plan { RatersId = ids });
+            Plan p = App.Get(id);
+            string[] newStr = ids.Split(',');
+            if (p.RatersId != "")
+            {
+                for (int i = 0; i < newStr.Length; i++)
+                {
+                    if (p.RatersId.Contains(newStr[i]))
+                    {
+                        p.RatersId = p.RatersId.Replace(newStr[i] + ",", "");
+                    }
+                    else
+                    {
+                        p.RatersId = p.RatersId + newStr[i] + ",";
+                    }
+                }
+            }
+            else {
+                p.RatersId = ids;
+            }
+            string iid = p.RatersId;
+            App.Repository.Update(d => d.Id == id, d => new Plan { RatersId = iid });
             return JsonHelper.Instance.Serialize(new { msg = "成功" });
         }
         public string CheckUp(string ids, string id)
         {
-            App.Repository.Update(d => d.Id == id, d => new Plan { JudgeId = ids });
+            Plan p = App.Get(id);
+            string[] newStr = ids.Split(',');
+            if (p.JudgeId != "")
+            {
+                for (int i = 0; i < newStr.Length; i++)
+                {
+                    if (p.JudgeId.Contains(newStr[i]))
+                    {
+                        p.JudgeId = p.JudgeId.Replace(newStr[i] + ",", "");
+                    }
+                    else
+                    {
+                        p.JudgeId = p.JudgeId + newStr[i] + ",";
+                    }
+                }
+            }
+            else {
+                p.JudgeId = ids;
+            }
+            string iid = p.JudgeId;
+            App.Repository.Update(d => d.Id == id, d => new Plan { JudgeId = iid });
             return JsonHelper.Instance.Serialize(new { msg = "成功" });
         }
 
