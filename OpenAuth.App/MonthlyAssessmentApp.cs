@@ -26,34 +26,91 @@ namespace OpenAuth.App
             string orgids = "";
             for (int i = 0; i < rli.Count; i++)
             {
-                orgids = orgids + rli[i].Id + ",";
+                orgids = orgids + "'" +rli[i].Id + "',";
             }
-            
+            if (orgids != "")
+                orgids = orgids.Substring(0, orgids.Length - 1);
             offset += 1;
+            //string sql = $@"select top {limit} * from(
+            //                  select row_number() over(order by a.created) as num,a.*,b.Name as OrgName,c.Name as UserName
+            //                                           from MonthlyAssessment a left join Org b
+            //                                           on a.OrgId=b.Id
+            //                                           left join [User] c
+            //                                           on a.UserId=c.Id 
+            //                                           where a.Creator=@Creator 
+            //                                           and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
+            //                                           and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null)
+            //                                           and (c.Name like '%'+@UserName+'%' or @UserName is null)
+            //                                           and (b.Name like '%'+@OrgName+'%' or @OrgName is null)
+
+            //                ) as t where num > ({limit}*({offset}-1))";
+
+            //var rows = Repository.ExecuteQuerySql<MonthlyAssessmentOutput>(sql, input.ToParameters()).ToList();
+
+            //sql = @"select count(*) from MonthlyAssessment a left join [User] c  on a.UserId=c.Id 
+            //        left join Org b
+            //        on a.OrgId=b.Id
+            //        where a.Creator=@Creator 
+            //        and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
+            //        and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null)
+            //        and (c.Name like '%'+@UserName+'%'  or @UserName is null)
+            //        and (b.Name like '%'+@OrgName+'%' or @OrgName is null)";
+
+            //int total = Repository.ExecuteQuerySql<int>(sql, input.ToParameters()).FirstOrDefault();
+
+            //return new
+            //{
+            //    total = total,
+            //    rows = rows
+            //};
+
+
+
             string sql = $@"select top {limit} * from(
-                              select row_number() over(order by a.created) as num,a.*,b.Name as OrgName,c.Name as UserName
-                                                       from MonthlyAssessment a left join Org b
-                                                       on a.OrgId=b.Id
-                                                       left join [User] c
-                                                       on a.UserId=c.Id 
-                                                       where a.Creator=@Creator 
+
+
+select row_number() over(order by a.created) as num,
+
+ a.[Id]
+      ,c.id [UserId]
+      ,b.id [OrgId]
+      ,a.[EvaluateYear]
+      ,a.[EvaluateMonth]
+      ,a.[AnntubeScore]
+      ,a.[QuantifyScore]
+      ,a.[Score]
+      ,a.[Creator]
+      ,a.[Created]
+      ,a.[Updated]
+      ,a.[Reason1]
+      ,a.[Reason2]
+,b.Name as OrgName,c.Name as UserName from( select *  
+                                                       from MonthlyAssessment a where a.Creator=@Creator 
                                                        and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
-                                                       and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null)
-                                                       and (c.Name like '%'+@UserName+'%' or @UserName is null)
+                                                       and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null) ) a 
+                                                       right join [User] c
+                                                       on a.UserId=c.Id left join dbo.Relevance as r on r.firstid=c.id 
+                                                       and r.[key]='UserOrg' left join Org b
+                                                       on b.Id=r.SecondId  
+                                                       where  (b.id in ({orgids}) or '{orgids}'='') and 
+                                                        (c.Name like '%'+@UserName+'%' or @UserName is null)
                                                        and (b.Name like '%'+@OrgName+'%' or @OrgName is null)
                                                        
                             ) as t where num > ({limit}*({offset}-1))";
 
             var rows = Repository.ExecuteQuerySql<MonthlyAssessmentOutput>(sql, input.ToParameters()).ToList();
 
-            sql = @"select count(*) from MonthlyAssessment a left join [User] c  on a.UserId=c.Id 
-                    left join Org b
-                    on a.OrgId=b.Id
-                    where a.Creator=@Creator 
-                    and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
-                    and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null)
-                    and (c.Name like '%'+@UserName+'%'  or @UserName is null)
-                    and (b.Name like '%'+@OrgName+'%' or @OrgName is null)";
+            sql = $@"select count(*) from( select *  
+                                                       from MonthlyAssessment a where a.Creator=@Creator 
+                                                       and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
+                                                       and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null) ) a 
+                                                       right join [User] c
+                                                       on a.UserId=c.Id left join dbo.Relevance as r on r.firstid=c.id 
+                                                       and r.[key]='UserOrg' left join Org b
+                                                       on b.Id=r.SecondId  
+                                                       where (b.id in ({orgids}) or '{orgids}' = '') and 
+                                                        (c.Name like '%'+@UserName+'%' or @UserName is null)
+                                                       and (b.Name like '%'+@OrgName+'%' or @OrgName is null)";
 
             int total = Repository.ExecuteQuerySql<int>(sql, input.ToParameters()).FirstOrDefault();
 
@@ -62,6 +119,7 @@ namespace OpenAuth.App
                 total = total,
                 rows = rows
             };
+
         }
 
         public object GetMonthlyPostAssessment(int limit, int offset, MonthlyPostAssessmentQueryInput input)

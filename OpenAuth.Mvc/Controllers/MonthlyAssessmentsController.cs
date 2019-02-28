@@ -102,7 +102,7 @@ namespace OpenAuth.Mvc.Controllers
         {
 
             input.Creator = _User.Id;
-            var result = App.page(limit, offset, input);
+            var result = App.page(10000, 0, input);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -223,6 +223,20 @@ namespace OpenAuth.Mvc.Controllers
             }
 
         }
+
+        public JsonResult Add(MonthlyAssessment model) {
+            model.Id = Guid.NewGuid().ToString();
+            model.Creator = _User.Id;
+            App.Add(model);
+            return Json(new { result = true, msg = "保存成功" });
+        }
+
+        public JsonResult Update(MonthlyAssessment model)
+        {
+            App.Update(model);
+            return Json(new { result = true, msg = "保存成功" });
+        }
+
     }
 
     public class Reply<T>
