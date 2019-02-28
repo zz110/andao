@@ -20,7 +20,6 @@
                     </div>
                     <div class="col-xs-2">
                         <select class="form-control" id="EvaluateMonth">
-                            <option value="">请选择月份</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -115,23 +114,36 @@
                         title: '部门'
                     }, {
                         field: 'EvaluateYear',
-                        title: '年'
+                        title: '年',
+                        formatter:
+                            function (value, row, index) {
+                                return $("#EvaluateYear").val();
+                            }
+                        
                     }, {
                         field: 'EvaluateMonth',
-                        title: '月'
+                        title: '月',
+                        formatter:
+                            function (value, row, index) {
+                                return $("#EvaluateMonth").val();
+                            }
                     }, {
                         field: 'AnntubeScore',
                         title: '安管成绩',
                         formatter:
                             function (value, row, index) {
-                                return "<input type='text' value='" + value + "' />";
+                                if (value == null || value == "null")
+                                    value = "0";
+                                return "<input type='text' value='" + value + "' onblur=saveInfo(this,'" + row.Id + "','" + row.UserId + "','" + row.OrgId + "',1) />";
                             }
                     }, {
                         field: 'QuantifyScore',
                         title: '标准化成绩',
                         formatter:
                             function (value, row, index) {
-                                return "<input type='text' value='" + value + "' />";
+                                if (value == null || value == "null")
+                                    value = "0";
+                                return "<input type='text' value='" + value + "' onblur=saveInfo(this,'" + row.Id + "','" + row.UserId + "','" + row.OrgId + "',2) />";
                             }
                     }, 
                     {
@@ -139,7 +151,10 @@
                         title: '月度考核总成绩',
                         formatter:
                             function (value, row, index) {
-                                return "<input type='text' value='" + value + "' />";
+
+                                if (value == null || value == "null")
+                                    value = "0";
+                                return "<input type='text' value='" + value + "' onblur=saveInfo(this,'" + row.Id + "','" + row.UserId + "','" + row.OrgId + "',3) />";
                             }
                     }, {
                         field: 'CreateTime',
@@ -189,6 +204,37 @@
 
 
         });
+
+        function saveInfo(obj, id, userId, orgId,type)
+        {
+            var tds = $(obj).parents("tr").find("td");
+            var AnntubeScore = $($(tds[5]).find("input")[0]).val();
+            var QuantifyScore = $($(tds[6]).find("input")[0]).val();
+            var Score = $($(tds[7]).find("input")[0]).val();
+            var model = {
+                Id: id,
+                UserId: userId,
+                OrgId: orgId,
+                EvaluateYear: $("#EvaluateYear").val(),
+                EvaluateMonth: $("#EvaluateMonth").val(),
+                AnntubeScore: AnntubeScore,
+                QuantifyScore: QuantifyScore,
+                Score: Score
+            }
+            if (id == null || id == "null" ||id == "") {
+                //add
+                $.post("/MonthlyAssessments/Add", { model: model }, function (result) {
+                    _dataTable.Refresh();
+                })
+            } else {
+                //update
+                $.post("/MonthlyAssessments/Update", { model: model }, function (result) {
+                    _dataTable.Refresh();
+                })
+            }
+            
+        }
+
 
     </script>
 
