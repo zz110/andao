@@ -8,6 +8,7 @@ using OpenAuth.App.Response;
 using OpenAuth.App.SSO;
 using OpenAuth.Mvc.Models;
 using OpenAuth.Repository.Domain;
+using OpenAuth.Repository.Dto;
 
 namespace OpenAuth.Mvc.Controllers
 {
@@ -22,7 +23,7 @@ namespace OpenAuth.Mvc.Controllers
         }
 
         [System.Web.Mvc.HttpGet]
-        public ActionResult page(int limit, int offset, PerformanceAppraisal input)
+        public ActionResult page(int limit, int offset, MonthlyPostAssessmentQueryInput input)
         {
             var result = App.page(limit, offset, input);
             return Json(result, JsonRequestBehavior.AllowGet);

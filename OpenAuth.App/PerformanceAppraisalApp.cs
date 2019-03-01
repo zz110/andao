@@ -27,7 +27,7 @@ namespace OpenAuth.App
         }
 
 
-        public object page(int limit, int offset, PerformanceAppraisal input)
+        public object page(int limit, int offset, MonthlyPostAssessmentQueryInput input)
         {
 
             offset += 1;
