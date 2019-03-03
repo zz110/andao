@@ -30,6 +30,8 @@ namespace OpenAuth.App
             }
             if (orgids != "")
                 orgids = orgids.Substring(0, orgids.Length - 1);
+            else
+                orgids = "''";
             offset += 1;
             //string sql = $@"select top {limit} * from(
             //                  select row_number() over(order by a.created) as num,a.*,b.Name as OrgName,c.Name as UserName
@@ -92,7 +94,7 @@ select row_number() over(order by c.Name) as num,
                                                        on a.UserId=c.Id left join dbo.Relevance as r on r.firstid=c.id 
                                                        and r.[key]='UserOrg' left join Org b
                                                        on b.Id=r.SecondId  
-                                                       where  (b.id in ({orgids}) or '{orgids}'='') and 
+                                                       where  (b.id in ({orgids}) or {orgids}='') and 
                                                         (c.Name like '%'+@UserName+'%' or @UserName is null)
                                                        and (b.Name like '%'+@OrgName+'%' or @OrgName is null)
                                                        

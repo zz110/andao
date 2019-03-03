@@ -226,13 +226,15 @@ namespace OpenAuth.Mvc.Controllers
 
         public JsonResult Add(MonthlyAssessment model) {
             model.Id = Guid.NewGuid().ToString();
+            model.Score = Convert.ToDecimal(model.AnntubeScore) * Convert.ToDecimal(0.3) + Convert.ToDecimal(model.QuantifyScore) * Convert.ToDecimal(0.7);
             model.Creator = _User.Id;
-            App.Add(model);
-            return Json(new { result = true, msg = "保存成功" });
+            string id = App.Add(model);
+            return Json(new { result = true, msg = "保存成功", id = id });
         }
 
         public JsonResult Update(MonthlyAssessment model)
         {
+            model.Score = Convert.ToDecimal(model.AnntubeScore) * Convert.ToDecimal(0.3) + Convert.ToDecimal(model.QuantifyScore) * Convert.ToDecimal(0.7);
             App.Update(model);
             return Json(new { result = true, msg = "保存成功" });
         }

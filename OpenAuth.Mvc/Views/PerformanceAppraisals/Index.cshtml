@@ -99,22 +99,37 @@
             $("#EvaluateMonth").val(month);
 
             var tbOptions = {
+                pageList: [10000],
+                pageSize: 10000,
                 columns: [
                     {
                         checkbox: true
                     }, {
-                        visible: false,
+                        visible: false, width: '120px',
                         field: 'Id'
                     },{
-                        field: 'JudgeName',
+                        field: 'JudgeName', width: '120px',
                         title: '姓名'
                     }, {
-                        field: 'State',
+                        field: 'State', width: '120px',
                         title: '年'
                     }, 
                     {
                         field: 'AccessmentScore',
-                        title: '成绩'
+                        title: '成绩', width: '120px',
+                        formatter:
+                            function (value, row, index) {
+                                if (value == null || value == "null")
+                                    value = "0";
+                                return "<input type='text' value='" + value + "' />";
+                            }
+                    }, {
+                        field: 'Id',
+                        title: '操作', width: '120px',
+                        formatter:
+                            function (value, row, index) {
+                                return "<input type='button' data-guid='" + row.Id + "' value='保存' onclick=saveInfo(this,'" + row.JudgeId + "') />";
+                            }
                     }]
             };
 
@@ -163,6 +178,32 @@
 
 
         });
+
+
+        function saveInfo(obj, JudgeId) {
+            var id = $(obj).data("guid");
+            var model = {
+                Id: id,
+                JudgeId: JudgeId,
+                State: $("#EvaluateYear").val(),
+                AccessmentScore: $(obj).val()
+            }
+            if (id == null || id == "null" || id == "") {
+                //add
+                $.post("/PerformanceAppraisals/Add", { model: model }, function (result) {
+                    if (result.result) {
+                        $(obj).data("guid", result.id);
+                    }
+                    alert(result.msg);
+                })
+            } else {
+                //update
+                $.post("/PerformanceAppraisals/Update", { model: model }, function (result) {
+                    alert(result.msg)
+                })
+            }
+
+        }
 
     </script>
 

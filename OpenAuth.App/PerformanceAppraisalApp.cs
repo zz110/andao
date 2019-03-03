@@ -27,44 +27,55 @@ namespace OpenAuth.App
         }
 
 
-        public object page(int limit, int offset, MonthlyPostAssessmentQueryInput input)
+        public object page(int limit, int offset, PerformanceAppraisalQueryInput input)
         {
+            User user = AuthUtil.GetCurrentUser().User;
+            List<Relevance> rli = ReleManagerApp.Repository.Find(i => i.FirstId == user.Id && i.Key == "UserOrg").ToList<Relevance>();
+            string orgids = "";
+            for (int i = 0; i < rli.Count; i++)
+            {
+                orgids = orgids + "'" + rli[i].Id + "',";
+            }
+            if (orgids != "")
+                orgids = orgids.Substring(0, orgids.Length - 1);
+            else
+                orgids = "''";
 
             offset += 1;
             string sql = $@"select top {limit} * from(
-                              select row_number() over(order by a.id) as num,c.name JudgeName,a.[Id]
-      ,a.[AccessmentScore]
-      ,a.[RatersId]
-      ,a.[RatersName]
-      ,a.[JudgeId],a.Optime
-      , Datename(year,a.[Optime])  State
-                                                       from PerformanceAppraisal a left join [User] c
-                                                       on a.JudgeId=c.Id where Datename(year,a.[Optime]) =@EvaluateYear and (JudgeId in(
-                                select distinct a.FirstId from Relevance a  join [Role] b
-                                on a.SecondId=b.Id
-                                where a.[Key]='UserRole' and b.Name=@role
 
-                            ) or @role is null) 
- 
+
+select row_number() over(order by c.Name) as num,
+
+ a.[Id],isnull(AccessmentScore,0) AccessmentScore
+      ,isnull(RatersId,'') RatersId,isnull(RatersName,'') RatersName,c.id JudgeId,c.Name as JudgeName,isnull(Optime,'') Optime
+      , isnull(Datename(year,a.[Optime]),'') [State] 
+ from( select *  
+                                                      from PerformanceAppraisal a where 
+                                                       (Datename(year,a.[Optime]) =@EvaluateYear) ) a 
+                                                       right join [User] c
+                                                       on a.JudgeId=c.Id left join dbo.Relevance as r on r.firstid=c.id 
+                                                       and r.[key]='UserOrg' left join Org b
+                                                       on b.Id=r.SecondId  
+                                                       where  (b.id in ({orgids}) or {orgids}='') and 
+                                                        (c.Name like '%'+@UserName+'%' or @UserName is null)
+                                                       and (b.Name like '%'+@OrgName+'%' or @OrgName is null)
                                                        
                             ) as t where num > ({limit}*({offset}-1))";
 
-            var rows = Repository.ExecuteQuerySql<PerformanceAppraisal>(sql, input.ToParameters()).ToList();
-
-            sql = @"select count(*) from PerformanceAppraisal ";
-
-            int total = Repository.ExecuteQuerySql<int>(sql, input.ToParameters()).FirstOrDefault();
+            var rows = Repository.ExecuteQuerySql<PerformanceAppraisalOutPut>(sql, input.ToParameters()).ToList<PerformanceAppraisalOutPut>();
+            
 
             return new
             {
-                total = total,
+                total = rows.Count(),
                 rows = rows
             };
         }
 
-        public void Add(PerformanceAppraisal obj)
+        public string Add(PerformanceAppraisal obj)
         {
-            Repository.Add(obj);
+            return Repository.AddAndReturnId(obj);
         }
 
         public void Update(PerformanceAppraisal obj)
@@ -72,6 +83,8 @@ namespace OpenAuth.App
             UnitWork.Update<PerformanceAppraisal>(u => u.Id == obj.Id, u => new PerformanceAppraisal
             {
                 //todo:要修改的字段赋值
+                Optime = obj.Optime,
+                AccessmentScore = obj.AccessmentScore
             });
 
         }

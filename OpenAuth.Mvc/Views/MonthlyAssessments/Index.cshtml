@@ -54,7 +54,7 @@
 <div class="box box-default">
     <div class="row">
         <div class="col-xs-12 col-sm-12">
-            <table id="tbList" data-reorderable-columns="true" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"></table>
+            <table id="tbList" data-reorderable-columns="true" style="overflow: hidden;"></table>
         </div>
     </div>
 </div>
@@ -108,13 +108,13 @@
                         field: 'Id'
                     },{
                         field: 'UserName',
-                        title: '姓名'
+                        title: '姓名',width:'120px'
                     }, {
                         field: 'OrgName',
-                        title: '部门'
+                        title: '部门', width: '120px'
                     }, {
                         field: 'EvaluateYear',
-                        title: '年',
+                        title: '年', width: '120px',
                         formatter:
                             function (value, row, index) {
                                 return $("#EvaluateYear").val();
@@ -122,43 +122,50 @@
                         
                     }, {
                         field: 'EvaluateMonth',
-                        title: '月',
+                        title: '月', width: '120px',
                         formatter:
                             function (value, row, index) {
                                 return $("#EvaluateMonth").val();
                             }
                     }, {
                         field: 'AnntubeScore',
-                        title: '安管成绩',
+                        title: '安管成绩', width: '120px',
                         formatter:
                             function (value, row, index) {
                                 if (value == null || value == "null")
                                     value = "0";
-                                return "<input type='text' value='" + value + "' onblur=saveInfo(this,'" + row.Id + "','" + row.UserId + "','" + row.OrgId + "',1) />";
+                                return "<input type='text' value='" + value + "' style='width:100px' onblur=Bulr(this,'" + row.Id + "','" + row.UserId + "','" + row.OrgId + "',1) />";
                             }
                     }, {
                         field: 'QuantifyScore',
-                        title: '标准化成绩',
+                        title: '标准化成绩', width: '120px',
                         formatter:
                             function (value, row, index) {
                                 if (value == null || value == "null")
                                     value = "0";
-                                return "<input type='text' value='" + value + "' onblur=saveInfo(this,'" + row.Id + "','" + row.UserId + "','" + row.OrgId + "',2) />";
+                                return "<input type='text' value='" + value + "' style='width:100px' onblur=Bulr(this,'" + row.Id + "','" + row.UserId + "','" + row.OrgId + "',2) />";
                             }
                     }, 
                     {
                         field: 'Score',
-                        title: '月度考核总成绩',
+                        title: '月度考核总成绩', width: '120px',
                         formatter:
                             function (value, row, index) {
 
                                 if (value == null || value == "null")
                                     value = "0";
-                                return "<input type='text' value='" + value + "' onblur=saveInfo(this,'" + row.Id + "','" + row.UserId + "','" + row.OrgId + "',3) />";
+                                return "<input type='text' value='" + value + "' style='width:100px'  />";
                             }
                     }, {
                         field: 'CreateTime',
-                        title: '创建时间'
+                        title: '创建时间', width: '120px'
+                    }, {
+                        field: 'Id',
+                        title: '操作', width: '120px',
+                        formatter:
+                            function (value, row, index) {
+                                return "<input type='button' data-guid='"+row.Id+"' value='保存' onclick=saveInfo(this,'" + row.UserId + "','" + row.OrgId + "',3) />";
+                            }
                     }]
             };
 
@@ -205,8 +212,21 @@
 
         });
 
-        function saveInfo(obj, id, userId, orgId,type)
+        function Bulr(obj) {
+            var tds = $(obj).parents("tr").find("td");
+            var AnntubeScore = $($(tds[5]).find("input")[0]).val();
+            var QuantifyScore = $($(tds[6]).find("input")[0]).val();
+
+
+            var Score = toDecimal(parseFloat((AnntubeScore * 0.3 + QuantifyScore * 0.7)), 100);
+
+            var Score = $($(tds[7]).find("input")[0]).val(Score);
+           
+        }
+
+        function saveInfo(obj, userId, orgId,type)
         {
+            var id = $(obj).data("guid");
             var tds = $(obj).parents("tr").find("td");
             var AnntubeScore = $($(tds[5]).find("input")[0]).val();
             var QuantifyScore = $($(tds[6]).find("input")[0]).val();
@@ -224,15 +244,27 @@
             if (id == null || id == "null" ||id == "") {
                 //add
                 $.post("/MonthlyAssessments/Add", { model: model }, function (result) {
-                    _dataTable.Refresh();
+                    if (result.result) {
+                        $(obj).data("guid", result.id);
+                    }
+                    alert(result.msg);
                 })
             } else {
                 //update
                 $.post("/MonthlyAssessments/Update", { model: model }, function (result) {
-                    _dataTable.Refresh();
+                    alert(result.msg)
                 })
             }
             
+        }
+
+        function toDecimal(x, v) {
+            var f = parseFloat(x);
+            if (isNaN(f)) {
+                return 0;
+            }
+            f = Math.round(x * v) / v;
+            return f;
         }
 
 
