@@ -77,5 +77,36 @@ namespace OpenAuth.App
 
         }
 
+        public object NoAnswers(int limit, int offset, AnswerSearch input)
+        {
+
+            offset += 1;
+            string sql = $@"  select u.Name,u.Account,o.name Password ,u.[Id]
+      ,u.[Sex]
+      ,u.[Status]
+      ,u.[BizCode]
+      ,u.[CreateTime]
+      ,u.[CrateId]
+      ,u.[TypeName]
+      ,u.[TypeId]
+      ,u.[Age]
+      ,u.[XRank]
+      ,u.[ZRank]
+      ,[CardId] from [user] u inner join dbo.Relevance r on u.id=r.firstid inner join dbo.Org o on o.id=r.secondid
+  where u.id in (
+SELECT distinct  a.id  
+  FROM dbo.[Plan] p left join [dbo].[user] a on 1=1 where charindex( a.id,p.RatersId)>0 
+  and a.id not in ( select RatersId from Answer  ))";
+
+            var rows = Repository.ExecuteQuerySql<User>(sql, input.ToParameters()).ToList();
+
+
+            return new
+            {
+                total = rows.Count(),
+                rows = rows
+            };
+        }
+
     }
 }

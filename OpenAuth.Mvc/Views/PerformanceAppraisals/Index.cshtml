@@ -181,12 +181,14 @@
 
 
         function saveInfo(obj, JudgeId) {
+            var tds = $(obj).parents("tr").find("td");
+            var AccessmentScore = $($(tds[3]).find("input")[0]).val();
             var id = $(obj).data("guid");
             var model = {
                 Id: id,
                 JudgeId: JudgeId,
                 State: $("#EvaluateYear").val(),
-                AccessmentScore: $(obj).val()
+                AccessmentScore: AccessmentScore
             }
             if (id == null || id == "null" || id == "") {
                 //add

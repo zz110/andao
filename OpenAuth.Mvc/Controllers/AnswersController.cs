@@ -89,5 +89,17 @@ namespace OpenAuth.Mvc.Controllers
 
             return JsonHelper.Instance.Serialize(Result);
         }
+
+        public ActionResult NoAnswers()
+        {
+            return View();
+        }
+
+        [System.Web.Mvc.HttpGet]
+        public string GetNoAnswers(int limit, int offset, AnswerSearch input)
+        {
+            var result = App.NoAnswers(1, 1, input);
+            return JsonHelper.Instance.Serialize(result);
+        }
     }
 }

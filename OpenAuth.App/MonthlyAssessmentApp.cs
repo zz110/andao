@@ -26,7 +26,7 @@ namespace OpenAuth.App
             string orgids = "";
             for (int i = 0; i < rli.Count; i++)
             {
-                orgids = orgids + "'" +rli[i].Id + "',";
+                orgids = orgids + "'" +rli[i].SecondId + "',";
             }
             if (orgids != "")
                 orgids = orgids.Substring(0, orgids.Length - 1);

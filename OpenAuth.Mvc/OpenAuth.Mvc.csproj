@@ -8265,6 +8265,7 @@
     <Content Include="Views\MonthlyAssessments\MonthlyPostAssessmentNoDepartmentScore.cshtml" />
     <Content Include="Views\UserManager\ChangePwd.cshtml" />
     <Content Include="Views\CheckAndEvaluate\Add.cshtml" />
+    <Content Include="Views\Answers\NoAnswers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="layui\lay\modules\mobile\" />
