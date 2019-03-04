@@ -96,7 +96,7 @@ namespace OpenAuth.App
   where u.id in (
 SELECT distinct  a.id  
   FROM dbo.[Plan] p left join [dbo].[user] a on 1=1 where charindex( a.id,p.RatersId)>0 
-  and a.id not in ( select RatersId from Answer  ))";
+  and a.id not in ( select RatersId from Answer  )) order by o.name";
 
             var rows = Repository.ExecuteQuerySql<User>(sql, input.ToParameters()).ToList();
 
