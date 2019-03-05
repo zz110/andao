@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "ChangePwd";
+    Layout = "~/Views/Shared/_adminLTELayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-4 col-xs4 col-md-4">
+            <div class="input-group">
+                <input type="Password" id="Password" class="form-control" placeholder="请妥善保管您的密码" />
+                <span class="input-group-btn">
+                    <button type="button" id="btnSearch" onclick="ChangePwd()" class="btn btn-primary">修改密码</button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="~/static/app/app.js"></script>
+    <script>
+        function ChangePwd()
+        {
+            var Password = $("#Password").val();
+            $.post("/UserManager/ChangeUserPwd", { Password: Password},function(result){
+                alert("修改成功");
+            })
+        }
+    </script>
+}

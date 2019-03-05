@@ -1,0 +1,168 @@
+﻿@{
+    ViewBag.Title = "MonthStatistics2";
+    Layout = "~/Views/Shared/_adminLTELayout.cshtml";
+}
+
+<div class="box box-default">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div class="col-xs-12">
+                    <div class="col-xs-2" id="menuList">
+                    </div>
+
+                    <div class="col-xs-1">
+                        <input type="text" id="EvaluateYear" autocomplete="off" class="form-control" placeholder="请输入年份">
+                    </div>
+                    <div class="col-xs-2">
+                        <select id="role" onchange="role_select(this.options[this.options.selectedIndex].value)" class="form-control">
+                            <option value="">请选择职务</option>
+                            <option value="正职">中层正职</option>
+                            <option value="副职">中层副职</option>
+                            <option value="一般">一般干部</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-2">
+                        <select id="DeptType" onchange="dept_type_select(this.options[this.options.selectedIndex].value)" class="form-control">
+                            <option value="">请选择部门类别</option>
+                            <option value="车间">车间</option>
+                            <option value="专业科室">专业科室</option>
+                            <option value="综合科室">综合科室</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-1">
+                        <button class="btn btn-sm btn-primary" id="btnSearch">搜索</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.box-body -->
+</div>
+
+<div class="box box-default">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            <table id="tbList" class="layui-table" data-reorderable-columns="true" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"></table>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/static/app/app.js"></script>
+
+    <script type="text/javascript">
+        var _dataTable;
+        var tbOptions;
+
+        var role = '';
+        var deptType = '';
+        var tbOpts = {
+            type: 'csv',
+            fileName: '月度考核首末排名',
+        }
+
+        var QueryObj = {};
+
+
+        $(function () {
+
+            $("#menuList").loadMenus("evaluate_statistic_analysis");
+
+            var date = new Date();
+            var fullYear = date.getFullYear();
+            var month = date.getMonth() + 1;
+            $("#EvaluateYear").val(fullYear);
+            $("#EvaluateMonth").val(month);    
+
+            App.init();
+            App.setExportOptions(tbOpts);
+
+            InitTable();                        
+
+            $("#btnSearch").click(function () {
+
+                var EvaluateYear = parseInt($("#EvaluateYear").val());
+
+                if (isNaN(EvaluateYear) || (EvaluateYear < 1977 || EvaluateYear > 9999)) {
+
+                    swal("提示", "请输入合法的年份", "warning");
+                    return;
+                }
+
+                QueryObj = {
+                    queryYear: parseInt($("#EvaluateYear").val()),
+                    role: $("#role").val(),
+                    DeptType: $("#DeptType").val()
+                };
+
+                InitTable();
+
+                _dataTable.SetParameters(QueryObj);
+                _dataTable.Refresh();                
+            });
+            
+        });
+
+        function role_select(value) {
+
+            QueryObj = {
+                queryYear: parseInt($("#EvaluateYear").val()),
+                role: $("#role").val(),
+                DeptType: $("#DeptType").val()
+            };
+
+            InitTable();
+
+            _dataTable.SetParameters(QueryObj);
+            _dataTable.Refresh();
+        }
+
+        function dept_type_select(value) {
+
+            QueryObj = {
+                queryYear: parseInt($("#EvaluateYear").val()),
+                role: $("#role").val(),
+                DeptType: $("#DeptType").val()
+            };
+
+            InitTable();
+
+            _dataTable.SetParameters(QueryObj);
+            _dataTable.Refresh();
+        }
+
+        function InitTable() {
+
+            $("#tbList").bootstrapTable('destroy');
+
+            $.ajax({
+                type: "get",
+                url: "/MonthlyAssessments/GetTableColumns4MonthlyStatisticsAssessment2",
+                async: false,
+                data: {
+                    deptType: $("#DeptType").val()
+                },
+                dataType: "json",
+                success: function (data) {
+                    //console.log(data);
+                    tbOptions = {
+                        pageList: [10000],
+                        pageSize: 10000,
+                        columns: data.rows
+                    };
+                }
+            });
+
+            _dataTable = App.initTable('/MonthlyAssessments/OutDataTmp1', tbOptions);
+            _dataTable.SetParameters({
+                queryYear: parseInt($("#EvaluateYear").val()),
+                role: $("#role").val(),
+                DeptType: $("#DeptType").val()
+            });
+            _dataTable.Init();
+        }
+    </script>
+}
+

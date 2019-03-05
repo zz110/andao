@@ -55,13 +55,24 @@ namespace OpenAuth.Mvc.Controllers
             return JsonHelper.Instance.Serialize(Result);
         }
 
+        [System.Web.Mvc.HttpGet]
+        public ActionResult page(int limit, int offset, AnswerSearch input)
+        {
+            var result = App.page(limit, offset, input);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         /// <summary>
         /// 加载列表
         /// </summary>
         public string Load([FromUri]QueryAnswerListReq request)
         {
-            return JsonHelper.Instance.Serialize(App.Load(request));
+            AnswerSearch input = new AnswerSearch();
+            var result = App.page(1000, 0, input);
+            return JsonHelper.Instance.Serialize(result);
         }
+
+         
 
         [System.Web.Mvc.HttpPost]
         public string Delete(string[] ids)
@@ -77,6 +88,18 @@ namespace OpenAuth.Mvc.Controllers
             }
 
             return JsonHelper.Instance.Serialize(Result);
+        }
+
+        public ActionResult NoAnswers()
+        {
+            return View();
+        }
+
+        [System.Web.Mvc.HttpGet]
+        public string GetNoAnswers(int limit, int offset, AnswerSearch input)
+        {
+            var result = App.NoAnswers(1, 1, input);
+            return JsonHelper.Instance.Serialize(result);
         }
     }
 }

@@ -20,5 +20,8 @@ namespace OpenAuth.Repository.Dto
         /// 职务角色
         /// </summary>
         public string role { get; set; }
+
+
+        public string DeptType { get; set; }
     }
 }

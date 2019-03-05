@@ -22,8 +22,9 @@ namespace OpenAuth.Repository.Dto
 
         public DateTime Optime { get; set; }
 
-        public int State { get; set; }
+        public string State { get; set; }
 
+        public string DeptType { get; set; }
         //
         public decimal q1 { get; set; }
         public decimal q2 { get; set; }

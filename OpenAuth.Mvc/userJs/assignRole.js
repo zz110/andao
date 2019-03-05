@@ -8,6 +8,7 @@ layui.config({
     var openauth = layui.openauth;
     var id = $.getUrlParam("id");      //待分配的id
     layui.droptree("/UserSession/GetOrgs", "#Organizations", "#OrganizationIds");
+
    
     //主列表加载，可反复调用进行刷新
     var config= {};  //table的参数，如搜索key，点击tree的id
@@ -32,13 +33,14 @@ layui.config({
                         for (var i = 0; i < res.data.length; i++) {
                             for (var j = 0; j < roles.length; j++) {
                                 if (res.data[i].Id != roles[j]) continue;
-
+                                
                                 //这里才是真正的有效勾选
-                                res.data[i]["LAY_CHECKED"] = true;
+                                res.data[i]["layTableRadio"] = true;
                                 //找到对应数据改变勾选样式，呈现出选中效果
                                 var index = res.data[i]['LAY_TABLE_INDEX'];
-                                $('.layui-table-fixed-l tr[data-index=' + index + '] input[type="checkbox"]').prop('checked', true);
-                                $('.layui-table-fixed-l tr[data-index=' + index + '] input[type="checkbox"]').next().addClass('layui-form-checked');
+                                $('.layui-table tr[data-index=' + index + '] input[name="layTableRadio"]').prop('checked', true);
+
+                                form.render();
                             }
                             
                         }
@@ -58,6 +60,9 @@ layui.config({
             }
         });
     }
+
+
+
     //左边树状机构列表
     var ztree = function () {
         var url = '/UserSession/GetOrgs';
@@ -101,7 +106,7 @@ layui.config({
 
 
     //分配及取消分配
-    table.on('checkbox(list)', function (obj) {
+    table.on('radio(list)', function (obj) {
         console.log(obj.checked); //当前是否选中状态
         console.log(obj.data); //选中行的相关数据
         console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
@@ -110,11 +115,15 @@ layui.config({
         if (!obj.checked) {
             url = "/RelevanceManager/UnAssign";
         }
-        $.post(url, { type: "UserRole", firstId: id, secIds: [obj.data.Id] }
-                       , function (data) {
-                           layer.msg(data.Message);
-                       }
-                      , "json");
+        var ids = id.split(',');
+        $.each(ids, function (i, v) {
+            $.post(url, { type: "UserRole", firstId: v, secIds: [obj.data.Id] }
+                , function (data) {
+                    layer.msg(data.Message);
+                }
+                , "json");
+        });
+        
     });
     //监听页面主按钮操作 end
 })

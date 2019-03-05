@@ -135,8 +135,8 @@
         <script src="~/static/app/app.js"></script>
         <script>
             var userId = '@ViewBag.user.Id';
-            var planid = "";
             var planname = "";
+            var planid = "";
             $(function () {
 
                 $("#btnSearch").click(function () {
@@ -150,15 +150,14 @@
                             rep = JSON.parse(rep);
                             if (rep.code == 1) {
 
-                                planid = rep.planid;
                                 var items = rep.list;
 
                                 var html = "<ul  class='list-group'>";
                                 $.each(rep.list, function (i, v) {
-                                    html = html + "<li  class='list-group-item list-group-item-warning' style='width: 250px'>部门:" + v.part + "<br/>姓名:" + v.name + "<br/>状态:" + v.state ;
+                                    html = html + "<li  class='list-group-item list-group-item-warning' style='width: 250px'>方案名称:" + v.PlanName + "<br/>部门:" + v.part + "<br/>姓名:" + v.name + "<br/>状态:" + v.state;
                                     if (v.state != '已提交')
                                     {
-                                        html = html + "<br /><input type='button' class='btn btn-primary' value='开始评测' onclick=ShowPc('" + v.id + "','" + v.state + "','" + v.name + "','" + v.part + "') /></li>";
+                                        html = html + "<br /><input type='button' class='btn btn-primary' value='开始评测' onclick=ShowPc('" + v.id + "','" + v.state + "','" + v.name + "','" + v.part + "','" + v.planid + "','" + v.PlanName + "') /></li>";
                                     }else {
                                         html = html + "</li>";
                                     }
@@ -174,10 +173,14 @@
 
                 });
 
+            $("#btnSearch").click();
+
             });
 
             var JudgeId = '';
-            function ShowPc(id, state, name, part) {
+            function ShowPc(id, state, name, part, pid, pname) {
+                planid = pid;
+                planname = pname;
                 JudgeId = id;
                 $('input:radio').prop("checked", false);
                 $("#forPc").html("当前被评测人:<br/>部门:" + part + "<br>姓名:" + name);
@@ -244,6 +247,37 @@
                 var A4 = $('input:radio[name="4"]:checked').val();
                 var A5 = $('input:radio[name="5"]:checked').val();
                 var A6 = $('input:radio[name="6"]:checked').val();
+                
+                if(A1==undefined||A1=="")
+                {
+                    alert("请选择第一题");
+                    return;
+                }
+                if(A2==undefined||A2=="")
+                {
+                    alert("请选择第二题");
+                    return;
+                }
+                if(A3==undefined||A3=="")
+                {
+                    alert("请选择第三题");
+                    return;
+                }
+                if(A4==undefined||A4=="")
+                {
+                    alert("请选择第四题");
+                    return;
+                }
+                if(A5==undefined||A5=="")
+                {
+                    alert("请选择第五题");
+                    return;
+                }
+                if(A6==undefined||A6=="")
+                {
+                    alert("请选择第六题");
+                    return;
+                }
                 $.post("/Result/sub", {
                     Q1: A1 == undefined ? '' : A1,
                     Q2: A2 == undefined ? '' : A2,

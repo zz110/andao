@@ -6,15 +6,20 @@ using OpenAuth.App;
 using OpenAuth.App.Request;
 using OpenAuth.App.Response;
 using OpenAuth.Mvc.Models;
-using OpenAuth.Mvc.Utils;
+using OpenAuth.Repository;
 using OpenAuth.Repository.Domain;
 using OpenAuth.Repository.Dto;
+using OpenAuth.App.SSO;
+using System.Linq;
+using OpenAuth.Mvc.Utils;
 
 namespace OpenAuth.Mvc.Controllers
 {
     public class AnnualExaminationRegistrationsController : BaseController
     {
         public AnnualExaminationRegistrationApp App { get; set; }
+
+        public RevelanceManagerApp A { get; set; }
 
         //
         [Authenticate]
@@ -47,8 +52,16 @@ namespace OpenAuth.Mvc.Controllers
                     result.Creator = _User.Id;
                     result.UserId = _User.Id;
                     result.Name = _User.Name;
-                    result.OrgId = "";
+                    string cardId = _User.CardId;
+                    string year = _User.CardId.Substring(6, 4);
+                    string month = _User.CardId.Substring(10, 2);
+                    string date = _User.CardId.Substring(12, 2);
+                    result.Birthday = Convert.ToDateTime(year + "-" + month + "-" + date);
+                    result.Sex = _User.Sex == 1 ? "男" : "女";
+                    result.OrgId =  A.Repository.FindSingle(i=>i.FirstId ==_User.Id && i.Key== "UserOrg")?.SecondId;
+                    result.OrgName = AuthUtil.GetCurrentUser().Orgs.Find(i => i.Id == result.OrgId).Name;
                     result.Created = DateTime.Now;
+                    result.RegistrationTime = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
                 }
                 response.Result = result;
                 response.Message = "";
@@ -73,6 +86,8 @@ namespace OpenAuth.Mvc.Controllers
 
 
         }
+
+
 
 
         [System.Web.Mvc.HttpPost]
@@ -158,7 +173,6 @@ namespace OpenAuth.Mvc.Controllers
             }
 
         }
-
 
 
         [System.Web.Mvc.HttpPost]

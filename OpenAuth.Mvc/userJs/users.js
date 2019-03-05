@@ -158,16 +158,20 @@ layui.config({
         , btnAccessModule: function () {
             var checkStatus = table.checkStatus('mainList')
                , data = checkStatus.data;
-            if (data.length != 1) {
+            if (data.length == 0) {
                 toplayer.msg("请选择要分配的用户");
                 return;
             }
-
+            var id = "";
+            for (var i = 0; i < data.length; i++) {
+                id = id + data[0].Id + ",";
+            }
+            id = id.substring(0, id.length - 1);
             var index = toplayer.open({
-                title: "为用户【" + data[0].Name + "】分配模块",
+                title: "为用户分配模块",
                 type: 2,
                 area: ['750px', '600px'],
-                content: "/ModuleManager/Assign?type=UserModule&menuType=UserElement&id=" + data[0].Id,
+                content: "/ModuleManager/Assign?type=UserModule&menuType=UserElement&id=" + id,
                 success: function(layero, index) {
                     
                 }
@@ -176,16 +180,20 @@ layui.config({
         , btnAccessRole: function () {
             var checkStatus = table.checkStatus('mainList')
                , data = checkStatus.data;
-            if (data.length != 1) {
+            if (data.length == 0) {
                 toplayer.msg("请选择要分配的用户");
                 return;
             }
-
+            var id = "";
+            for (var i = 0; i < data.length; i++) {
+                id = id + data[0].Id + ",";
+            }
+            id = id.substring(0, id.length - 1);
             var index = toplayer.open({
-                title: "为用户【"+ data[0].Name + "】分配角色",
+                title: "为用户分配角色",
                 type: 2,
                 area: ['750px', '600px'],
-                content: "/RoleManager/Assign?type=UserRole&id=" + data[0].Id,
+                content: "/RoleManager/Assign?type=UserRole&id=" + id,
                 success: function (layero, index) {
 
                 }
@@ -194,16 +202,20 @@ layui.config({
         , btnAssignReource: function () {
             var checkStatus = table.checkStatus('mainList')
                 , data = checkStatus.data;
-            if (data.length != 1) {
+            if (data.length == 0) {
                 toplayer.msg("请选择要分配的用户");
                 return;
             }
-
+            var id = "";
+            for (var i = 0; i < data.length; i++) {
+                id = id + data[0].Id + ",";
+            }
+            id = id.substring(0, id.length - 1);
             var index = toplayer.open({
-                title: "为用户【" + data[0].Name + "】分配资源",
+                title: "为用户分配资源",
                 type: 2,
                 area: ['750px', '600px'],
-                content: "/Resources/Assign?type=UserResource&id=" + data[0].Id,
+                content: "/Resources/Assign?type=UserResource&id=" + id,
                 success: function (layero, index) {
 
                 }

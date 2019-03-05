@@ -8,6 +8,7 @@ using OpenAuth.App.Response;
 using OpenAuth.App.SSO;
 using OpenAuth.Mvc.Models;
 using OpenAuth.Repository.Domain;
+using OpenAuth.Repository.Dto;
 
 namespace OpenAuth.Mvc.Controllers
 {
@@ -22,41 +23,10 @@ namespace OpenAuth.Mvc.Controllers
         }
 
         [System.Web.Mvc.HttpGet]
-        public ActionResult page(int limit, int offset, PerformanceAppraisal input)
+        public ActionResult page(int limit, int offset, PerformanceAppraisalQueryInput input)
         {
             var result = App.page(limit, offset, input);
             return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        //添加或修改
-        [System.Web.Mvc.HttpPost]
-        public ActionResult Add(PerformanceAppraisal input)
-        {
-            Response<object> response = new Response<object>("服务器错误");
-            input.Optime = DateTime.Now;
-            input.RatersId = AuthUtil.GetCurrentUser().User.Id;
-            input.RatersName = AuthUtil.GetCurrentUser().User.Name;
-            App.Add(input);
-            response.Message = "";
-            response.Code = Response<object>.SUCCESS_CODE;
-            return Json(response);
-        }
-
-        //添加或修改
-        [System.Web.Mvc.HttpPost]
-        public string Update(PerformanceAppraisal obj)
-        {
-            try
-            {
-                App.Update(obj);
-
-            }
-            catch (Exception ex)
-            {
-                Result.Code = 500;
-                Result.Message = ex.Message;
-            }
-            return JsonHelper.Instance.Serialize(Result);
         }
 
         /// <summary>
@@ -86,6 +56,23 @@ namespace OpenAuth.Mvc.Controllers
         public ActionResult PerformanceForm()
         {
             return View();
+        }
+
+        public JsonResult Add(PerformanceAppraisal model)
+        {
+            model.Id = Guid.NewGuid().ToString();
+            model.Optime = Convert.ToDateTime(model.State + "-" + DateTime.Now.ToString("MM-dd"));
+            model.RatersId = _User.Id;
+            string id = App.Add(model);
+            return Json(new { result = true, msg = "保存成功", id = id });
+        }
+
+        public JsonResult Update(PerformanceAppraisal model)
+        {
+            PerformanceAppraisal old = App.Get(model.Id);
+            old.Optime = Convert.ToDateTime(model.State + "-" + DateTime.Now.ToString("MM-dd"));
+            App.Update(model);
+            return Json(new { result = true, msg = "保存成功" });
         }
     }
 }

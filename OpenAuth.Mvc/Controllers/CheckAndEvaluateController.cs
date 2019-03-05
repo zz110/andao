@@ -20,9 +20,9 @@ namespace OpenAuth.Mvc.Controllers
 
         [System.Web.Mvc.HttpGet]
         //int limit, int offset, PerformanceAppraisalQueryInput input
-        public ActionResult List(string year,string type)
+        public ActionResult List(string year,string type,string DeptType)
         {
-            var result = App.List(year,type);
+            var result = App.List(year,type,DeptType);
             List<PerformanceAppraisalOutPut> list = result as List<PerformanceAppraisalOutPut>;
             for (int i = 0; i < list.Count; i++)
             {

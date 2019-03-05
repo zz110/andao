@@ -60,6 +60,11 @@ namespace OpenAuth.App
             };
         }
 
+        public void ChangePwd(User user)
+        {
+            Repository.Update(user);
+        }
+
         public void AddOrUpdate(UserView view)
         {
             if (string.IsNullOrEmpty(view.OrganizationIds))
@@ -72,7 +77,7 @@ namespace OpenAuth.App
                     throw new Exception("用户账号已存在");
                 }
                 user.CreateTime = DateTime.Now;
-                user.Password = user.Account; //初始密码与账号相同
+                user.Password = user.Account.Substring(user.Account.Length-6); //初始密码与账号相同
                 Repository.Add(user);
                 view.Id = user.Id;   //要把保存后的ID存入view
             }
@@ -96,6 +101,9 @@ namespace OpenAuth.App
             ReleManagerApp.DeleteBy(Define.USERORG, user.Id);
             ReleManagerApp.AddRelevance(Define.USERORG, orgIds.ToLookup(u => user.Id));
         }
+
+        
+
 
         /// <summary>
         /// 加载用户的所有机构

@@ -175,6 +175,22 @@
 
                 }
             });
+        },
+        //批量启用方案
+        btnState: function () {
+            var checkStatus = table.checkStatus('mainList')
+                , data = checkStatus.data;
+            if (data.length == 0) {
+                toplayer.msg("请选择要启用的方案");
+                return;
+            }
+            var ids = ""
+            $.each(data, function (i, v) {
+                ids = ids + v.Id + ",";
+            })
+            $.post("/Plans/UpState", { ids: ids}, function (result) {
+                alert(result.msg);
+            });
         }
 
         , search: function () {   //搜索

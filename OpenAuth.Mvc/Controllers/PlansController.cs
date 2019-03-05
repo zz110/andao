@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Mvc;
 using Infrastructure;
@@ -89,19 +90,83 @@ namespace OpenAuth.Mvc.Controllers
         }
         public string Up(string ids,string id)
         {
+            Plan p = App.Get(id);
+            //string[] newStr = ids.Split(',');
+            //if (p.RatersId != "")
+            //{
+            //    for (int i = 0; i < newStr.Length; i++)
+            //    {
+            //        if (p.RatersId.Contains(newStr[i]))
+            //        {
+            //            p.RatersId = p.RatersId.Replace(newStr[i] + ",", "");
+            //        }
+            //        else
+            //        {
+            //            p.RatersId = p.RatersId + newStr[i] + ",";
+            //        }
+            //    }
+            //}
+            //else {
+            //    p.RatersId = ids;
+            //}
+            //string iid = p.RatersId;
             App.Repository.Update(d => d.Id == id, d => new Plan { RatersId = ids });
             return JsonHelper.Instance.Serialize(new { msg = "成功" });
         }
         public string CheckUp(string ids, string id)
         {
+            Plan p = App.Get(id);
+            //string[] newStr = ids.Split(',');
+            //if (p.JudgeId != "")
+            //{
+            //    for (int i = 0; i < newStr.Length; i++)
+            //    {
+            //        if (p.JudgeId.Contains(newStr[i]))
+            //        {
+            //            p.JudgeId = p.JudgeId.Replace(newStr[i] + ",", "");
+            //        }
+            //        else
+            //        {
+            //            p.JudgeId = p.JudgeId + newStr[i] + ",";
+            //        }
+            //    }
+            //}
+            //else {
+            //    p.JudgeId = ids;
+            //}
+            //string iid = p.JudgeId;
             App.Repository.Update(d => d.Id == id, d => new Plan { JudgeId = ids });
             return JsonHelper.Instance.Serialize(new { msg = "成功" });
+        }
+
+        public JsonResult UpState(string ids)
+        {
+            App.Repository.Update(d => ids.Contains(d.Id), d => new Plan { State = 1 });
+            return Json(new { msg = "成功" });
         }
         public string LoadUser(string Id)
         {
             var list = App.Repository.FindSingle(d => d.Id == Id).RatersId;
             var result = list.TrimEnd(',');
             return JsonHelper.Instance.Serialize(result);
+        }
+
+        public string LoadUserAndDept(string Id)
+        {
+            var list = App.Repository.FindSingle(d => d.Id == Id).RatersId;
+            var result = list.TrimEnd(',');
+
+            List<Repository.Domain.User> li = Uapp.Repository.Find(i => list.Contains(i.Id)).MapToList<Repository.Domain.User>();
+            return JsonHelper.Instance.Serialize(li);
+        }
+
+        public string LoadJudgeAndDept(string Id)
+        {
+            var list = App.Repository.FindSingle(d => d.Id == Id).JudgeId;
+            var result = list.TrimEnd(',');
+
+            List<Repository.Domain.User> li = Uapp.Repository.Find(i => list.Contains(i.Id)).MapToList<Repository.Domain.User>();
+            return JsonHelper.Instance.Serialize(li);
         }
     }
 }

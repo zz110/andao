@@ -17,6 +17,14 @@
                         <input type="text" id="EvaluateYear" autocomplete="off" class="form-control" placeholder="请输入年份">
                     </div>
                     <div class="col-xs-2">
+                        <select id="role" onchange="role_select(this.options[this.options.selectedIndex].value)" class="form-control">
+                            <option value="">请选择职务</option>
+                            <option value="中层正职">中层正职</option>
+                            <option value="中层副职">中层副职</option>
+                            <option value="一般干部">一般干部</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-2">
                         <select id="DeptType" onchange="dept_type_select(this.options[this.options.selectedIndex].value)" class="form-control">
                             <option value="">请选择部门类别</option>
                             <option value="车间">车间</option>
@@ -89,14 +97,6 @@
                         {
                             field: 'Name',
                             title: "姓名",
-                            valign: "middle",
-                            align: "center",
-                            colspan: 1,
-                            rowspan: 2
-                        },
-                        {
-                            field: 'XRank',
-                            title: "职务",
                             valign: "middle",
                             align: "center",
                             colspan: 1,
@@ -190,6 +190,7 @@
                 QueryObj = {
                     EvaluateYear: $("#EvaluateYear").val(),
                     DeptType: $("#DeptType").val(),
+                    role: $("#role").val()
                 };
 
                 _dataTable.SetParameters(QueryObj);
@@ -211,7 +212,8 @@
 
             QueryObj = {
                 EvaluateYear: $("#EvaluateYear").val(),
-                DeptType: $("#DeptType").val()
+                DeptType: $("#DeptType").val(),
+                role: $("#role").val()
             };
 
             _dataTable.SetParameters(QueryObj);

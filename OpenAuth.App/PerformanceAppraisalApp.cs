@@ -27,39 +27,58 @@ namespace OpenAuth.App
         }
 
 
-        public object page(int limit, int offset, PerformanceAppraisal input)
+        public object page(int limit, int offset, PerformanceAppraisalQueryInput input)
         {
+            User user = AuthUtil.GetCurrentUser().User;
+            List<Relevance> rli = ReleManagerApp.Repository.Find(i => i.FirstId == user.Id && i.Key == "UserOrg").ToList<Relevance>();
+            string orgids = "";
+            for (int i = 0; i < rli.Count; i++)
+            {
+                orgids = orgids + "'" + rli[i].SecondId + "',";
+            }
+            if (orgids != "")
+                orgids = orgids.Substring(0, orgids.Length - 1);
+            else
+                orgids = "''";
 
             offset += 1;
             string sql = $@"select top {limit} * from(
-                              select row_number() over(order by a.id) as num,c.name JudgeName,a.[Id]
-      ,a.[AccessmentScore]
-      ,a.[RatersId]
-      ,a.[RatersName]
-      ,a.[JudgeId],a.Optime
-      , Datename(year,a.[Optime])  State
-                                                       from PerformanceAppraisal a left join [User] c
-                                                       on a.JudgeId=c.Id 
- 
+
+
+select row_number() over(order by c.Name) as num,
+
+ a.[Id],isnull(AccessmentScore,0) AccessmentScore
+      ,isnull(RatersId,'') RatersId,isnull(RatersName,'') RatersName,c.id JudgeId,c.Name as JudgeName,isnull(Optime,'') Optime
+      , isnull(Datename(year,a.[Optime]),'') [State],b.Name DeptType 
+ from( select *  
+                                                      from PerformanceAppraisal a where 
+                                                       (Datename(year,a.[Optime]) =@EvaluateYear) ) a 
+                                                       right join [User] c
+                                                       on a.JudgeId=c.Id inner join dbo.Relevance as r on r.firstid=c.id 
+                                                       and r.[key]='UserOrg' inner join Org b
+                                                       on b.Id=r.SecondId   inner join dbo.Relevance as r1 on r1.firstid=c.id 
+                                                       and r1.[key]='UserRole' inner join Role ro
+                                                       on ro.Id=r1.SecondId  
+                                                       where  (b.id in ({orgids}) or {orgids}='') and 
+                                                        (c.Name like '%'+@UserName+'%' or @UserName is null)
+                                                       and (b.Name like '%'+@OrgName+'%' or @OrgName is null)
+                and (ro.Name = '{ input.role }' or '{ input.role }' = '') and (b.BizCode='{input.DeptType}' or ('{input.DeptType}'='' or '{input.DeptType}' is null ))  
                                                        
-                            ) as t where num > ({limit}*({offset}-1))";
+                            ) as t where num > ({limit}*({offset}-1)) order by DeptType";
 
-            var rows = Repository.ExecuteQuerySql<PerformanceAppraisal>(sql, input.ToParameters()).ToList();
-
-            sql = @"select count(*) from PerformanceAppraisal ";
-
-            int total = Repository.ExecuteQuerySql<int>(sql, input.ToParameters()).FirstOrDefault();
+            var rows = Repository.ExecuteQuerySql<PerformanceAppraisalOutPut>(sql, input.ToParameters()).ToList<PerformanceAppraisalOutPut>();
+            
 
             return new
             {
-                total = total,
+                total = rows.Count(),
                 rows = rows
             };
         }
 
-        public void Add(PerformanceAppraisal obj)
+        public string Add(PerformanceAppraisal obj)
         {
-            Repository.Add(obj);
+            return Repository.AddAndReturnId(obj);
         }
 
         public void Update(PerformanceAppraisal obj)
@@ -67,11 +86,13 @@ namespace OpenAuth.App
             UnitWork.Update<PerformanceAppraisal>(u => u.Id == obj.Id, u => new PerformanceAppraisal
             {
                 //todo:要修改的字段赋值
+                Optime = obj.Optime,
+                AccessmentScore = obj.AccessmentScore
             });
 
         }
 
-        public List<PerformanceAppraisalOutPut> List(string year,string type)
+        public List<PerformanceAppraisalOutPut> List(string year,string type,string DeptType)
         {
             string sql = $@"select top 1000 JudgeId,JudgeName,
                             (select SUM(Score)/12 from MonthlyAssessment 
@@ -133,7 +154,7 @@ namespace OpenAuth.App
 	                            else 0 
 	                            end
                             ) q6count,
-                            (select AccessmentScore from PerformanceAppraisal 
+                            (select top 1 AccessmentScore from PerformanceAppraisal 
                             where JudgeId = JudgeId and YEAR(Optime) = { year }) AccessmentScore 
                             from(
                               select row_number() over(order by a.Optime) as num,
@@ -145,7 +166,8 @@ namespace OpenAuth.App
                             ) as t 
                             left join Relevance r on r.FirstId = t.JudgeId 
                             inner join [Role] ro on ro.Id = r.SecondId 
-                            where num > 0 and (ro.Name = '{ type }' or '{ type }' = '') 
+                            inner join Org o on o.Id = r.SecondId 
+                            where num > 0 and (ro.Name = '{ type }' or '{ type }' = '') and (o.BizCode='{DeptType}' or ('{DeptType}'='' or '{DeptType}' is null ))  
                             group by JudgeId,JudgeName";
             var rows = Repository.ExecuteQuerySql<PerformanceAppraisalOutPut>(sql).ToList();
 

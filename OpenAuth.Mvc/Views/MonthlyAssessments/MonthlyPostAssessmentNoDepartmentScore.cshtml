@@ -1,9 +1,10 @@
 ﻿
 @{
-    ViewBag.Title = "MonthStatistics";
+    /**/
+
+    ViewBag.Title = "MonthlyPostAssessmentNoDepartmentScore";
     Layout = "~/Views/Shared/_adminLTELayout.cshtml";
 }
-
 
 <div class="box box-default">
     <div class="box-body">
@@ -30,6 +31,29 @@
                     </div>
                     <div class="col-xs-1">
                         <input type="text" id="EvaluateYear" autocomplete="off" class="form-control" placeholder="请输入年份">
+                    </div>
+                    <div class="col-xs-2">
+                        <select class="form-control" id="EvaluateMonth">
+                            <option value="">请选择月份</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-1">
+                        <input type="text" id="UserName" autocomplete="off" class="form-control" placeholder="请输入姓名">
+                    </div>
+                    <div class="col-xs-1">
+                        <input type="text" id="OrgName" autocomplete="off" class="form-control" placeholder="请输入部门">
                     </div>
                     <div class="col-xs-1">
                         <button class="btn btn-sm btn-primary" id="btnSearch">搜索</button>
@@ -61,16 +85,14 @@
         var deptType = '';
         var tbOpts = {
             type: 'csv',
-            fileName: '月度考核成绩排名',
+            fileName: '岗位履责考评结果',
         }
 
         var QueryObj = {};
 
 
         $(function () {
-
             $("#menuList").loadMenus("evaluate_statistic_analysis");
-
             var date = new Date();
             var fullYear = date.getFullYear();
             var month = date.getMonth() + 1;
@@ -83,60 +105,33 @@
                 pageSize: 10000,
                 columns: [
                     {
-                        field: '结果',
-                        title: '结果'
+                        field: 'UserName',
+                        title: '姓名'
+                        //formatter: function (value, row, index) {
+                        //    return row.UserName;
+                        //}
                     },
                     {
-                        field: '一',
-                        title: '1'
-                    },
-                    {
-                        field: '二',
-                        title: '2'
-                    },
-                    {
-                        field: '三',
-                        title: '3'
-                    },
-                    {
-                        field: '四',
-                        title: '4'
-                    },
-                    {
-                        field: '五',
-                        title: '5'
-                    },
-                    {
-                        field: '六',
-                        title: '6'
-                    },
-                    {
-                        field: '七',
-                        title: '7'
-                    },
-                    {
-                        field: '八',
-                        title: '8'
-                    },
-                    {
-                        field: '九',
-                        title: '9'
-                    },
-                    {
-                        field: '十',
-                        title: '10'
-                    },
-                    {
-                        field: '十一',
-                        title: '11'
-                    },
-                    {
-                        field: '十二',
-                        title: '12'
-                    },
-                    {
-                        field: '统计',
-                        title: '统计'
+                        field: 'EvaluateYear',
+                        title: '年份'
+                    }, {
+                        field: 'EvaluateMonth',
+                        title: '月份'
+                    }, {
+                        field: 'OrgName',
+                        title: '部门'
+                    }, {
+                        field: 'Score',
+                        title: '月度考核成绩',
+                        formatter: function (value, row, index) {
+                            return value.toFixed(2);
+                        }
+                    },  {
+                        field: 'AssessmentScore',
+                        title: '得分',
+                        formatter: function (value, row, index) {
+                            return value.toFixed(2);
+                        }
                     }]
             }
 
@@ -144,7 +139,7 @@
 
             App.setExportOptions(tbOpts);
 
-            _dataTable = App.initTable('/MonthlyAssessments/GetMonthStatistics', tbOptions);
+            _dataTable = App.initTable('/MonthlyAssessments/GetMonthlyPostAssessment', tbOptions);
 
             _dataTable.SetParameters({
                 EvaluateYear: fullYear,
@@ -225,5 +220,3 @@
     </script>
 
 }
-
-

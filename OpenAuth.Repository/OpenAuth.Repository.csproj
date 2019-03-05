@@ -59,6 +59,7 @@
     <Compile Include="CpContext.cs" />
     <Compile Include="Domain\AnnualExaminationRegistration.cs" />
     <Compile Include="Domain\Answer.cs" />
+    <Compile Include="Domain\AnswerSearch.cs" />
     <Compile Include="Domain\Application.cs" />
     <Compile Include="Domain\Category.cs" />
     <Compile Include="Domain\CategoryType.cs" />

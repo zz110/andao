@@ -15,6 +15,22 @@
                         @*<button class="btn btn-sm btn-info" id="btnEdit">编辑</button>
                         <button class="btn btn-sm btn-danger" id="btnDelele">删除</button>*@
                     </div>
+                    <div class="col-xs-2">
+                        <select id="role" onchange="role_select(this.options[this.options.selectedIndex].value)" class="form-control">
+                            <option value="">请选择职务</option>
+                            <option value="中层正职">中层正职</option>
+                            <option value="中层副职">中层副职</option>
+                            <option value="一般干部">一般干部</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-2">
+                        <select id="DeptType" onchange="dept_type_select(this.options[this.options.selectedIndex].value)" class="form-control">
+                            <option value="">请选择部门类别</option>
+                            <option value="车间">车间</option>
+                            <option value="专业科室">专业科室</option>
+                            <option value="综合科室">综合科室</option>
+                        </select>
+                    </div>
                     <div class="col-xs-1">
                         <input type="text" id="EvaluateYear" autocomplete="off" class="form-control" placeholder="请输入年份">
                     </div>
@@ -83,22 +99,42 @@
             $("#EvaluateMonth").val(month);
 
             var tbOptions = {
+                pageList: [10000],
+                pageSize: 10000,
                 columns: [
                     {
                         checkbox: true
                     }, {
-                        visible: false,
+                        visible: false, width: '120px',
                         field: 'Id'
-                    },{
-                        field: 'JudgeName',
+                    }, {
+                         width: '120px',
+                        field: 'DeptType',
+                        title: '部门'
+                    },
+                    {
+                        field: 'JudgeName', width: '120px',
                         title: '姓名'
                     }, {
-                        field: 'State',
+                        field: 'State', width: '120px',
                         title: '年'
                     }, 
                     {
                         field: 'AccessmentScore',
-                        title: '成绩'
+                        title: '成绩', width: '120px',
+                        formatter:
+                            function (value, row, index) {
+                                if (value == null || value == "null")
+                                    value = "0";
+                                return "<input type='text' value='" + value + "' />";
+                            }
+                    }, {
+                        field: 'Id',
+                        title: '操作', width: '120px',
+                        formatter:
+                            function (value, row, index) {
+                                return "<input type='button' data-guid='" + row.Id + "' value='保存' onclick=saveInfo(this,'" + row.JudgeId + "') />";
+                            }
                     }]
             };
 
@@ -125,7 +161,8 @@
                 var EvaluateMonth = parseInt($("#EvaluateMonth").val());
                 var UserName = $("#UserName").val();
                 var OrgName = $("#OrgName").val();
-
+                var DeptType = $("#DeptType").val();
+                
                 if (isNaN(EvaluateYear) || (EvaluateYear < 1977 || EvaluateYear > 9999)) {
 
                     swal("提示", "请输入合法的年份", "warning");
@@ -136,7 +173,9 @@
                     EvaluateYear: EvaluateYear,
                     EvaluateMonth: EvaluateMonth,
                     UserName: UserName,
-                    OrgName: OrgName
+                    OrgName: OrgName,
+                    DeptType: DeptType,
+                    role: $("#role").val()
                 });
 
                 _dataTable.Refresh();
@@ -144,6 +183,34 @@
 
 
         });
+
+
+        function saveInfo(obj, JudgeId) {
+            var tds = $(obj).parents("tr").find("td");
+            var AccessmentScore = $($(tds[4]).find("input")[0]).val();
+            var id = $(obj).data("guid");
+            var model = {
+                Id: id,
+                JudgeId: JudgeId,
+                State: $("#EvaluateYear").val(),
+                AccessmentScore: AccessmentScore
+            }
+            if (id == null || id == "null" || id == "") {
+                //add
+                $.post("/PerformanceAppraisals/Add", { model: model }, function (result) {
+                    if (result.result) {
+                        $(obj).data("guid", result.id);
+                    }
+                    alert(result.msg);
+                })
+            } else {
+                //update
+                $.post("/PerformanceAppraisals/Update", { model: model }, function (result) {
+                    alert(result.msg)
+                })
+            }
+
+        }
 
     </script>
 

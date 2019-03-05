@@ -8,6 +8,9 @@ using OpenAuth.App.SSO;
 using OpenAuth.Repository.Domain;
 using OpenAuth.Repository.Dto;
 
+using System.Data.SqlClient;
+using System.Data;
+
 namespace OpenAuth.App
 {
     public class MonthlyAssessmentApp : BaseApp<MonthlyAssessment>
@@ -18,32 +21,98 @@ namespace OpenAuth.App
 
         public object page(int limit, int offset, MonthlyAssessmentQueryInput input)
         {
-
+            User user = AuthUtil.GetCurrentUser().User;
+            List<Relevance> rli = ReleManagerApp.Repository.Find(i => i.FirstId == user.Id && i.Key == "UserOrg").ToList<Relevance>();
+            string orgids = "";
+            for (int i = 0; i < rli.Count; i++)
+            {
+                orgids = orgids + "'" +rli[i].SecondId + "',";
+            }
+            if (orgids != "")
+                orgids = orgids.Substring(0, orgids.Length - 1);
+            else
+                orgids = "''";
             offset += 1;
+            //string sql = $@"select top {limit} * from(
+            //                  select row_number() over(order by a.created) as num,a.*,b.Name as OrgName,c.Name as UserName
+            //                                           from MonthlyAssessment a left join Org b
+            //                                           on a.OrgId=b.Id
+            //                                           left join [User] c
+            //                                           on a.UserId=c.Id 
+            //                                           where a.Creator=@Creator 
+            //                                           and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
+            //                                           and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null)
+            //                                           and (c.Name like '%'+@UserName+'%' or @UserName is null)
+            //                                           and (b.Name like '%'+@OrgName+'%' or @OrgName is null)
+
+            //                ) as t where num > ({limit}*({offset}-1))";
+
+            //var rows = Repository.ExecuteQuerySql<MonthlyAssessmentOutput>(sql, input.ToParameters()).ToList();
+
+            //sql = @"select count(*) from MonthlyAssessment a left join [User] c  on a.UserId=c.Id 
+            //        left join Org b
+            //        on a.OrgId=b.Id
+            //        where a.Creator=@Creator 
+            //        and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
+            //        and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null)
+            //        and (c.Name like '%'+@UserName+'%'  or @UserName is null)
+            //        and (b.Name like '%'+@OrgName+'%' or @OrgName is null)";
+
+            //int total = Repository.ExecuteQuerySql<int>(sql, input.ToParameters()).FirstOrDefault();
+
+            //return new
+            //{
+            //    total = total,
+            //    rows = rows
+            //};
+
+
+
             string sql = $@"select top {limit} * from(
-                              select row_number() over(order by a.created) as num,a.*,b.Name as OrgName,c.Name as UserName
-                                                       from MonthlyAssessment a left join Org b
-                                                       on a.OrgId=b.Id
-                                                       left join [User] c
-                                                       on a.UserId=c.Id 
-                                                       where a.Creator=@Creator 
+
+
+select row_number() over(order by c.Name) as num,
+
+ a.[Id]
+      ,c.id [UserId]
+      ,b.id [OrgId]
+      ,a.[EvaluateYear]
+      ,a.[EvaluateMonth]
+      ,a.[AnntubeScore]
+      ,a.[QuantifyScore]
+      ,a.[Score]
+      ,a.[Creator]
+      ,a.[Created]
+      ,a.[Updated]
+      ,a.[Reason1]
+      ,a.[Reason2]
+,b.Name as OrgName,c.Name as UserName from( select *  
+                                                       from MonthlyAssessment a where a.Creator=@Creator 
                                                        and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
-                                                       and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null)
-                                                       and (c.Name like '%'+@UserName+'%' or @UserName is null)
+                                                       and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null) ) a 
+                                                       right join [User] c
+                                                       on a.UserId=c.Id inner join dbo.Relevance as r on r.firstid=c.id 
+                                                       and r.[key]='UserOrg' inner join Org b
+                                                       on b.Id=r.SecondId  
+                                                       where  (b.id in ({orgids}) or {orgids}='') and 
+                                                        (c.Name like '%'+@UserName+'%' or @UserName is null)
                                                        and (b.Name like '%'+@OrgName+'%' or @OrgName is null)
                                                        
                             ) as t where num > ({limit}*({offset}-1))";
 
             var rows = Repository.ExecuteQuerySql<MonthlyAssessmentOutput>(sql, input.ToParameters()).ToList();
 
-            sql = @"select count(*) from MonthlyAssessment a left join [User] c  on a.UserId=c.Id 
-                    left join Org b
-                    on a.OrgId=b.Id
-                    where a.Creator=@Creator 
-                    and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
-                    and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null)
-                    and (c.Name like '%'+@UserName+'%'  or @UserName is null)
-                    and (b.Name like '%'+@OrgName+'%' or @OrgName is null)";
+            sql = $@"select count(*) from( select *  
+                                                       from MonthlyAssessment a where a.Creator=@Creator 
+                                                       and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
+                                                       and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null) ) a 
+                                                       right join [User] c
+                                                       on a.UserId=c.Id inner join dbo.Relevance as r on r.firstid=c.id 
+                                                       and r.[key]='UserOrg' inner join Org b
+                                                       on b.Id=r.SecondId  
+                                                       where (b.id in ({orgids}) or '{orgids}' = '') and 
+                                                        (c.Name like '%'+@UserName+'%' or @UserName is null)
+                                                       and (b.Name like '%'+@OrgName+'%' or @OrgName is null)";
 
             int total = Repository.ExecuteQuerySql<int>(sql, input.ToParameters()).FirstOrDefault();
 
@@ -52,6 +121,7 @@ namespace OpenAuth.App
                 total = total,
                 rows = rows
             };
+
         }
 
         public object GetMonthlyPostAssessment(int limit, int offset, MonthlyPostAssessmentQueryInput input)
@@ -82,6 +152,62 @@ namespace OpenAuth.App
                 total = 10000,
                 rows = rows
             };
+        }
+
+        public object GetTableColumns4MonthlyStatisticsAssessment2(string deptType)
+        {
+            try
+            {
+                var haha = new SqlParameter("@BizCode", DateTime.Now.ToString());
+
+                var sql = "select 'YueFen' as field,'月份' as title,-1 as SortNo union all ";
+                sql += "select '['+[Name]+']' as field,[Name] as title,[SortNo] from [Org] ";
+                if (!string.IsNullOrEmpty(deptType))
+                    sql += "where [BizCode]='"+ deptType + "' ";
+                sql += "order by [SortNo] ";
+
+                var rows = Repository.ExecuteQuerySql<TableColumns>(sql, haha).ToList();
+                return new { total = 10000, rows = rows };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public object GetMonthlyStatisticsAssessment2(int queryYear, string role, string DeptType)
+        {
+            try
+            {
+                var connStr = System.Configuration.ConfigurationManager.ConnectionStrings["OpenAuthDBContext"].ToString();
+
+                using (SqlConnection sqlConn = new SqlConnection(connStr))
+                {
+                    sqlConn.Open();
+
+                    SqlCommand sqlComm = new SqlCommand("PROC_TMP1", sqlConn);
+                    sqlComm.CommandType = CommandType.StoredProcedure;
+
+                    sqlComm.Parameters.Add(new SqlParameter("@QueryYear", SqlDbType.VarChar));
+                    sqlComm.Parameters["@QueryYear"].Value = queryYear.ToString();
+
+                    sqlComm.Parameters.Add(new SqlParameter("@RoleType", SqlDbType.NVarChar));
+                    sqlComm.Parameters["@RoleType"].Value = role;
+
+                    sqlComm.Parameters.Add(new SqlParameter("@OrgType", SqlDbType.NVarChar));
+                    sqlComm.Parameters["@OrgType"].Value = DeptType;
+
+                    var dt = new DataTable();
+                    SqlDataReader sqlReader = sqlComm.ExecuteReader(CommandBehavior.CloseConnection);
+                    dt.Load(sqlReader);
+                    sqlReader.Close();
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public object GetMonthlyStatisticsAssessment(int limit, int offset, MonthlyPostAssessmentQueryInput input)
@@ -137,7 +263,7 @@ PIVOT
 (
    max(Names) FOR 
     p.EvaluateMonth IN ([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
-) AS T ) t ) as s group by ge   union all    select COUNT(*) 统计,'不合格原因',MAX(s.[1]) as 一,MAX(s.[2]) as 二,MAX(s.[3]) as 三,MAX(s.[4]) as 四,MAX(s.[5]) as 五
+) AS T ) t ) as s group by ge   union all    select COUNT(*)-1 统计,'不合格原因',MAX(s.[1]) as 一,MAX(s.[2]) as 二,MAX(s.[3]) as 三,MAX(s.[4]) as 四,MAX(s.[5]) as 五
      ,MAX(s.[6]) as 六,MAX(s.[7]) as 七,MAX(s.[8]) as 八,MAX(s.[9]) as 九
      ,MAX(s.[10]) as 十,MAX(s.[11]) as 十一,MAX(s.[12]) as 十二 from (                      
    select * from (   
@@ -159,7 +285,7 @@ PIVOT
 (
    max(Names) FOR 
     p.EvaluateMonth IN ([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
-) AS T ) t ) as s group by ge  union all    select COUNT(*) 统计,'减分原因',MAX(s.[1]) as 一,MAX(s.[2]) as 二,MAX(s.[3]) as 三,MAX(s.[4]) as 四,MAX(s.[5]) as 五
+) AS T ) t ) as s group by ge  union all    select COUNT(*)-1 统计,'减分原因',MAX(s.[1]) as 一,MAX(s.[2]) as 二,MAX(s.[3]) as 三,MAX(s.[4]) as 四,MAX(s.[5]) as 五
      ,MAX(s.[6]) as 六,MAX(s.[7]) as 七,MAX(s.[8]) as 八,MAX(s.[9]) as 九
      ,MAX(s.[10]) as 十,MAX(s.[11]) as 十一,MAX(s.[12]) as 十二 from (                      
    select * from (   

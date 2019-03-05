@@ -63,7 +63,7 @@ namespace OpenAuth.Mvc.Controllers
         /// </summary>
         public string GetOrgs()
         {
-            return JsonHelper.Instance.Serialize(user.Orgs);
+            return JsonHelper.Instance.Serialize(user.Orgs.OrderBy(i=>i.SortNo));
         }
 
         /// <summary>

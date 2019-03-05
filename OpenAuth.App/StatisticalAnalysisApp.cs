@@ -45,11 +45,11 @@ namespace OpenAuth.App
 							                                  (绩_好+绩_中+绩_差)=0 or
 							                                  (廉_好+廉_中+廉_差)=0 then 0
 						                                else 
-							                                  (德_好*1+德_中*0.7+德_差*0.3)*15/(德_好+德_中+德_差)+
-							                                  (能_好*1+能_中*0.7+能_差*0.3)*15/(能_好+能_中+能_差)+
-							                                  (勤_好*1+勤_中*0.7+勤_差*0.3)*15/(勤_好+勤_中+勤_差)+
-							                                  (绩_好*1+绩_中*0.7+绩_差*0.3)*15/(绩_好+绩_中+绩_差)+
-							                                  (廉_好*1+廉_中*0.7+廉_差*0.3)*15/(廉_好+廉_中+廉_差)
+							                                  (德_好*1+德_中*0.7+德_差*0.3)*20/(德_好+德_中+德_差)+
+							                                  (能_好*1+能_中*0.7+能_差*0.3)*20/(能_好+能_中+能_差)+
+							                                  (勤_好*1+勤_中*0.7+勤_差*0.3)*20/(勤_好+勤_中+勤_差)+
+							                                  (绩_好*1+绩_中*0.7+绩_差*0.3)*20/(绩_好+绩_中+绩_差)+
+							                                  (廉_好*1+廉_中*0.7+廉_差*0.3)*20/(廉_好+廉_中+廉_差)
 						                                end)
 	                                 from (
 			                                select JudgeId,
@@ -73,7 +73,12 @@ namespace OpenAuth.App
 				                                sum(case Q5 when 11 then 1 else 0 end) as '廉_中', 
 				                                sum(case Q5 when 12 then 1 else 0 end) as '廉_差'
 			                                from Answer
-			                                where State='已提交' and year(Optime)=@EvaluateYear
+			                                where State='已提交' and year(Optime)=@EvaluateYear and (JudgeId in(
+                                select distinct a.FirstId from Relevance a  join [Role] b
+                                on a.SecondId=b.Id
+                                where a.[Key]='UserRole' and b.Name=@role
+
+                            ) or @role is null) 
 			                                group by JudgeId
 	                                ) as t1 left join [User] as u
 	                                on t1.JudgeId=u.Id
@@ -135,7 +140,12 @@ namespace OpenAuth.App
 												sum(case Q6 when 12 then 1 else 0 end) as '基本称职', 
 												sum(case Q6 when 13 then 1 else 0 end) as '不称职'
 											from Answer as a1
-											where State='已提交' and year(Optime)=@EvaluateYear
+											where State='已提交' and year(Optime)=@EvaluateYear and (JudgeId in(
+                                select distinct a.FirstId from Relevance a  join [Role] b
+                                on a.SecondId=b.Id
+                                where a.[Key]='UserRole' and b.Name=@role
+
+                            ) or @role is null) 
 											group by JudgeId 
 	                                ) as t1 left join [User] as u
 	                                on t1.JudgeId=u.Id
@@ -188,11 +198,11 @@ namespace OpenAuth.App
 							                                                            (绩_好+绩_中+绩_差)=0 or
 							                                                            (廉_好+廉_中+廉_差)=0 then 0
 						                                                        else 
-							                                                            (德_好*1+德_中*0.7+德_差*0.3)*15/(德_好+德_中+德_差)+
-							                                                            (能_好*1+能_中*0.7+能_差*0.3)*15/(能_好+能_中+能_差)+
-							                                                            (勤_好*1+勤_中*0.7+勤_差*0.3)*15/(勤_好+勤_中+勤_差)+
-							                                                            (绩_好*1+绩_中*0.7+绩_差*0.3)*15/(绩_好+绩_中+绩_差)+
-							                                                            (廉_好*1+廉_中*0.7+廉_差*0.3)*15/(廉_好+廉_中+廉_差)
+							                                                            (德_好*1+德_中*0.7+德_差*0.3)*20/(德_好+德_中+德_差)+
+							                                                            (能_好*1+能_中*0.7+能_差*0.3)*20/(能_好+能_中+能_差)+
+							                                                            (勤_好*1+勤_中*0.7+勤_差*0.3)*20/(勤_好+勤_中+勤_差)+
+							                                                            (绩_好*1+绩_中*0.7+绩_差*0.3)*20/(绩_好+绩_中+绩_差)+
+							                                                            (廉_好*1+廉_中*0.7+廉_差*0.3)*20/(廉_好+廉_中+廉_差)
 						                                                        end)
 	                                                            from (
 			                                                        select JudgeId,
@@ -216,7 +226,12 @@ namespace OpenAuth.App
 				                                                        sum(case Q5 when 11 then 1 else 0 end) as '廉_中', 
 				                                                        sum(case Q5 when 12 then 1 else 0 end) as '廉_差'
 			                                                        from Answer
-			                                                        where State='已提交' and year(Optime)=@EvaluateYear
+			                                                        where State='已提交' and year(Optime)=@EvaluateYear and (JudgeId in(
+                                select distinct a.FirstId from Relevance a  join [Role] b
+                                on a.SecondId=b.Id
+                                where a.[Key]='UserRole' and b.Name=@role
+
+                            ) or @role is null) 
 			                                                        group by JudgeId
 	                                                        ) as t1 left join [User] as u
 	                                                        on t1.JudgeId=u.Id
@@ -260,7 +275,12 @@ namespace OpenAuth.App
 					                        sum(case Q6 when 12 then 1 else 0 end) as '基本称职', 
 					                        sum(case Q6 when 13 then 1 else 0 end) as '不称职'
 				                        from Answer as a1
-				                        where State='已提交' and year(Optime)=@EvaluateYear
+				                        where State='已提交' and year(Optime)=@EvaluateYear and (JudgeId in(
+                                select distinct a.FirstId from Relevance a  join [Role] b
+                                on a.SecondId=b.Id
+                                where a.[Key]='UserRole' and b.Name=@role
+
+                            ) or @role is null) 
 				                        group by JudgeId 
 		                        ) as t1 left join [User] as u
 		                        on t1.JudgeId=u.Id

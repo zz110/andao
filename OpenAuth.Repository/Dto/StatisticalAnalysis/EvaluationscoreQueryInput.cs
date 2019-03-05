@@ -12,6 +12,10 @@ namespace OpenAuth.Repository.Dto
     public class EvaluationscoreQueryInput
     {
         /// <summary>
+        /// 角色职务
+        /// </summary>
+        public string role { get; set; }
+        /// <summary>
         /// 测评年份
         /// </summary>
         public int? EvaluateYear { get; set; }

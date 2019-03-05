@@ -41,7 +41,8 @@ namespace OpenAuth.Mvc.Controllers
         /// 月度岗位履责考评结果
         /// </summary>
         /// <returns></returns>
-        public ActionResult MonthlyPostAssessment() {
+        public ActionResult MonthlyPostAssessment()
+        {
 
             return View();
         }
@@ -101,7 +102,7 @@ namespace OpenAuth.Mvc.Controllers
         {
 
             input.Creator = _User.Id;
-            var result = App.page(limit, offset, input);
+            var result = App.page(10000, 0, input);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -167,6 +168,11 @@ namespace OpenAuth.Mvc.Controllers
             return JsonHelper.Instance.Serialize(Result);
         }
 
+        public ActionResult MonthlyPostAssessmentNoDepartmentScore()
+        {
+            return View();
+        }
+
         public ActionResult MonthStatistics()
         {
             return View();
@@ -178,5 +184,67 @@ namespace OpenAuth.Mvc.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult MonthStatistics2()
+        {
+            return View();
+        }
+
+        public JsonResult GetTableColumns4MonthlyStatisticsAssessment2(string deptType)
+        {
+            try
+            {
+                var rslt = App.GetTableColumns4MonthlyStatisticsAssessment2(deptType);
+
+                return Json(rslt, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public ContentResult OutDataTmp1(int queryYear,string role,string DeptType)
+        {
+            try
+            {
+                var rslt = App.GetMonthlyStatisticsAssessment2(queryYear,role,DeptType) as System.Data.DataTable;
+
+                var tmp = Newtonsoft.Json.JsonConvert.SerializeObject(rslt);
+
+                var rsltStr = "{\"total\":" + rslt.Rows.Count + ",\"rows\":" + tmp + "}";
+
+                return Content(rsltStr);
+
+                //return Json(rslt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+
+        public JsonResult Add(MonthlyAssessment model) {
+            model.Id = Guid.NewGuid().ToString();
+            model.Score = Convert.ToDecimal(model.AnntubeScore) * Convert.ToDecimal(0.3) + Convert.ToDecimal(model.QuantifyScore) * Convert.ToDecimal(0.7);
+            model.Creator = _User.Id;
+            string id = App.Add(model);
+            return Json(new { result = true, msg = "保存成功", id = id });
+        }
+
+        public JsonResult Update(MonthlyAssessment model)
+        {
+            model.Score = Convert.ToDecimal(model.AnntubeScore) * Convert.ToDecimal(0.3) + Convert.ToDecimal(model.QuantifyScore) * Convert.ToDecimal(0.7);
+            App.Update(model);
+            return Json(new { result = true, msg = "保存成功" });
+        }
+
+    }
+
+    public class Reply<T>
+    {
+        public int total { get; set; } = 0;
+
+        public System.Collections.Generic.List<T> rows { get; set; } = new System.Collections.Generic.List<T>();
     }
 }
