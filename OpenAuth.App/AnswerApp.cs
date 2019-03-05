@@ -81,7 +81,10 @@ namespace OpenAuth.App
         {
 
             offset += 1;
-            string sql = $@"  select u.Name,u.Account,o.name Password ,u.[Id]
+            string sql = $@"  
+  
+  
+  select u.Name,u.Account,o.name Password ,u.[Id]
       ,u.[Sex]
       ,u.[Status]
       ,u.[BizCode]
@@ -94,9 +97,10 @@ namespace OpenAuth.App
       ,u.[ZRank]
       ,[CardId] from [user] u inner join dbo.Relevance r on u.id=r.firstid inner join dbo.Org o on o.id=r.secondid
   where u.id in (
-SELECT distinct  a.id  
-  FROM dbo.[Plan] p left join [dbo].[user] a on 1=1 where charindex( a.id,p.RatersId)>0 
-  and a.id not in ( select RatersId from Answer  )) order by o.name";
+ select * from temp 
+  ) order by o.name
+  
+  ";
 
             var rows = Repository.ExecuteQuerySql<User>(sql, input.ToParameters()).ToList();
 

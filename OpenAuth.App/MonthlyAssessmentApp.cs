@@ -91,8 +91,8 @@ select row_number() over(order by c.Name) as num,
                                                        and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
                                                        and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null) ) a 
                                                        right join [User] c
-                                                       on a.UserId=c.Id left join dbo.Relevance as r on r.firstid=c.id 
-                                                       and r.[key]='UserOrg' left join Org b
+                                                       on a.UserId=c.Id inner join dbo.Relevance as r on r.firstid=c.id 
+                                                       and r.[key]='UserOrg' inner join Org b
                                                        on b.Id=r.SecondId  
                                                        where  (b.id in ({orgids}) or {orgids}='') and 
                                                         (c.Name like '%'+@UserName+'%' or @UserName is null)
@@ -107,8 +107,8 @@ select row_number() over(order by c.Name) as num,
                                                        and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
                                                        and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null) ) a 
                                                        right join [User] c
-                                                       on a.UserId=c.Id left join dbo.Relevance as r on r.firstid=c.id 
-                                                       and r.[key]='UserOrg' left join Org b
+                                                       on a.UserId=c.Id inner join dbo.Relevance as r on r.firstid=c.id 
+                                                       and r.[key]='UserOrg' inner join Org b
                                                        on b.Id=r.SecondId  
                                                        where (b.id in ({orgids}) or '{orgids}' = '') and 
                                                         (c.Name like '%'+@UserName+'%' or @UserName is null)

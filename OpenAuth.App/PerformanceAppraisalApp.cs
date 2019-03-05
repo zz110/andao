@@ -54,10 +54,10 @@ select row_number() over(order by c.Name) as num,
                                                       from PerformanceAppraisal a where 
                                                        (Datename(year,a.[Optime]) =@EvaluateYear) ) a 
                                                        right join [User] c
-                                                       on a.JudgeId=c.Id left join dbo.Relevance as r on r.firstid=c.id 
-                                                       and r.[key]='UserOrg' left join Org b
-                                                       on b.Id=r.SecondId   left join dbo.Relevance as r1 on r1.firstid=c.id 
-                                                       and r1.[key]='UserRole' left join Role ro
+                                                       on a.JudgeId=c.Id inner join dbo.Relevance as r on r.firstid=c.id 
+                                                       and r.[key]='UserOrg' inner join Org b
+                                                       on b.Id=r.SecondId   inner join dbo.Relevance as r1 on r1.firstid=c.id 
+                                                       and r1.[key]='UserRole' inner join Role ro
                                                        on ro.Id=r1.SecondId  
                                                        where  (b.id in ({orgids}) or {orgids}='') and 
                                                         (c.Name like '%'+@UserName+'%' or @UserName is null)
