@@ -8,6 +8,7 @@ namespace OpenAuth.Mvc.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.u = _User;
             return View();
         }
 
