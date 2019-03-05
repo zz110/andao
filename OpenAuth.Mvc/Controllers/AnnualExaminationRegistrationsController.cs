@@ -69,6 +69,9 @@ namespace OpenAuth.Mvc.Controllers
             input.Creator = _User.Id;
             var result = App.page(limit, offset, input);
             return Json(result, JsonRequestBehavior.AllowGet);
+
+
+
         }
 
 
@@ -113,7 +116,11 @@ namespace OpenAuth.Mvc.Controllers
             return Json(response);
         }
 
-
+        /// <summary>
+        /// 导出Excel
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public FileContentResult ExportWord(string id = "") {
 
 
