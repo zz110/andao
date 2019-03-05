@@ -187,7 +187,7 @@
 
         function saveInfo(obj, JudgeId) {
             var tds = $(obj).parents("tr").find("td");
-            var AccessmentScore = $($(tds[3]).find("input")[0]).val();
+            var AccessmentScore = $($(tds[4]).find("input")[0]).val();
             var id = $(obj).data("guid");
             var model = {
                 Id: id,
