@@ -90,5 +90,10 @@ namespace OpenAuth.Repository.Domain
         public string Position { get; set; }
         public string DegreeEdu { get; set; }
 
+        public string Nation { get; set; }
+
+        public string Officetime { get; set; }
+
+
     }
 }

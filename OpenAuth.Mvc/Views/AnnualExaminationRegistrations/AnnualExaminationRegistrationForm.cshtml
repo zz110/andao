@@ -131,14 +131,16 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">民族:</label>
                     <div class="col-sm-9">
-                        <select class="form-control" name="Nation" ng-model="model.Nation">
-                            <option value="" ng-selected="'' == model.Nation">--请选择--</option>
-                            <option ng-repeat="item in NationList"
-                                    ng-selected="item == model.Nation"
-                                    value="{{item}}">
-                                {{item}}
-                            </option>
-                        </select>
+
+                        <input type="text"
+                               name="Nation"
+                               autocomplete="off"
+                               ng-model="model.Nation"
+                               maxlength="20"
+                               minlength="2" readonly
+                               class="form-control required"
+                               placeholder="民族" />
+
                     </div>
                 </div>
             </div>
@@ -204,9 +206,9 @@
                     <div class="col-sm-8">
                         <input type="text"
                                autocomplete="off"
-                               name="Officetime"
-                               ng-model="model.Officetime"
-                               class="form-control adminlte_datepicker Officetime required" placeholder="请选择任现职时间" />
+                               name="Officetime" readonly
+                               ng-model="model.Officetime"  
+                               class="form-control required" placeholder="请选择任现职时间" />
                     </div>
                 </div>
             </div>

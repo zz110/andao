@@ -186,6 +186,7 @@
 
 
         function saveInfo(obj, JudgeId) {
+            $(obj).attr("disabled", true);
             var tds = $(obj).parents("tr").find("td");
             var AccessmentScore = $($(tds[4]).find("input")[0]).val();
             var id = $(obj).data("guid");
@@ -202,11 +203,13 @@
                         $(obj).data("guid", result.id);
                     }
                     alert(result.msg);
+                    $(obj).attr("disabled", false);
                 })
             } else {
                 //update
                 $.post("/PerformanceAppraisals/Update", { model: model }, function (result) {
-                    alert(result.msg)
+                    alert(result.msg);
+                    $(obj).attr("disabled", false);
                 })
             }
 

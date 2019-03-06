@@ -56,6 +56,8 @@ namespace OpenAuth.Mvc.Controllers
                     result.Politicalaffiliation = uu.Politicalaffiliation;
                     result.Position = uu.Position;
                     result.DegreeEdu = uu.DegreeEdu;
+                    result.Nation = uu.Nation;
+                    result.Officetime =Convert.ToDateTime(uu.Officetime);
                     string cardId = _User.CardId;
                     string year = _User.CardId.Substring(6, 4);
                     string month = _User.CardId.Substring(10, 2);
