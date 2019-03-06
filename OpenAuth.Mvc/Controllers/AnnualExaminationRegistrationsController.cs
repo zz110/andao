@@ -52,6 +52,10 @@ namespace OpenAuth.Mvc.Controllers
                     result.Creator = _User.Id;
                     result.UserId = _User.Id;
                     result.Name = _User.Name;
+                    User uu = App.Repository.ExecuteQuerySql<User>("select * from [user] where id='" + result.UserId + "'").ToList<User>()[0];
+                    result.Politicalaffiliation = uu.Politicalaffiliation;
+                    result.Position = uu.Position;
+                    result.DegreeEdu = uu.DegreeEdu;
                     string cardId = _User.CardId;
                     string year = _User.CardId.Substring(6, 4);
                     string month = _User.CardId.Substring(10, 2);

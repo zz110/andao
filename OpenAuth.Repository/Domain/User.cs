@@ -34,6 +34,10 @@ namespace OpenAuth.Repository.Domain
             this.XRank = string.Empty;
             this.ZRank = string.Empty;
             this.CardId = string.Empty;
+            this.Politicalaffiliation = string.Empty;
+            this.Position = string.Empty;
+            this.DegreeEdu = string.Empty;
+
         }
 
         /// <summary>
@@ -80,6 +84,11 @@ namespace OpenAuth.Repository.Domain
         public string XRank { get; set; }
         public string ZRank { get; set; }
         public string CardId { get; set; }
+
+
+        public string Politicalaffiliation { get; set; }
+        public string Position { get; set; }
+        public string DegreeEdu { get; set; }
 
     }
 }

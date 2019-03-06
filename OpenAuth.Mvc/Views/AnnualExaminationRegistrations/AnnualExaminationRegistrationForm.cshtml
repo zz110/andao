@@ -147,15 +147,15 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">政治面貌:</label>
                     <div class="col-sm-9">
-
-                        <select class="form-control" name="Politicalaffiliation" ng-model="model.Politicalaffiliation">
-                            <option value="" ng-selected="'' == model.Politicalaffiliation">--请选择--</option>
-                            <option ng-repeat="item in PoliticalaffiliationList"
-                                    ng-selected="item == model.Politicalaffiliation"
-                                    value="{{item}}">
-                                {{item}}
-                            </option>
-                        </select>
+                        <input type="text"
+                               name="Politicalaffiliation"
+                               autocomplete="off"
+                               ng-model="model.Politicalaffiliation"
+                               maxlength="20"
+                               minlength="2" readonly
+                               class="form-control required"
+                               placeholder="政治面貌" />
+ 
                     </div>
                 </div>
             </div>
@@ -164,15 +164,15 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">文化程度:</label>
                     <div class="col-sm-9">
-
-                        <select class="form-control" name="Politicalaffiliation" ng-model="model.DegreeEdu">
-                            <option value="" ng-selected="'' == model.DegreeEdu">--请选择--</option>
-                            <option ng-repeat="item in DegreeEduList"
-                                    ng-selected="item == model.DegreeEdu"
-                                    value="{{item}}">
-                                {{item}}
-                            </option>
-                        </select>
+                        <input type="text"
+                               name="DegreeEdu"
+                               autocomplete="off"
+                               ng-model="model.DegreeEdu"
+                               maxlength="20"
+                               minlength="2" readonly
+                               class="form-control required"
+                               placeholder="请输入现任职务" />
+                        
                     </div>
                 </div>
             </div>
@@ -191,7 +191,7 @@
                                autocomplete="off"
                                ng-model="model.Position"
                                maxlength="20"
-                               minlength="2"
+                               minlength="2" readonly 
                                class="form-control required"
                                placeholder="请输入现任职务" />
                     </div>
