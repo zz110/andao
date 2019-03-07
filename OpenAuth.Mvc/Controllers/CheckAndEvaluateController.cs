@@ -27,7 +27,7 @@ namespace OpenAuth.Mvc.Controllers
             for (int i = 0; i < list.Count; i++)
             {
                 list[i].q6 = list[i].q6 * 100 / list[i].q6count;
-                if (type == "正职")
+                if (type == "中层正职")
                 {
                     list[i].pingce = (list[i].q1 + list[i].q2 + list[i].q3 + list[i].q4 +
                         list[i].q5) * (decimal)0.6 + list[i].q6 * (decimal)0.4;

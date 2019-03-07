@@ -95,9 +95,9 @@ select row_number() over(order by c.Name) as num,
         public List<PerformanceAppraisalOutPut> List(string year,string type,string DeptType)
         {
             string sql = $@"select top 1000 JudgeId,JudgeName,
-                            (select SUM(Score)/12 from MonthlyAssessment 
+                           isnull( (select SUM(Score)/12 from MonthlyAssessment 
                             where UserId = JudgeId 
-                            and EvaluateYear='{ year }') 
+                            and EvaluateYear='{ year }'),0) 
                             MonthlyAVG,
                             sum(
 	                            case q1 
@@ -165,8 +165,8 @@ select row_number() over(order by c.Name) as num,
                               where YEAR(a.Optime) = { year } and a.State = '已提交'
                             ) as t 
                             left join Relevance r on r.FirstId = t.JudgeId 
-                            inner join [Role] ro on ro.Id = r.SecondId 
-                            inner join Org o on o.Id = r.SecondId 
+                            left join [Role] ro on ro.Id = r.SecondId 
+                            left join Org o on o.Id = r.SecondId 
                             where num > 0 and (ro.Name = '{ type }' or '{ type }' = '') and (o.BizCode='{DeptType}' or ('{DeptType}'='' or '{DeptType}' is null ))  
                             group by JudgeId,JudgeName";
             var rows = Repository.ExecuteQuerySql<PerformanceAppraisalOutPut>(sql).ToList();

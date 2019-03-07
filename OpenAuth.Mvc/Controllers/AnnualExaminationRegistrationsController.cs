@@ -12,12 +12,15 @@ using OpenAuth.Repository.Dto;
 using OpenAuth.App.SSO;
 using System.Linq;
 using OpenAuth.Mvc.Utils;
+using System.Collections.Generic;
 
 namespace OpenAuth.Mvc.Controllers
 {
     public class AnnualExaminationRegistrationsController : BaseController
     {
         public AnnualExaminationRegistrationApp App { get; set; }
+
+        public StatisticalAnalysisApp Appp { get; set; }
 
         public RevelanceManagerApp A { get; set; }
 
@@ -52,12 +55,48 @@ namespace OpenAuth.Mvc.Controllers
                     result.Creator = _User.Id;
                     result.UserId = _User.Id;
                     result.Name = _User.Name;
-                    User uu = App.Repository.ExecuteQuerySql<User>("select * from [user] where id='" + result.UserId + "'").ToList<User>()[0];
+                    User uu = App.Repository.ExecuteQuerySql<User>(@"SELECT u.Id,
+      [Account]
+      ,[Password]
+      , u.Name
+      ,[Sex]
+      ,[CrateId]
+      , ro.Name[TypeName]
+      , o.BizCode[TypeId]
+      ,[Age]
+      ,[XRank]
+      ,[ZRank]
+      ,[CardId]
+      ,[Politicalaffiliation]
+      ,[Position]
+      ,[DegreeEdu]
+      ,[Nation]
+      ,[Officetime],u.Status,u.BizCode,u.CreateTime
+  FROM[cp].[dbo].[User] u left join dbo.Relevance r1 on r1.FirstId = u.Id and r1.[Key] = 'UserRole' left join Role ro on ro.Id = r1.SecondId
+  left join dbo.Relevance r2 on r2.FirstId = u.Id and r2.[Key] = 'UserOrg'  left join dbo.Org o on o.Id = r2.SecondId
+   where u.Id = '" + result.UserId + "'").ToList<User>()[0];
                     result.Politicalaffiliation = uu.Politicalaffiliation;
                     result.Position = uu.Position;
                     result.DegreeEdu = uu.DegreeEdu;
                     result.Nation = uu.Nation;
                     result.Officetime =Convert.ToDateTime(uu.Officetime);
+                    EvaluationscoreQueryInput input = new EvaluationscoreQueryInput();
+                    input.role = uu.TypeName;
+                    input.DeptType = uu.TypeId;
+                    input.EvaluateYear = DateTime.Now.Year;
+
+                    List<EvaluationTotalscoreOutput> li = Appp.get_totalscore_data_all(input);
+                    
+                    result.EvaluationCount = li.Count();
+                    EvaluationTotalscoreOutput ue = (EvaluationTotalscoreOutput)li.FirstOrDefault(i => i.Id == uu.Id);
+                    if (ue != null)
+                    {
+                        result.FactorScore = ue.要素;
+
+                        List<EvaluationTotalscoreOutput> phb = li.FindAll(i => i.总分 > ue.总分).ToList<EvaluationTotalscoreOutput>();
+                        result.Rank = phb.Count() + 1;
+                    }
+
                     string cardId = _User.CardId;
                     string year = _User.CardId.Substring(6, 4);
                     string month = _User.CardId.Substring(10, 2);
