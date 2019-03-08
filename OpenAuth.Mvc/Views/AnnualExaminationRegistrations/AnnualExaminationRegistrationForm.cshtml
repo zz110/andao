@@ -219,7 +219,7 @@
                 <div class="form-group">
                     <label class="col-sm-1 control-label">个人总结:</label>
                     <div class="col-sm-11">
-                        <textarea class="form-control" placeholder="请输入个人总结(字数不用超过800)" rows="10" name="Conclusion" ng-model="model.Conclusion"></textarea>
+                        <textarea class="form-control" placeholder="请输入个人总结" rows="10" name="Conclusion" ng-model="model.Conclusion"></textarea>
                     </div>
                 </div>
             </div>
@@ -231,8 +231,6 @@
                 <div class="form-group">
                     <label class="col-sm-1 control-label">
                         考核期内奖惩情况:
-                        <br />
-                        <input type="button" onclick="AddRow()" value="添加新行" />
                     </label>
                     <div class="col-sm-11">
                         <div class="box box-success">
@@ -245,7 +243,7 @@
                                                 <div class="col-sm-2">
                                                     <input type="text"
                                                            autocomplete="off"
-                                                           ng-model="model.PenaltyTime" name="PenaltyTime"
+                                                           id="PenaltyTime" name="PenaltyTime" ng-model="model.PenaltyTime"
                                                            class="form-control adminlte_datepicker PenaltyTime" placeholder="请选择日期">
                                                 </div>
                                                 <div class="col-sm-1">
@@ -254,7 +252,7 @@
                                                 <div class="col-sm-3">
                                                     <input type="text"
                                                            autocomplete="off"
-                                                           ng-model="model.PenaltyReasons" name="PenaltyReasons"
+                                                           id="PenaltyReasons" name="PenaltyReasons"
                                                            class="form-control" placeholder="请输入原因">
                                                 </div>
                                                 <div class="col-sm-1">
@@ -263,12 +261,17 @@
                                                 <div class="col-sm-3">
                                                     <input type="text"
                                                            autocomplete="off"
-                                                           ng-model="model.Penalty" name="Penalty"
+                                                           name="Penalty" id="Penalty"  ng-model="model.Penalty"
                                                            class="form-control" placeholder="请输入处分详情">
                                                 </div>
                                                 <div class="col-sm-1">
                                                     <label class="control-label">处分</label>
                                                 </div>
+                                                <div class="col-sm-1">
+                                                   <input type="button" onclick="AddPenaltyReasons()" value="增加" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12" id="处分详情" ng-model="model.PenaltyReasons">
 
                                             </div>
                                         </div>
@@ -283,7 +286,7 @@
                                                 <div class="col-sm-2">
                                                     <input type="text"
                                                            autocomplete="off"
-                                                           ng-model="model.RewardTime" name="RewardTime"
+                                                           id="RewardTime" name="RewardTime" ng-model="model.RewardTime"
                                                            class="form-control adminlte_datepicker RewardTime" placeholder="请选择日期">
                                                 </div>
                                                 <div class="col-sm-1">
@@ -292,7 +295,7 @@
                                                 <div class="col-sm-3">
                                                     <input type="text"
                                                            autocomplete="off"
-                                                           ng-model="model.RewardReasons" name="RewardReasons"
+                                                           id="RewardReasons" name="RewardReasons"
                                                            class="form-control" placeholder="请输入原因">
                                                 </div>
                                                 <div class="col-sm-1">
@@ -301,9 +304,15 @@
                                                 <div class="col-sm-3">
                                                     <input type="text"
                                                            autocomplete="off"
-                                                           ng-model="model.Reward" name="Reward"
+                                                           id="Reward" name="Reward" ng-model="model.Reward"
                                                            class="form-control" placeholder="请输入称号">
                                                 </div>
+                                                <div class="col-sm-1">
+                                                    <input type="button" onclick="AddRewardReasons()" value="增加" />
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-12" id="奖励详情" ng-model="model.RewardReasons">
 
                                             </div>
                                         </div>
@@ -326,7 +335,7 @@
                         <div class="box box-success">
                             <div class="box-body">
                                 <div class="row">
-                                    <div class="col-xs-12 col-sm-6">
+                                    <div class="col-xs-12 col-sm-6" style="display:none">
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">测评人员范围:</label>
                                             <div class="col-sm-9">
@@ -345,7 +354,7 @@
                                                 <input type="text"
                                                        autocomplete="off"
                                                        name="EvaluationCount"
-                                                       ng-model="model.EvaluationCount"
+                                                       ng-model="model.EvaluationCount" readonly
                                                        class="form-control" placeholder="请输入被测评人数" />
                                             </div>
                                         </div>
@@ -360,7 +369,7 @@
                                                 <input type="text"
                                                        autocomplete="off"
                                                        name="FactorScore"
-                                                       ng-model="model.FactorScore"
+                                                       ng-model="model.FactorScore" readonly
                                                        class="form-control" placeholder="请输入要素测评得分" />
                                             </div>
                                         </div>
@@ -372,7 +381,7 @@
                                                 <input type="text"
                                                        name="Rate"
                                                        autocomplete="off"
-                                                       ng-model="model.Rate"
+                                                       ng-model="model.Rate" readonly
                                                        class="form-control" placeholder="请输入优秀称职率" />
                                             </div>
                                         </div>
@@ -387,7 +396,7 @@
                                                 <input type="text"
                                                        name="Rank"
                                                        autocomplete="off"
-                                                       ng-model="model.Rank"
+                                                       ng-model="model.Rank" readonly
                                                        class="form-control" placeholder="请输入排名顺位" />
                                             </div>
                                         </div>
@@ -489,9 +498,9 @@
                                                     <label class="control-label">依据唐山供电段《干部综合考核评价实施办法》，该同志考核评定为：</label>
 
                                                 </div>
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-6" style="display:none">
 
-                                                    <textarea name="HRAdvice" autocomplete="off" ng-model="model.HRAdvice" rows="5" class="form-control"></textarea>
+                                                    <textarea name="HRAdvice" autocomplete="off" ng-model="model.HRAdvice"  rows="5" class="form-control"></textarea>
 
                                                 </div>
 
@@ -539,10 +548,10 @@
                     <div class="col-sm-11">
                         <div class="box box-success">
                             <div class="box-body">
-                                <div class="row">
+                                <div class="row" style="display:none">
                                     <div class="col-xs-12 col-sm-12">
                                         <div class="form-group">
-                                            <div class="col-sm-12">
+                                            <div class="col-sm-12" >
 
                                                 <div class="col-sm-12">
                                                     <textarea name="UnitAdvice" autocomplete="off" ng-model="model.UnitAdvice" rows="5" class="form-control"></textarea>
@@ -584,7 +593,7 @@
 
         </div>
 
-        <div class="row">
+        <div class="row" style="display:none">
             <div class="col-xs-12 col-sm-12">
                 <div class="form-group">
                     <label class="col-sm-1 control-label">
@@ -683,15 +692,26 @@
     <script src="~/static/app/AnnualExaminationRegistrationForm.js"></script>
 
     <script type="text/javascript">
-        var html =" <div class='col-sm-12'> <div class='col-sm-2'>";
-        html = html + "<input type='text' autocomplete='off' ng-model='model.PenaltyTime' name='PenaltyTime' class='form-control adminlte_datepicker PenaltyTime' placeholder='请选择日期'></div>";
-        html = html + "<div class='col-sm-1'><label class='control-label'>因</label></div><div class='col-sm-3'>";
-        html = html + "<input type='text' autocomplete='off' ng-model='model.PenaltyReasons' name='PenaltyReasons' class='form-control' placeholder='请输入原因'>";
-        html = html + "</div> <div class='col-sm-1'><label class='control-label'>受</label></div><div class='col-sm-3'><input type='text' autocomplete='off' ng-model='model.Penalty' name='Penalty' class='form-control' placeholder='请输入处分详情'>";
-        html = html + "</div><div class='col-sm-1'><label class='control-label'>处分</label></div></div>";
-        function AddRow()
+
+        function AddPenaltyReasons()
         {
-            $("#AddNewRow").html($("#AddNewRow").html()+html);
+            var PenaltyTime = $("#PenaltyTime").val();
+            var PenaltyReasons = $("#PenaltyReasons").val();
+            var Penalty = $("#Penalty").val();
+            var str = "<li onclick='Remove(this)' data-nn='" + PenaltyTime + "因" + PenaltyReasons + "受" + Penalty + "处分'>" + PenaltyTime + "因" + PenaltyReasons + "受" + Penalty + "处分</li>";
+            $("#处分详情").html($("#处分详情").html() + str);
+        }
+
+        function AddRewardReasons() {
+            var RewardTime = $("#RewardTime").val();
+            var RewardReasons = $("#RewardReasons").val();
+            var Reward = $("#Reward").val();
+            var str = "<li onclick='Remove(this)' data-nn='" + RewardTime + "因" + RewardReasons + "获得" + Reward +"'>" + RewardTime + "因" + RewardReasons + "获得" + Reward + "</li>";
+            $("#奖励详情").html($("#奖励详情").html() + str );
+        }
+
+        function Remove(obj) {
+            $(obj).remove();
         }
     </script>
 

@@ -15,7 +15,11 @@ namespace OpenAuth.App
         /// <param name="type">关联的类型，如Define.USERRESOURCE</param>
         public void Assign(string type, string firstId, string[] secIds)
         {
-            Assign(type, secIds.ToLookup(u => firstId));
+            string[] ss = firstId.Split(',');
+            for (int i = 0; i < ss.Length; i++)
+            {
+                Assign(type, secIds.ToLookup(u => ss[i]));
+            }
         }
 
         public void Assign(string key, ILookup<string, string> idMaps)
@@ -59,7 +63,12 @@ namespace OpenAuth.App
         /// <param name="secIds">The sec ids.</param>
         public void UnAssign(string type, string firstId, string[] secIds)
         {
-            DeleteBy(type, secIds.ToLookup(u =>firstId));
+            string[] ss = firstId.Split(',');
+            for (int i = 0; i < ss.Length; i++)
+            {
+                DeleteBy(type, secIds.ToLookup(u => ss[i]));
+            }
+            
         }
 
         public void DeleteBy(string key, params string[] firstIds)

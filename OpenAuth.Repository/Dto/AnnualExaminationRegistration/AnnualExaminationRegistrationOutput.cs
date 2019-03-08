@@ -298,12 +298,12 @@ namespace OpenAuth.Repository.Dto
 
                 if (RegistrationTime.HasValue)
                 {
-                    result += $"{RegistrationTime.Value.ToString("yyyy-MM-dd")},因{RewardReasons},获得{Reward}" + Environment.NewLine;
+                    result += $"{RewardReasons}" + Environment.NewLine;
                 }
 
                 if (PenaltyTime.HasValue)
                 {
-                    result += $"{PenaltyTime.Value.ToString("yyyy-MM-dd")},因{PenaltyReasons},受{Penalty}" + Environment.NewLine;
+                    result += $"{PenaltyReasons}" + Environment.NewLine;
                 }
 
                 return result;

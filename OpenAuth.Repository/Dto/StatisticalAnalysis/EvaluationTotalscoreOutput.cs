@@ -20,6 +20,8 @@ namespace OpenAuth.Repository.Dto
         public decimal 综合 { get; set; }
         public decimal 总分 { get; set; }
 
+        public decimal 优秀率 { get; set; }
+
         public string Id { get; set; }
 
     }

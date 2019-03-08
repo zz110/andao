@@ -110,7 +110,7 @@ select row_number() over(order by c.Name) as num,
                                                        on a.UserId=c.Id inner join dbo.Relevance as r on r.firstid=c.id 
                                                        and r.[key]='UserOrg' inner join Org b
                                                        on b.Id=r.SecondId  
-                                                       where (b.id in ({orgids}) or '{orgids}' = '') and 
+                                                       where (b.id in ({orgids}) or {orgids} = '') and 
                                                         (c.Name like '%'+@UserName+'%' or @UserName is null)
                                                        and (b.Name like '%'+@OrgName+'%' or @OrgName is null)";
 
