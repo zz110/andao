@@ -125,8 +125,8 @@ namespace OpenAuth.App
 	                                select u.Name,
 		                                   t2.OrgName,t2.XRank,
 		                                   优秀,称职,基本称职,不称职,
-		                                   优秀称职率=(优秀+称职)/(优秀+称职+基本称职+不称职)*100.0,
-										   不称职率=(基本称职+不称职)/(优秀+称职+基本称职+不称职)*100.0,
+		                                   优秀称职率=convert(decimal(18,2),(convert(decimal(18,2),(优秀+称职))/convert(decimal(18,2),(优秀+称职+基本称职+不称职))*100)),
+										   不称职率=convert(decimal(18,2),(convert(decimal(18,2),(基本称职+不称职))/convert(decimal(18,2),(优秀+称职+基本称职+不称职))*100)),
 										   综合得分=case when cnt=0 then 0 
 														 else 
 														   convert(decimal(18,2),(优秀*1+称职*0.8+基本称职*0.6+不称职*0.3)*100.0/cnt)
@@ -395,7 +395,7 @@ namespace OpenAuth.App
 				                        综合=case when cnt=0 then 0 
 								                        else 
 								                        convert(decimal(18,2),(优秀*1+称职*0.8+基本称职*0.6+不称职*0.3)*100.0/cnt)
-								                        end,优秀率=convert(decimal(18,2),(优秀+称职))/convert(decimal(18,2),(优秀+称职+基本称职+不称职))*100
+								                        end,优秀率=convert(decimal(18,2),(convert(decimal(18,2),(优秀+称职))/convert(decimal(18,2),(优秀+称职+基本称职+不称职))*100))
 
 		                                  
 			                        from (
