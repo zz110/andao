@@ -154,8 +154,8 @@ select row_number() over(order by c.Name) as num,
 	                            else 0 
 	                            end
                             ) q6count,
-                            (select top 1 AccessmentScore from PerformanceAppraisal 
-                            where JudgeId = JudgeId and YEAR(Optime) = { year }) AccessmentScore 
+                            isnull((select top 1 AccessmentScore from PerformanceAppraisal 
+                            where JudgeId = JudgeId and YEAR(Optime) = { year }),0) AccessmentScore 
                             from(
                               select row_number() over(order by a.Optime) as num,
                               a.RatersId,a.JudgeId,uj.Name as RatersName,ur.Name as JudgeName,
