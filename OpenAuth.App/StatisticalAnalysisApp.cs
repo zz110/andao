@@ -125,8 +125,8 @@ namespace OpenAuth.App
 	                                select u.Name,
 		                                   t2.OrgName,t2.XRank,
 		                                   优秀,称职,基本称职,不称职,
-		                                   优秀称职率=(优秀+称职)/cnt*100.0,
-										   不称职率=(基本称职+不称职)/cnt*100.0,
+		                                   优秀称职率=(优秀+称职)/(优秀+称职+基本称职+不称职)*100.0,
+										   不称职率=(基本称职+不称职)/(优秀+称职+基本称职+不称职)*100.0,
 										   综合得分=case when cnt=0 then 0 
 														 else 
 														   convert(decimal(18,2),(优秀*1+称职*0.8+基本称职*0.6+不称职*0.3)*100.0/cnt)
@@ -313,7 +313,7 @@ namespace OpenAuth.App
         public List<EvaluationTotalscoreOutput> get_totalscore_data_all(EvaluationscoreQueryInput input)
         {
 
-            string sql = @"select ROW_NUMBER() over(order by t1.要素*0.6+t2.综合*0.4 desc) as Num,Id,t1.Name,t1.OrgName,isnull(t1.XRank,'') as XRank,t1.要素,t2.综合,convert(decimal(18,2),t1.要素*0.6+t2.综合*0.4) as 总分 from (
+            string sql = @"select ROW_NUMBER() over(order by t1.要素*0.6+t2.综合*0.4 desc) as Num,Id,t1.Name,t1.OrgName,isnull(t1.XRank,'') as XRank,t1.要素,t2.综合,convert(decimal(18,2),t1.要素*0.6+t2.综合*0.4) as 总分,优秀率 from (
                            select 
                                                                     Name,
 		                                                            OrgName,XRank,
@@ -386,7 +386,7 @@ namespace OpenAuth.App
                             select 
 				                        Name,
 				                        OrgName,XRank,
-				                        综合
+				                        综合,优秀率
 		                                   
 	                        from (
 		                        select u.Name,
@@ -395,7 +395,7 @@ namespace OpenAuth.App
 				                        综合=case when cnt=0 then 0 
 								                        else 
 								                        convert(decimal(18,2),(优秀*1+称职*0.8+基本称职*0.6+不称职*0.3)*100.0/cnt)
-								                        end
+								                        end,优秀率=convert(decimal(18,2),(优秀+称职))/convert(decimal(18,2),(优秀+称职+基本称职+不称职))*100
 
 		                                  
 			                        from (

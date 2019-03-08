@@ -164,7 +164,7 @@ layui.config({
             }
             var id = "";
             for (var i = 0; i < data.length; i++) {
-                id = id + data[0].Id + ",";
+                id = id + data[i].Id + ",";
             }
             id = id.substring(0, id.length - 1);
             var index = toplayer.open({
@@ -186,7 +186,7 @@ layui.config({
             }
             var id = "";
             for (var i = 0; i < data.length; i++) {
-                id = id + data[0].Id + ",";
+                id = id + data[i].Id + ",";
             }
             id = id.substring(0, id.length - 1);
             var index = toplayer.open({
@@ -208,7 +208,7 @@ layui.config({
             }
             var id = "";
             for (var i = 0; i < data.length; i++) {
-                id = id + data[0].Id + ",";
+                id = id + data[i].Id + ",";
             }
             id = id.substring(0, id.length - 1);
             var index = toplayer.open({

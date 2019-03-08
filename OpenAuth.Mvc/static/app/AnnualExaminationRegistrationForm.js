@@ -153,8 +153,22 @@ app.controller('appController', function ($scope) {
                 _Officialadvice = _id;
             }
         });
-
+        
         $scope.model.Officialadvice = _Officialadvice;
+        var cf = $("#处分详情").find("li");
+        var jl = $("#奖励详情").find("li");
+        var cfstr = "";
+        var jlstr = "";
+        $.each(cf, function (i, v) {
+            cfstr = cfstr + $(v).data("nn") + ",";
+        });
+        $.each(jl, function (i, v) {
+            jlstr = jlstr + $(v).data("nn") + ",";
+        });
+        //处分
+        $scope.model.PenaltyReasons = cfstr;
+        //奖励
+        $scope.model.RewardReasons = jlstr;
 
         var url = "/AnnualExaminationRegistrations/save";
         $.post(url, { input: $scope.model }, function (resp) {

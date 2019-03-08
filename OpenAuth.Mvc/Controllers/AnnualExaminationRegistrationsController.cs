@@ -79,6 +79,8 @@ namespace OpenAuth.Mvc.Controllers
                     result.Position = uu.Position;
                     result.DegreeEdu = uu.DegreeEdu;
                     result.Nation = uu.Nation;
+                    if (uu.Officetime == null)
+                        uu.Officetime = DateTime.Now.ToString("yyyy-MM-dd");
                     result.Officetime =Convert.ToDateTime(uu.Officetime);
                     EvaluationscoreQueryInput input = new EvaluationscoreQueryInput();
                     input.role = uu.TypeName;
@@ -95,6 +97,7 @@ namespace OpenAuth.Mvc.Controllers
 
                         List<EvaluationTotalscoreOutput> phb = li.FindAll(i => i.总分 > ue.总分).ToList<EvaluationTotalscoreOutput>();
                         result.Rank = phb.Count() + 1;
+                        result.Rate = ue.优秀率;
                     }
 
                     string cardId = _User.CardId;
