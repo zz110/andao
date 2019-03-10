@@ -18,6 +18,10 @@ namespace OpenAuth.Repository.Dto
 
         public string Creator { get; set; }
 
+        public string role { get; set; }
+
+        public string DeptType { get; set; }
+
         public string Reason1 { get; set; }
 
         public string Reason2 { get; set; }

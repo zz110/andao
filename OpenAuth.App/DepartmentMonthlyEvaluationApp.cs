@@ -22,16 +22,20 @@ namespace OpenAuth.App
                                                        from DepartmentMonthlyEvaluation a left join Org b
                                                        on a.OrgId=b.Id
                                                        where a.Creator=@Creator 
-                                                       and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
-                                                       and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null)
+                                                       and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null) 
+                                                       and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null) 
+                                                       and (b.Name like '%{input.OrgName}%' or @OrgName is null)
+                                                       and (b.BizCode=@DeptType or (@DeptType='' or @DeptType is null or @DeptType=''))
+
                             ) as t where num > ({limit}*({offset}-1))";
 
             var rows = Repository.ExecuteQuerySql<DepartmentMonthlyEvaluationOutput>(sql, input.ToParameters()).ToList();
 
-            sql = @"select count(*) from DepartmentMonthlyEvaluation a left join Org b on a.OrgId=b.Id
+            sql = $@"select count(*) from DepartmentMonthlyEvaluation a left join Org b on a.OrgId=b.Id
                     where a.Creator=@Creator 
                     and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
-                    and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null)";
+                    and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null) and (b.Name like '%{input.OrgName}%' or @OrgName is null)
+                    and (b.BizCode=@DeptType or (@DeptType='' or @DeptType is null or @DeptType=''))";
 
             int total = Repository.ExecuteQuerySql<int>(sql, input.ToParameters()).FirstOrDefault();
 
