@@ -126,8 +126,9 @@ namespace OpenAuth.Mvc.Controllers
         [System.Web.Mvc.HttpGet]
         public ActionResult page(int limit, int offset, AnnualExaminationRegistrationQueryInput input)
         {
+            if(_User.Id!= "00000000-0000-0000-0000-000000000000")
+                input.Creator = _User.Id;
 
-            input.Creator = _User.Id;
             var result = App.page(limit, offset, input);
             return Json(result, JsonRequestBehavior.AllowGet);
 

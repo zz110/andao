@@ -11,12 +11,18 @@
             <div class="col-xs-12 col-sm-12">
                 <div class="col-xs-12">
                     <div class="col-xs-2" id="menuList">
-                       
+
                     </div>
-                    <div class="col-xs-4">
-                        <input type="text" id="EvaluateYear"  autocomplete="off" class="form-control" placeholder="请输入年份">
+                    <div class="col-xs-2">
+                        <input type="text" id="EvaluateYear" autocomplete="off" class="form-control" placeholder="请输入年份">
                     </div>
-                    <div class="col-xs-5">
+                    <div class="col-xs-2">
+                        <input type="text" id="UserName" autocomplete="off" class="form-control" placeholder="请输入姓名">
+                    </div>
+                    <div class="col-xs-2">
+                        <input type="text" id="OrgName" autocomplete="off" class="form-control" placeholder="请输入部门">
+                    </div>
+                    <div class="col-xs-2">
                         <button class="btn btn-sm btn-primary" id="btnSearch">搜索</button>
                         <button class="btn btn-sm btn-success" id="btnExportWord">导出</button>
                     </div>
@@ -139,14 +145,16 @@
                 }
 
                 _dataTable.SetParameters({
-                    EvaluateYear: EvaluateYear
+                    EvaluateYear: EvaluateYear,
+                    UserName:$("#UserName").val(),
+                    OrgName:$("#OrgName").val()
                 });
 
                 _dataTable.Refresh();
             });
 
             $("#btnExportWord").click(function () {
-                debugger
+               
                 var rows = _dataTable.GetSelections();
                 if (rows.length == 0) {
                     swal("提示", "请选择要导出得数据！", "warning");

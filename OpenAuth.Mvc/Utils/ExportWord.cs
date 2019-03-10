@@ -38,7 +38,26 @@ namespace OpenAuth.Mvc.Utils
                         if (props.Contains(text))
                         {
                             var value = type.GetProperty(text).GetValue(obj, null);
-                            cell.Paragraphs[0].ReplaceText(text, value == null ? "" : value.ToString());
+                            if (value != null)
+                            {
+                                string[] s = value.ToString().Split('\n');
+                                if (s.Length > 1)
+                                {
+                                    cell.Paragraphs[0].ReplaceText(text, "");
+                                    for (int i = 0; i < s.Length; i++)
+                                    {
+                                        XWPFParagraph p = cell.AddParagraph();//添加新段落
+                                        p.CreateRun().SetText(s[i]);
+                                    }
+                                }
+                                else
+                                {
+                                    cell.Paragraphs[0].ReplaceText(text, value == null ? "" : value.ToString());
+                                }
+                            }
+                            else {
+                                cell.Paragraphs[0].ReplaceText(text, value == null ? "" : value.ToString());
+                            }
                         }
                     }
                 }

@@ -24,8 +24,9 @@ namespace OpenAuth.App
                                                        on a.OrgId=b.Id
                                                        left join [User] c
                                                        on a.UserId=c.Id 
-                                                       where a.Creator=@Creator 
-                                                       and (year(a.Created)=@EvaluateYear or @EvaluateYear is null)
+                                                       where (a.Creator=@Creator or @Creator is null) 
+                                                       and (year(a.Created)=@EvaluateYear or @EvaluateYear is null) 
+                                                       and c.Name like '%{input.UserName}%' and b.Name like '%{input.OrgName}%'
 
                             ) as t where num > ({limit}*({offset}-1))";
 
@@ -34,8 +35,8 @@ namespace OpenAuth.App
             sql = @"select count(*) from AnnualExaminationRegistration a left join [User] c  on a.UserId=c.Id 
                     left join Org b
                     on a.OrgId=b.Id
-                    where a.Creator=@Creator 
-                    and (year(a.Created)=@EvaluateYear or @EvaluateYear is null)";
+                    where (a.Creator=@Creator or @Creator is null) 
+                    and (year(a.Created)=@EvaluateYear or @EvaluateYear is null) and c.Name like '%{input.UserName}%' and b.Name like '%{input.OrgName}%' ";
 
             int total = Repository.ExecuteQuerySql<int>(sql, input.ToParameters()).FirstOrDefault();
 
