@@ -43,14 +43,17 @@ namespace OpenAuth.Mvc.Utils
                                 string[] s = value.ToString().Split('\n');
                                 if (s.Length > 1)
                                 {
-                                    cell.Paragraphs[0].ReplaceText(text, "");
+                                    cell.Paragraphs[0].ReplaceText(text,"");
                                     for (int i = 0; i < s.Length; i++)
                                     {
-                                        XWPFParagraph p0 = cell.AddParagraph();
+                                        
+                                        XWPFParagraph p0 = cell.Paragraphs[0];
                                         XWPFRun r0 = p0.CreateRun();
                                         r0.SetFontFamily("宋体", FontCharRange.CS);
                                         r0.FontSize = 12;
                                         r0.SetText(s[i]);
+                                        r0.AddCarriageReturn();
+                                        
                                     }
                                 }
                                 else

@@ -205,7 +205,14 @@ namespace OpenAuth.Mvc.Controllers
                 Word.ReplaceKey("_Officialadvice", result._Officialadvice);
                 Word.ReplaceKey("HRAdvice_", result.HRAdvice);
                 Word.ReplaceKey("Notes", result.Notes);
-                Word.ReplaceKey("RewardPunishment", result.RewardPunishment);
+                if (!string.IsNullOrEmpty(result.RewardPunishment))
+                {
+                    Word.ReplaceKey("RewardPunishment", result.RewardPunishment);
+                }
+                else
+                {
+                    Word.ReplaceKey("RewardPunishment", "无");
+                }
                 
            
                 var doc = Word.GetWord();
