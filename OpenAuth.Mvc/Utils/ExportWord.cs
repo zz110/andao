@@ -46,8 +46,11 @@ namespace OpenAuth.Mvc.Utils
                                     cell.Paragraphs[0].ReplaceText(text, "");
                                     for (int i = 0; i < s.Length; i++)
                                     {
-                                        XWPFParagraph p = cell.AddParagraph();//添加新段落
-                                        p.CreateRun().SetText(s[i]);
+                                        XWPFParagraph p0 = cell.AddParagraph();
+                                        XWPFRun r0 = p0.CreateRun();
+                                        r0.SetFontFamily("宋体", FontCharRange.CS);
+                                        r0.FontSize = 12;
+                                        r0.SetText(s[i]);
                                     }
                                 }
                                 else

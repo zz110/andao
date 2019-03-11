@@ -183,7 +183,7 @@ namespace OpenAuth.App
         /// <returns></returns>
         public object get_totalscore_data(EvaluationscoreQueryInput input) {
 
-            string sql = @"select ROW_NUMBER() over(order by t1.要素*0.6+t2.综合*0.4 desc) as Num,t1.Name,t1.OrgName,isnull(t1.XRank,'') as XRank,t1.要素,t2.综合,convert(decimal(18,2),t1.要素*0.6+t2.综合*0.4) as 总分 from (
+            string sql = @"select ROW_NUMBER() over(order by t1.要素*0.6+t2.综合*0.4 desc) as Num,t1.Name,t1.OrgName,isnull(t1.XRank,'') as XRank,t1.要素,t2.综合,convert(decimal(18,1),t1.要素*0.6+t2.综合*0.4) as 总分 from (
                            select 
                                                                     Name,
 		                                                            OrgName,XRank,
@@ -192,7 +192,7 @@ namespace OpenAuth.App
 	                                                        select u.Name,
 		                                                            t2.OrgName,
 																	t2.XRank,
-		                                                            要素=convert(decimal(18,2),case when (德_好+德_中+德_差)=0 or 
+		                                                            要素=convert(decimal(18,1),case when (德_好+德_中+德_差)=0 or 
 							                                                            (能_好+能_中+能_差)=0 or
 							                                                            (勤_好+勤_中+勤_差)=0 or
 							                                                            (绩_好+绩_中+绩_差)=0 or
@@ -264,7 +264,7 @@ namespace OpenAuth.App
 		                                t2.XRank,
 				                        综合=case when cnt=0 then 0 
 								                        else 
-								                        convert(decimal(18,2),(优秀*1+称职*0.8+基本称职*0.6+不称职*0.3)*100.0/cnt)
+								                        convert(decimal(18,1),(优秀*1+称职*0.8+基本称职*0.6+不称职*0.3)*100.0/cnt)
 								                        end
 
 		                                  
@@ -313,7 +313,7 @@ namespace OpenAuth.App
         public List<EvaluationTotalscoreOutput> get_totalscore_data_all(EvaluationscoreQueryInput input)
         {
 
-            string sql = @"select ROW_NUMBER() over(order by t1.要素*0.6+t2.综合*0.4 desc) as Num,Id,t1.Name,t1.OrgName,isnull(t1.XRank,'') as XRank,t1.要素,t2.综合,convert(decimal(18,2),t1.要素*0.6+t2.综合*0.4) as 总分,优秀率 from (
+            string sql = @"select ROW_NUMBER() over(order by t1.要素*0.6+t2.综合*0.4 desc) as Num,Id,t1.Name,t1.OrgName,isnull(t1.XRank,'') as XRank,t1.要素,t2.综合,convert(decimal(18,1),t1.要素*0.6+t2.综合*0.4) as 总分,优秀率 from (
                            select 
                                                                     Name,
 		                                                            OrgName,XRank,
@@ -322,7 +322,7 @@ namespace OpenAuth.App
 	                                                        select u.Id,u.Name,
 		                                                            t2.OrgName,
 																	t2.XRank,
-		                                                            要素=convert(decimal(18,2),case when (德_好+德_中+德_差)=0 or 
+		                                                            要素=convert(decimal(18,1),case when (德_好+德_中+德_差)=0 or 
 							                                                            (能_好+能_中+能_差)=0 or
 							                                                            (勤_好+勤_中+勤_差)=0 or
 							                                                            (绩_好+绩_中+绩_差)=0 or
@@ -394,8 +394,8 @@ namespace OpenAuth.App
 		                                t2.XRank,
 				                        综合=case when cnt=0 then 0 
 								                        else 
-								                        convert(decimal(18,2),(优秀*1+称职*0.8+基本称职*0.6+不称职*0.3)*100.0/cnt)
-								                        end,优秀率=convert(decimal(18,2),(convert(decimal(18,2),(优秀+称职))/convert(decimal(18,2),(优秀+称职+基本称职+不称职))*100))
+								                        convert(decimal(18,1),(优秀*1+称职*0.8+基本称职*0.6+不称职*0.3)*100.0/cnt)
+								                        end,优秀率=convert(decimal(18,1),(convert(decimal(18,1),(优秀+称职))/convert(decimal(18,1),(优秀+称职+基本称职+不称职))*100))
 
 		                                  
 			                        from (
