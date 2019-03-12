@@ -213,6 +213,7 @@
     <Content Include="images\login\tou.png" />
     <Content Include="images\logo.png" />
     <Content Include="js\bootstrap.js" />
+    <Content Include="js\flow-ui\img\wallbg.png" />
     <Content Include="js\flow\config.js" />
     <Content Include="js\flow\fonts\demo.css" />
     <Content Include="js\flow\fonts\demo_fontclass.html" />
@@ -8266,6 +8267,7 @@
     <Content Include="Views\UserManager\ChangePwd.cshtml" />
     <Content Include="Views\CheckAndEvaluate\Add.cshtml" />
     <Content Include="Views\Answers\NoAnswers.cshtml" />
+    <Content Include="template\evaluation_export_template.docx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="layui\lay\modules\mobile\" />
