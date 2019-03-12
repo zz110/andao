@@ -20,7 +20,7 @@ namespace OpenAuth.Mvc.Utils
             }
         }
 
-      
+
         public void FillTable<T>(T obj)
         {
             try
@@ -43,17 +43,14 @@ namespace OpenAuth.Mvc.Utils
                                 string[] s = value.ToString().Split('\n');
                                 if (s.Length > 1)
                                 {
-                                    cell.Paragraphs[0].ReplaceText(text,"");
+                                    cell.RemoveParagraph(0);
                                     for (int i = 0; i < s.Length; i++)
                                     {
-                                        
-                                        XWPFParagraph p0 = cell.Paragraphs[0];
+                                        XWPFParagraph p0 = cell.AddParagraph();
                                         XWPFRun r0 = p0.CreateRun();
                                         r0.SetFontFamily("宋体", FontCharRange.CS);
                                         r0.FontSize = 12;
-                                        r0.SetText(s[i]);
-                                        r0.AddCarriageReturn();
-                                        
+                                        r0.SetText("    " + s[i].Trim());
                                     }
                                 }
                                 else
@@ -61,7 +58,8 @@ namespace OpenAuth.Mvc.Utils
                                     cell.Paragraphs[0].ReplaceText(text, value == null ? "" : value.ToString());
                                 }
                             }
-                            else {
+                            else
+                            {
                                 cell.Paragraphs[0].ReplaceText(text, value == null ? "" : value.ToString());
                             }
                         }
@@ -75,7 +73,7 @@ namespace OpenAuth.Mvc.Utils
         }
 
 
-        
+
 
         public void ReplaceKey(string key, string value)
         {

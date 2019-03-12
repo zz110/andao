@@ -171,7 +171,7 @@ namespace OpenAuth.Repository.Dto
             }
         }
 
-        
+
 
         public string _Officetime
         {
@@ -185,7 +185,7 @@ namespace OpenAuth.Repository.Dto
             }
         }
 
-        
+
 
         public string _RegistrationTime
         {
@@ -226,7 +226,7 @@ namespace OpenAuth.Repository.Dto
             }
         }
 
-      
+
 
         public string _HRTime
         {
@@ -239,7 +239,7 @@ namespace OpenAuth.Repository.Dto
                 return "";
             }
         }
-        
+
 
         public string _UnitTime
         {
@@ -252,7 +252,7 @@ namespace OpenAuth.Repository.Dto
                 return "";
             }
         }
-        
+
 
         public string OrgName { get; set; }
 
@@ -268,9 +268,11 @@ namespace OpenAuth.Repository.Dto
             }
         }
 
-        public string _Officialadvice {
-            get {
-                
+        public string _Officialadvice
+        {
+            get
+            {
+
                 if (Officialadvice == 1) return "同意该同志考核评定为:优秀";
                 if (Officialadvice == 2) return "同意该同志考核评定为:称职";
                 if (Officialadvice == 3) return "同意该同志考核评定为:基本称职";
@@ -287,16 +289,18 @@ namespace OpenAuth.Repository.Dto
                 return $"依据唐山供电段《干部综合考核评价实施办法》，该同志考核评定为：{HRAdvice}";
             }
         }
-        
 
 
-        public string RewardPunishment {
 
-            get {
+        public string RewardPunishment
+        {
+
+            get
+            {
 
                 string result = "";
 
-                if (RegistrationTime.HasValue)
+                if (RewardTime.HasValue)
                 {
                     result += $"{RewardReasons}" + Environment.NewLine;
                 }
@@ -305,7 +309,10 @@ namespace OpenAuth.Repository.Dto
                 {
                     result += $"{PenaltyReasons}" + Environment.NewLine;
                 }
-
+                if (result == "")
+                {
+                    result = "无";
+                }
                 return result;
             }
         }

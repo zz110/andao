@@ -313,15 +313,15 @@ namespace OpenAuth.App
         public List<EvaluationTotalscoreOutput> get_totalscore_data_all(EvaluationscoreQueryInput input)
         {
 
-            string sql = @"select ROW_NUMBER() over(order by t1.要素*0.6+t2.综合*0.4 desc) as Num,Id,t1.Name,t1.OrgName,isnull(t1.XRank,'') as XRank,t1.要素,t2.综合,convert(decimal(18,1),t1.要素*0.6+t2.综合*0.4) as 总分,优秀率 from (
+            string sql = @"select ROW_NUMBER() over(order by t1.要素*0.6+t2.综合*0.4 desc) as Num,Id,t1.Name,t1.OrgName,isnull(t1.XRank,'') as XRank,t1.要素,t2.综合,convert(decimal(18,1),t1.要素*0.6+t2.综合*0.4) as 总分,优秀率,总票数 from (
                            select 
                                                                     Name,
 		                                                            OrgName,XRank,
-		                                                            要素,Id
+		                                                            要素,Id,总票数
                                                         from (
 	                                                        select u.Id,u.Name,
 		                                                            t2.OrgName,
-																	t2.XRank,
+																	t2.XRank,总票数,
 		                                                            要素=convert(decimal(18,1),case when (德_好+德_中+德_差)=0 or 
 							                                                            (能_好+能_中+能_差)=0 or
 							                                                            (勤_好+勤_中+勤_差)=0 or
@@ -335,7 +335,7 @@ namespace OpenAuth.App
 							                                                            (廉_好*1+廉_中*0.7+廉_差*0.3)*20/(廉_好+廉_中+廉_差)
 						                                                        end)
 	                                                            from (
-			                                                        select JudgeId,
+			                                                        select JudgeId,count(*) 总票数,
 				                                                        sum(case Q1 when 10 then 1 else 0 end) as '德_好', 
 				                                                        sum(case Q1 when 11 then 1 else 0 end) as '德_中', 
 				                                                        sum(case Q1 when 12 then 1 else 0 end) as '德_差', 

@@ -89,12 +89,12 @@ namespace OpenAuth.Mvc.Controllers
 
                     List<EvaluationTotalscoreOutput> li = Appp.get_totalscore_data_all(input);
                     
-                    result.EvaluationCount = li.Count();
+                   
                     EvaluationTotalscoreOutput ue = (EvaluationTotalscoreOutput)li.FirstOrDefault(i => i.Id == uu.Id);
                     if (ue != null)
                     {
                         result.FactorScore = ue.要素;
-
+                        result.EvaluationCount = ue.总票数;
                         List<EvaluationTotalscoreOutput> phb = li.FindAll(i => i.总分 > ue.总分).ToList<EvaluationTotalscoreOutput>();
                         result.Rank = phb.Count() + 1;
                         result.Rate = ue.优秀率;

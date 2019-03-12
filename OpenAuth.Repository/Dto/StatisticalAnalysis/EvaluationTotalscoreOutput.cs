@@ -22,6 +22,8 @@ namespace OpenAuth.Repository.Dto
 
         public decimal 优秀率 { get; set; }
 
+        public int 总票数 { get; set; }
+
         public string Id { get; set; }
 
     }
