@@ -17,7 +17,7 @@ namespace OpenAuth.App
         public object page(int limit, int offset, AnnualExaminationRegistrationQueryInput input)
         {
 
-            offset += 1;
+            //offset += 1;
             string sql = $@"select top {limit} * from(
                               select row_number() over(order by a.created) as num,a.*,b.Name as OrgName,c.Name as UserName 
                                                        from AnnualExaminationRegistration a left join Org b
@@ -28,11 +28,12 @@ namespace OpenAuth.App
                                                        and (year(a.Created)=@EvaluateYear or @EvaluateYear is null) 
                                                        and c.Name like '%{input.UserName}%' and b.Name like '%{input.OrgName}%'
 
-                            ) as t where num > ({limit}*({offset}-1))";
+                            ) as t where num > {offset}";
+            //) as t where num > ({limit}*({offset}-1))";
 
             var rows = Repository.ExecuteQuerySql<AnnualExaminationRegistrationOutput>(sql, input.ToParameters()).ToList();
 
-            sql = @"select count(*) from AnnualExaminationRegistration a left join [User] c  on a.UserId=c.Id 
+            sql = $@"select count(*) from AnnualExaminationRegistration a left join [User] c  on a.UserId=c.Id 
                     left join Org b
                     on a.OrgId=b.Id
                     where (a.Creator=@Creator or @Creator is null) 

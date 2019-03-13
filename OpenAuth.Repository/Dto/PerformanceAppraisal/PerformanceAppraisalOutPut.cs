@@ -39,5 +39,7 @@ namespace OpenAuth.Repository.Dto
         public decimal pingcedefenavg { get; set; }
         public decimal kaopingdefen { get; set; }
         public int Index { get; set; }
+
+        public decimal Score { get; set; }
     }
 }

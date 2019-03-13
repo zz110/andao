@@ -30,7 +30,7 @@ namespace OpenAuth.App.SSO
                         Id = Guid.Empty.ToString(),  //TODO:可以根据需要调整
                         Account = "System",
                         Name ="超级管理员",
-                        Password = "123456"
+                        Password = "221227"
                     };
                 }
                 else

@@ -50,8 +50,7 @@ namespace OpenAuth.Mvc.Controllers
             try
             {
                 var result = App.get(id);
-                if (string.IsNullOrEmpty(result.Creator))
-                {
+
                     result.Creator = _User.Id;
                     result.UserId = _User.Id;
                     result.Name = _User.Name;
@@ -110,7 +109,7 @@ namespace OpenAuth.Mvc.Controllers
                     result.OrgName = AuthUtil.GetCurrentUser().Orgs.Find(i => i.Id == result.OrgId).Name;
                     result.Created = DateTime.Now;
                     result.RegistrationTime = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
-                }
+                
                 response.Result = result;
                 response.Message = "";
                 response.Code = Response<object>.SUCCESS_CODE;

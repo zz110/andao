@@ -98,7 +98,7 @@ select row_number() over(order by c.Name) as num,
                            isnull( (select SUM(Score)/12 from MonthlyAssessment 
                             where UserId = JudgeId 
                             and EvaluateYear='{ year }'),0) 
-                            MonthlyAVG,
+                            MonthlyAVG,isnull(max(m.Score),0) Score,
                             sum(
 	                            case q1 
 	                            when 10 then 1 
@@ -166,7 +166,7 @@ select row_number() over(order by c.Name) as num,
                             ) as t 
                             left join Relevance r on r.FirstId = t.JudgeId 
                             left join [Role] ro on ro.Id = r.SecondId 
-                            left join Org o on o.Id = r.SecondId 
+                            left join Org o on o.Id = r.SecondId left join MonthlyEvaluation m on t.JudgeId=m.UserId and m.EvaluateYear={year}  
                             where num > 0 and (ro.Name = '{ type }' or '{ type }' = '') and (o.BizCode='{DeptType}' or ('{DeptType}'='' or '{DeptType}' is null ))  
                             group by JudgeId,JudgeName";
             var rows = Repository.ExecuteQuerySql<PerformanceAppraisalOutPut>(sql).ToList();
