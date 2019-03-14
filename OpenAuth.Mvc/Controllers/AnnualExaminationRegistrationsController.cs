@@ -71,8 +71,8 @@ namespace OpenAuth.Mvc.Controllers
       ,[DegreeEdu]
       ,[Nation]
       ,[Officetime],u.Status,u.BizCode,u.CreateTime
-  FROM[cp].[dbo].[User] u left join dbo.Relevance r1 on r1.FirstId = u.Id and r1.[Key] = 'UserRole' left join Role ro on ro.Id = r1.SecondId
-  left join dbo.Relevance r2 on r2.FirstId = u.Id and r2.[Key] = 'UserOrg'  left join dbo.Org o on o.Id = r2.SecondId
+  FROM[cp].[dbo].[User] u inner join dbo.Relevance r1 on r1.FirstId = u.Id and r1.[Key] = 'UserRole' inner join Role ro on ro.Id = r1.SecondId
+  inner join dbo.Relevance r2 on r2.FirstId = u.Id and r2.[Key] = 'UserOrg'  inner join dbo.Org o on o.Id = r2.SecondId
    where u.Id = '" + result.UserId + "'").ToList<User>()[0];
                     result.Politicalaffiliation = uu.Politicalaffiliation;
                     result.Position = uu.Position;
