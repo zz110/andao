@@ -31,7 +31,10 @@
                         <input type="text" id="EvaluateYear" autocomplete="off" class="form-control" placeholder="请输入年份">
                     </div>
                     <div class="col-xs-2">
-                        <input type="text" id="search" autocomplete="off" class="form-control" placeholder="请输入搜索关键字">
+                        <input type="text" id="UserName" autocomplete="off" class="form-control" placeholder="请输入姓名">
+                    </div>
+                    <div class="col-xs-2">
+                        <input type="text" id="OrgName" autocomplete="off" class="form-control" placeholder="请输入部门">
                     </div>
                     <div class="col-xs-1">
                         <button class="btn btn-sm btn-primary" id="btnSearch">搜索</button>
@@ -217,7 +220,9 @@
                     EvaluateYear: $("#EvaluateYear").val(),
                     search: $("#search").val(),
                     DeptType: $("#DeptType").val(),
-                    role: $("#role").val()
+                    role: $("#role").val(),
+                    UserName : $("#UserName").val(),
+                    OrgName : $("#OrgName").val()
                 };
 
                 _dataTable.SetParameters(QueryObj);

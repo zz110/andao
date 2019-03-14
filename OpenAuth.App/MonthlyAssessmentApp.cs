@@ -93,10 +93,15 @@ select row_number() over(order by c.Name) as num,
                                                        right join [User] c
                                                        on a.UserId=c.Id inner join dbo.Relevance as r on r.firstid=c.id 
                                                        and r.[key]='UserOrg' inner join Org b
-                                                       on b.Id=r.SecondId  
+                                                       on b.Id=r.SecondId 
+                                                       inner join dbo.Relevance as r1 on r1.firstid=c.id 
+                                                       and r1.[key]='UserRole' inner join Role ro
+                                                       on ro.Id=r1.SecondId and 
+                                                        (ro.Name=@role or @role is null)
                                                        where  (b.id in ({orgids}) or {orgids}='') and 
                                                         (c.Name like '%'+@UserName+'%' or @UserName is null)
                                                        and (b.Name like '%'+@OrgName+'%' or @OrgName is null)
+                                                        and (b.BizCode=@DeptType or (@DeptType='' or @DeptType is null or @DeptType=''))  
                                                        
                             ) as t where num > ({limit}*({offset}-1))";
 
@@ -109,10 +114,13 @@ select row_number() over(order by c.Name) as num,
                                                        right join [User] c
                                                        on a.UserId=c.Id inner join dbo.Relevance as r on r.firstid=c.id 
                                                        and r.[key]='UserOrg' inner join Org b
-                                                       on b.Id=r.SecondId  
+                                                       on b.Id=r.SecondId  inner join dbo.Relevance as r1 on r1.firstid=c.id 
+                                                       and r1.[key]='UserRole' inner join Role ro
+                                                       on ro.Id=r1.SecondId and 
+                                                        (ro.Name=@role or @role is null) 
                                                        where (b.id in ({orgids}) or {orgids} = '') and 
                                                         (c.Name like '%'+@UserName+'%' or @UserName is null)
-                                                       and (b.Name like '%'+@OrgName+'%' or @OrgName is null)";
+                                                       and (b.Name like '%'+@OrgName+'%' or @OrgName is null)  and (b.BizCode=@DeptType or (@DeptType='' or @DeptType is null or @DeptType=''))";
 
             int total = Repository.ExecuteQuerySql<int>(sql, input.ToParameters()).FirstOrDefault();
 
@@ -231,7 +239,8 @@ select d.Name as UserName,c.Name as OrgName,a.EvaluateYear,a.EvaluateMonth,isnul
                             left join [User] as d
                             on a.UserId=d.Id  
 where (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null) and 
-                             (c.Name like '%'+@OrgName+'%' or @OrgName is null)
+                             (c.Name like '%'+@OrgName+'%' or @OrgName is null) and 
+                             (d.Name like '%'+@UserName+'%' or @UserName is null)
                             and (a.UserId in(
                                 select distinct a.FirstId from Relevance a  join [Role] b
                                 on a.SecondId=b.Id

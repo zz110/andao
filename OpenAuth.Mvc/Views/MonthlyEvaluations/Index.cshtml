@@ -19,7 +19,7 @@
                     <div class="col-xs-1">
                         <input type="text" id="EvaluateYear" autocomplete="off" class="form-control" placeholder="请输入年份">
                     </div>
-                    <div class="col-xs-2">
+                    <div class="col-xs-1">
                         <select class="form-control" id="EvaluateMonth">
                             <option value="">请选择月份</option>
                             <option value="1">1</option>
@@ -104,7 +104,10 @@
 {
     <script src="~/static/app/app.js"></script>
     <script>
-
+        var tbOpts = {
+            type: 'csv',
+            fileName: '月度评价排名维护',
+        }
         var _dataTable;
         $(function () {
 
@@ -156,6 +159,8 @@
                 form_url: '/MonthlyEvaluations/MonthlyEvaluationForm/',
                 delete_url: '/MonthlyEvaluations/Delete'
             });
+
+            App.setExportOptions(tbOpts);
 
             _dataTable = App.initTable('/MonthlyEvaluations/page', tbOptions);
 

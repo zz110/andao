@@ -16,9 +16,9 @@
                         <button class="btn btn-sm btn-danger" id="btnDelele">删除</button>
                     </div>
                     <div class="col-xs-1">
-                        <input type="text" id="EvaluateYear"  autocomplete="off" class="form-control" placeholder="请输入年份">
+                        <input type="text" id="EvaluateYear" autocomplete="off" class="form-control" placeholder="请输入年份">
                     </div>
-                    <div class="col-xs-2">
+                    <div class="col-xs-1">
                         <select class="form-control" id="EvaluateMonth">
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -35,10 +35,26 @@
                         </select>
                     </div>
                     <div class="col-xs-2">
-                        <input type="text" id="UserName"  autocomplete="off" class="form-control" placeholder="请输入姓名">
+                        <select id="role" onchange="role_select(this.options[this.options.selectedIndex].value)" class="form-control">
+                            <option value="">请选择职务</option>
+                            <option value="中层正职">中层正职</option>
+                            <option value="中层副职">中层副职</option>
+                            <option value="一般干部">一般干部</option>
+                        </select>
                     </div>
                     <div class="col-xs-2">
-                        <input type="text" id="OrgName"  autocomplete="off" class="form-control" placeholder="请输入部门">
+                        <select id="DeptType" onchange="dept_type_select(this.options[this.options.selectedIndex].value)" class="form-control">
+                            <option value="">请选择部门类型</option>
+                            <option value="车间">车间</option>
+                            <option value="专业科室">专业科室</option>
+                            <option value="综合科室">综合科室</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-2">
+                        <input type="text" id="UserName" autocomplete="off" class="form-control" placeholder="请输入姓名">
+                    </div>
+                    <div class="col-xs-2">
+                        <input type="text" id="OrgName" autocomplete="off" class="form-control" placeholder="请输入部门">
                     </div>
                     <div class="col-xs-1">
                         <button class="btn btn-sm btn-primary" id="btnSearch">搜索</button>
@@ -86,7 +102,10 @@
 {
     <script src="~/static/app/app.js"></script>
     <script>
-
+         var tbOpts = {
+            type: 'csv',
+            fileName: '月度考核成绩排名',
+        }
         var _dataTable;
         $(function () {
 
@@ -177,6 +196,8 @@
                 delete_url: '/MonthlyAssessments/Delete'
             });
 
+            App.setExportOptions(tbOpts);
+
             _dataTable = App.initTable('/MonthlyAssessments/page', tbOptions);
 
             _dataTable.SetParameters({
@@ -203,7 +224,8 @@
                     EvaluateYear: EvaluateYear,
                     EvaluateMonth: EvaluateMonth,
                     UserName: UserName,
-                    OrgName: OrgName
+                    OrgName: OrgName,  role: $("#role").val(),
+                    DeptType: $("#DeptType").val()
                 });
 
                 _dataTable.Refresh();
