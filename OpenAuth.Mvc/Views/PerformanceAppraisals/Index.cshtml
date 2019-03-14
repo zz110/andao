@@ -86,11 +86,14 @@
 {
     <script src="~/static/app/app.js"></script>
     <script>
-
+        var tbOpts = {
+            type: 'csv',
+            fileName: '领导评分',
+        }
         var _dataTable;
         $(function () {
             
-
+            $("#menuList").loadMenus("evaluate_statistic_analysis");
             var date = new Date();
             var fullYear = date.getFullYear();
             var month = date.getMonth() + 1;
@@ -145,6 +148,8 @@
                 form_url: '/PerformanceAppraisals/PerformanceForm/',
                 delete_url: '/PerformanceAppraisals/Delete'
             });
+
+            App.setExportOptions(tbOpts);
 
             _dataTable = App.initTable('/PerformanceAppraisals/page', tbOptions);
 

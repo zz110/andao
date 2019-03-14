@@ -95,7 +95,8 @@ namespace OpenAuth.App
 			                                ) as t
 			                                where t.num=1 and (t.BizCode=@DeptType or @DeptType is null)
 	                                ) t2
-	                                on t1.JudgeId=t2.UserId
+	                                on t1.JudgeId=t2.UserId and   (t2.OrgName like '%'+@OrgName+'%' or @OrgName is null) and 
+                                                                    (u.Name like '%'+@UserName+'%' or @UserName is null)
                                 ) as t";
 
             var rows = Repository.ExecuteQuerySql<EvaluationscoreOutput>(sql, input.ToParameters()).ToList();
@@ -162,7 +163,8 @@ namespace OpenAuth.App
 			                                ) as t
 			                                where t.num=1 and (t.BizCode=@DeptType or @DeptType is null)
 	                                ) t2
-	                                on t1.JudgeId=t2.UserId
+	                                on t1.JudgeId=t2.UserId and   (t2.OrgName like '%'+@OrgName+'%' or @OrgName is null) and 
+                                                                    (u.Name like '%'+@UserName+'%' or @UserName is null)
                                 ) as t";
 
             var rows = Repository.ExecuteQuerySql<EvaluationIntegrationOutput>(sql, input.ToParameters()).ToList();
@@ -183,7 +185,7 @@ namespace OpenAuth.App
         /// <returns></returns>
         public object get_totalscore_data(EvaluationscoreQueryInput input) {
 
-            string sql = @"select ROW_NUMBER() over(order by t1.要素*0.6+t2.综合*0.4 desc) as Num,t1.Name,t1.OrgName,isnull(t1.XRank,'') as XRank,t1.要素,t2.综合,convert(decimal(18,1),t1.要素*0.6+t2.综合*0.4) as 总分 from (
+            string sql = $@"select ROW_NUMBER() over(order by t1.要素*0.6+t2.综合*0.4 desc) as Num,t1.Name,t1.OrgName,isnull(t1.XRank,'') as XRank,t1.要素,t2.综合,convert(decimal(18,1),t1.要素*0.6+t2.综合*0.4) as 总分 from (
                            select 
                                                                     Name,
 		                                                            OrgName,XRank,
@@ -246,9 +248,11 @@ namespace OpenAuth.App
 			                                                            join Org o
 			                                                        on t.OrgId=o.Id
 			                                                        ) as t
-			                                                        where t.num=1 and (t.BizCode=@DeptType or @DeptType is null)
+			                                                        where t.num=1 and (t.BizCode=@DeptType or @DeptType is null) 
 	                                                        ) t2
-	                                                        on t1.JudgeId=t2.UserId
+	                                                        on t1.JudgeId=t2.UserId and 
+                                                                     (t2.OrgName like '%'+@OrgName+'%' or @OrgName is null) and 
+                                                                    (u.Name like '%'+@UserName+'%' or @UserName is null)
                                                         ) as t
 	                        ) as t1
 	                        join (
@@ -295,9 +299,11 @@ namespace OpenAuth.App
 					                        join Org o
 				                        on t.OrgId=o.Id
 				                        ) as t
-				                        where t.num=1 and (t.BizCode=@DeptType or @DeptType is null)
+				                        where t.num=1 and (t.BizCode=@DeptType or @DeptType is null)  
 		                        ) t2
-		                        on t1.JudgeId=t2.UserId
+		                        on t1.JudgeId=t2.UserId and 
+                                                                    (t2.OrgName like '%'+@OrgName+'%' or @OrgName is null) and 
+                                                                    (u.Name like '%'+@UserName+'%' or @UserName is null)
 	                        ) as t
                         ) as t2
                         on t1.Name=t2.Name and t1.OrgName=t2.OrgName";

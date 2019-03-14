@@ -24,5 +24,9 @@ namespace OpenAuth.Repository.Dto
         /// </summary>
         public string DeptType { get; set; }
 
+        public string UserName { get; set; }
+
+        public string OrgName { get; set; }
+
     }
 }

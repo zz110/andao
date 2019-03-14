@@ -32,6 +32,12 @@
                             <option value="综合科室">综合科室</option>
                         </select>
                     </div>
+                    <div class="col-xs-2">
+                        <input type="text" id="UserName" autocomplete="off" class="form-control" placeholder="请输入姓名">
+                    </div>
+                    <div class="col-xs-2">
+                        <input type="text" id="OrgName" autocomplete="off" class="form-control" placeholder="请输入部门">
+                    </div>
                     <div class="col-xs-1">
                         <button class="btn btn-sm btn-primary" id="btnSearch">搜索</button>
                     </div>
@@ -71,7 +77,7 @@
 
         $(function () {
 
-            $("#menuList").loadMenus("evaluationscore");
+            $("#menuList").loadMenus("evaluate_statistic_analysis");
 
             var date = new Date();
             var fullYear = date.getFullYear();
@@ -190,7 +196,9 @@
                 QueryObj = {
                     EvaluateYear: $("#EvaluateYear").val(),
                     DeptType: $("#DeptType").val(),
-                    role: $("#role").val()
+                    role: $("#role").val(),
+                    UserName: $("#UserName").val(),
+                    OrgName: $("#OrgName").val()
                 };
 
                 _dataTable.SetParameters(QueryObj);
@@ -213,7 +221,9 @@
             QueryObj = {
                 EvaluateYear: $("#EvaluateYear").val(),
                 DeptType: $("#DeptType").val(),
-                role: $("#role").val()
+                role: $("#role").val(),
+                UserName: $("#UserName").val(),
+                OrgName: $("#OrgName").val()
             };
 
             _dataTable.SetParameters(QueryObj);
