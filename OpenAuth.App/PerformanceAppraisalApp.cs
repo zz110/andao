@@ -95,7 +95,7 @@ select row_number() over(order by c.Name) as num,
         public List<PerformanceAppraisalOutPut> List(string year,string type,string DeptType)
         {
             string sql = $@"select top 10000 JudgeId,JudgeName,
-                           isnull( (select SUM(Score)/12 from MonthlyAssessment 
+                           isnull( (select SUM(Score) from MonthlyAssessment 
                             where UserId = JudgeId 
                             and EvaluateYear='{ year }'),0) 
                             MonthlyAVG,isnull(max(m.Score),0) Score,
