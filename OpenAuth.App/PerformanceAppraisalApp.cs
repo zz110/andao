@@ -217,9 +217,10 @@ select row_number() over(order by c.Name) as num,
                               inner join [user] uj on uj.Id = a.RatersId 
                               where YEAR(a.Optime) = { year } and a.State = '已提交' and PlanId <> (select id from [plan] where [PlanName]='s领导测评')
                             ) as t 
-                            inner join Relevance r on r.FirstId = t.JudgeId 
+                            inner join Relevance r on r.FirstId = t.JudgeId  and r.[key]='UserRole' 
                             left join [Role] ro on ro.Id = r.SecondId 
-                            left join Org o on o.Id = r.SecondId left join MonthlyEvaluation m on t.JudgeId=m.UserId and m.EvaluateYear={year}  
+							inner join Relevance r1 on r1.FirstId = t.JudgeId and r1.[key]='UserOrg' 
+                            left join Org o on o.Id = r1.SecondId left join MonthlyEvaluation m on t.JudgeId=m.UserId and m.EvaluateYear={year}  
                             where num > 0 and (ro.Name = '{ type }' or '{ type }' = '') and (o.BizCode='{DeptType}' or ('{DeptType}'='' or '{DeptType}' is null ))  
                             group by JudgeId,JudgeName";
             var rows = Repository.ExecuteQuerySql<PerformanceAppraisalOutPut>(sql).ToList();
