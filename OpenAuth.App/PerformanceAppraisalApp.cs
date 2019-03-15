@@ -94,7 +94,7 @@ select row_number() over(order by c.Name) as num,
 
         public List<PerformanceAppraisalOutPut> List(string year,string type,string DeptType)
         {
-            string sql = $@"select top 1000 JudgeId,JudgeName,
+            string sql = $@"select top 10000 JudgeId,JudgeName,
                            isnull( (select SUM(Score)/12 from MonthlyAssessment 
                             where UserId = JudgeId 
                             and EvaluateYear='{ year }'),0) 
@@ -154,17 +154,70 @@ select row_number() over(order by c.Name) as num,
 	                            else 0 
 	                            end
                             ) q6count,
+                            case when max(ro.name)<>'中层正职' then
                             isnull((select top 1 AccessmentScore from PerformanceAppraisal 
-                            where JudgeId = JudgeId and YEAR(Optime) = { year }),0) AccessmentScore 
+                            where JudgeId = t.JudgeId and YEAR(Optime) = 2018),0) 
+							
+							else 
+							isnull(
+
+							(select 要素*0.6+综合*0.4 from (
+							select  要素=convert(decimal(18,1),case when (德_好+德_中+德_差)=0 or 
+							                                                            (能_好+能_中+能_差)=0 or
+							                                                            (勤_好+勤_中+勤_差)=0 or
+							                                                            (绩_好+绩_中+绩_差)=0 or
+							                                                            (廉_好+廉_中+廉_差)=0 then 0
+						                                                        else 
+							                                                            (德_好*1+德_中*0.7+德_差*0.3)*20/(德_好+德_中+德_差)+
+							                                                            (能_好*1+能_中*0.7+能_差*0.3)*20/(能_好+能_中+能_差)+
+							                                                            (勤_好*1+勤_中*0.7+勤_差*0.3)*20/(勤_好+勤_中+勤_差)+
+							                                                            (绩_好*1+绩_中*0.7+绩_差*0.3)*20/(绩_好+绩_中+绩_差)+
+							                                                            (廉_好*1+廉_中*0.7+廉_差*0.3)*20/(廉_好+廉_中+廉_差)
+						                                                        end),综合=case when cnt=0 then 0 
+								                        else 
+								                        convert(decimal(18,1),(优秀*1+称职*0.8+基本称职*0.6+不称职*0.3)*100.0/cnt)
+								                        end
+														from (
+							select 
+							
+											sum(case Q1 when 10 then 1 else 0 end) as '德_好', 
+				                            sum(case Q1 when 11 then 0.7 else 0 end) as '德_中', 
+				                            sum(case Q1 when 12 then 0.3 else 0 end) as '德_差', 
+
+				                            sum(case Q2 when 10 then 1 else 0 end) as '能_好', 
+				                            sum(case Q2 when 11 then 0.7 else 0 end) as '能_中', 
+				                            sum(case Q2 when 12 then 0.3 else 0 end) as '能_差', 
+
+				                            sum(case Q3 when 10 then 1 else 0 end) as '勤_好', 
+				                            sum(case Q3 when 11 then 0.7 else 0 end) as '勤_中', 
+				                            sum(case Q3 when 12 then 0.3 else 0 end) as '勤_差', 
+
+				                            sum(case Q4 when 10 then 1 else 0 end) as '绩_好', 
+				                            sum(case Q4 when 11 then 0.7 else 0 end) as '绩_中', 
+				                            sum(case Q4 when 12 then 0.3 else 0 end) as '绩_差', 
+
+				                            sum(case Q5 when 10 then 1 else 0 end) as '廉_好', 
+				                            sum(case Q5 when 11 then 0.7 else 0 end) as '廉_中', 
+				                            sum(case Q5 when 12 then 0.3 else 0 end) as '廉_差' ,
+											count(Q6) cnt,
+											 sum(case Q6 when 10 then 1 else 0 end) as '优秀', 
+					                        sum(case Q6 when 11 then 1 else 0 end) as '称职', 
+					                        sum(case Q6 when 12 then 1 else 0 end) as '基本称职', 
+					                        sum(case Q6 when 13 then 1 else 0 end) as '不称职'
+							
+							 from Answer where JudgeId=t.JudgeId and PlanId = (select id from [plan] where [PlanName]='s领导测评')  )a) a)
+							,0)
+
+							 end  AccessmentScore 
                             from(
                               select row_number() over(order by a.Optime) as num,
                               a.RatersId,a.JudgeId,uj.Name as RatersName,ur.Name as JudgeName,
                               a.q1,a.q2,a.q3,a.q4,a.q5,a.q6 from Answer a 
                               inner join [user] ur on ur.Id = a.JudgeId 
                               inner join [user] uj on uj.Id = a.RatersId 
-                              where YEAR(a.Optime) = { year } and a.State = '已提交'
+                              where YEAR(a.Optime) = { year } and a.State = '已提交' and PlanId <> (select id from [plan] where [PlanName]='s领导测评')
                             ) as t 
-                            left join Relevance r on r.FirstId = t.JudgeId 
+                            inner join Relevance r on r.FirstId = t.JudgeId 
                             left join [Role] ro on ro.Id = r.SecondId 
                             left join Org o on o.Id = r.SecondId left join MonthlyEvaluation m on t.JudgeId=m.UserId and m.EvaluateYear={year}  
                             where num > 0 and (ro.Name = '{ type }' or '{ type }' = '') and (o.BizCode='{DeptType}' or ('{DeptType}'='' or '{DeptType}' is null ))  

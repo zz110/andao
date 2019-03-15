@@ -361,8 +361,8 @@ namespace OpenAuth.App
 				                                                        sum(case Q5 when 10 then 1 else 0 end) as '廉_好', 
 				                                                        sum(case Q5 when 11 then 1 else 0 end) as '廉_中', 
 				                                                        sum(case Q5 when 12 then 1 else 0 end) as '廉_差'
-			                                                        from Answer
-			                                                        where State='已提交' and PlanId not in (select id from [Plan] where PlanName like '%s%') and year(Optime)=@EvaluateYear and (JudgeId in(
+			                                                        from Answer a 
+			                                                        where State='已提交' and NOT exists (select id from [Plan] where id=a.PlanId and PlanName like '%s%') and year(Optime)=@EvaluateYear and (JudgeId in(
                                 select distinct a.FirstId from Relevance a  join [Role] b
                                 on a.SecondId=b.Id
                                 where a.[Key]='UserRole' and b.Name=@role
@@ -411,7 +411,7 @@ namespace OpenAuth.App
 					                        sum(case Q6 when 12 then 1 else 0 end) as '基本称职', 
 					                        sum(case Q6 when 13 then 1 else 0 end) as '不称职'
 				                        from Answer as a1
-				                        where State='已提交' and a1.PlanId not in (select id from [Plan] where PlanName like '%s%') and year(Optime)=@EvaluateYear and (JudgeId in(
+				                        where State='已提交' and NOT exists (select id from [Plan] where id=a1.PlanId and PlanName like '%s%') and year(Optime)=@EvaluateYear and (JudgeId in(
                                 select distinct a.FirstId from Relevance a  join [Role] b
                                 on a.SecondId=b.Id
                                 where a.[Key]='UserRole' and b.Name=@role

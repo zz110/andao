@@ -73,8 +73,9 @@
                 pageSize: 10000,
                 columns: [
                     {
-                        checkbox: true
-                    }, {
+                        field: 'Index',
+                        title: '排名'
+                    },{
                         visible: false,
                         field: 'Id'
                     }, {
@@ -90,14 +91,11 @@
                         field: 'AccessmentScore',
                         title: '主管领导评价得分'
                     }, {
+                        field: 'Score',
+                        title: '其他减分'
+                    }, {
                         field: 'kaopingdefen',
                         title: '考评得分'
-                    }, {
-                        field: 'Score',
-                        title: '减分'
-                    }, {
-                        field: 'Index',
-                        title: '排名'
                     }]
             };
             App.init({
@@ -123,10 +121,10 @@
 
                 var type = $("#positionSelect").val();
                 var year = $("#yearSelect").val();
-
+                var DeptType = $("#DeptType").val();
                 _dataTable.SetParameters({
                     year: year,
-                    type: type
+                    type: type,DeptType:DeptType
                 });
 
                 _dataTable.Refresh();

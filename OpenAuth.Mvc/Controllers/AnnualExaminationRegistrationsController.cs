@@ -84,7 +84,7 @@ namespace OpenAuth.Mvc.Controllers
                     EvaluationscoreQueryInput input = new EvaluationscoreQueryInput();
                     input.role = uu.TypeName;
                     input.DeptType = uu.TypeId;
-                    input.EvaluateYear = DateTime.Now.Year;
+                    input.EvaluateYear = 2018;
 
                     List<EvaluationTotalscoreOutput> li = Appp.get_totalscore_data_all(input);
                     
