@@ -26,16 +26,21 @@ namespace OpenAuth.Mvc.Controllers
             List<PerformanceAppraisalOutPut> list = result as List<PerformanceAppraisalOutPut>;
             for (int i = 0; i < list.Count; i++)
             {
-                list[i].q6 = list[i].q6 * 100 / list[i].q6count;
-                if (type == "-100")
-                {
-                    list[i].pingce = (list[i].q1 + list[i].q2 + list[i].q3 + list[i].q4 +
-                        list[i].q5) * (decimal)0.6 + list[i].q6 * (decimal)0.4;
-                }
-                else
-                {
-                    list[i].pingce = list[i].q6;
-                }
+                int cnt = list[i].q1count + list[i].q2count + list[i].q3count + list[i].q4count + list[i].q5count;
+                list[i].pingce = (list[i].q1*20/list[i].q1count + list[i].q2 * 20 / list[i].q2count + list[i].q3 * 20 / list[i].q3count +
+                        list[i].q4 * 20 / list[i].q4count + list[i].q5 * 20 / list[i].q5count) * (decimal)0.6 + list[i].q6 *100/ list[i].q6count * (decimal)0.4;
+
+
+                //list[i].q6 = list[i].q6 * 100 / list[i].q6count;
+                //if (type == "-100")
+                //{
+                //    list[i].pingce = (list[i].q1 + list[i].q2 + list[i].q3 + list[i].q4 +
+                //        list[i].q5) * (decimal)0.6 + list[i].q6 * (decimal)0.4;
+                //}
+                //else
+                //{
+                //    list[i].pingce = list[i].q6;
+                //}
 
                 list[i].pingce = Math.Round(Convert.ToDecimal(list[i].pingce), 2, MidpointRounding.AwayFromZero);
                 list[i].MonthlyAVG = Math.Round(Convert.ToDecimal(list[i].MonthlyAVG), 2, MidpointRounding.AwayFromZero);

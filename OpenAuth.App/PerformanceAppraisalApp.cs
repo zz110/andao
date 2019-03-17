@@ -153,7 +153,32 @@ select row_number() over(order by c.Name) as num,
 	                            when q6 is not null then 1 
 	                            else 0 
 	                            end
-                            ) q6count,
+                            ) q6count,sum(
+	                            case 
+	                            when q1 is not null then 1 
+	                            else 0 
+	                            end
+                            ) q1count,sum(
+	                            case 
+	                            when q2 is not null then 1 
+	                            else 0 
+	                            end
+                            ) q2count,sum(
+	                            case 
+	                            when q3 is not null then 1 
+	                            else 0 
+	                            end
+                            ) q3count,sum(
+	                            case 
+	                            when q4 is not null then 1 
+	                            else 0 
+	                            end
+                            ) q4count,sum(
+	                            case 
+	                            when q5 is not null then 1 
+	                            else 0 
+	                            end
+                            ) q5count,
                             case when max(ro.name)<>'中层正职' then
                             isnull((select top 1 AccessmentScore from PerformanceAppraisal 
                             where JudgeId = t.JudgeId and YEAR(Optime) = 2018),0) 

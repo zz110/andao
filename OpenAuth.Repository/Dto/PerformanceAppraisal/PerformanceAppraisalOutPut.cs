@@ -34,6 +34,12 @@ namespace OpenAuth.Repository.Dto
         public decimal q6 { get; set; }
         public int q6count { get; set; }
 
+        public int q1count { get; set; }
+        public int q2count { get; set; }
+        public int q3count { get; set; }
+        public int q4count { get; set; }
+        public int q5count { get; set; }
+
         public decimal pingce { get; set; }
         public decimal MonthlyAVG { get; set; }
         public decimal pingcedefenavg { get; set; }
