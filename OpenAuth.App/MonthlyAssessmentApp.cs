@@ -87,8 +87,7 @@ select row_number() over(order by c.Name) as num,
       ,a.[Reason1]
       ,a.[Reason2]
 ,b.Name as OrgName,c.Name as UserName from( select *  
-                                                       from MonthlyAssessment a where a.Creator=@Creator 
-                                                       and (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
+                                                       from MonthlyAssessment a where  (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null)
                                                        and (a.EvaluateMonth=@EvaluateMonth or @EvaluateMonth is null) ) a 
                                                        right join [User] c
                                                        on a.UserId=c.Id inner join dbo.Relevance as r on r.firstid=c.id 

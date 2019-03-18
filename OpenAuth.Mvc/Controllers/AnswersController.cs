@@ -7,6 +7,7 @@ using OpenAuth.App.Request;
 using OpenAuth.App.Response;
 using OpenAuth.Mvc.Models;
 using OpenAuth.Repository.Domain;
+using OpenAuth.Repository.Dto;
 
 namespace OpenAuth.Mvc.Controllers
 {
@@ -56,7 +57,7 @@ namespace OpenAuth.Mvc.Controllers
         }
 
         [System.Web.Mvc.HttpGet]
-        public ActionResult page(int limit, int offset, AnswerSearch input)
+        public ActionResult page(int limit, int offset, MonthlyPostAssessmentQueryInput input)
         {
             var result = App.page(limit, offset, input);
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -65,10 +66,9 @@ namespace OpenAuth.Mvc.Controllers
         /// <summary>
         /// 加载列表
         /// </summary>
-        public string Load([FromUri]QueryAnswerListReq request)
+        public string Load(int limit, int offset, MonthlyPostAssessmentQueryInput input)
         {
-            AnswerSearch input = new AnswerSearch();
-            var result = App.page(1000, 0, input);
+            var result = App.page(limit, offset, input);
             return JsonHelper.Instance.Serialize(result);
         }
 

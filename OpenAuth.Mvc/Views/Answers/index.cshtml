@@ -1,188 +1,302 @@
-﻿@section header
-{
-    <link rel="stylesheet" href="/css/treetable.css" />
+﻿@{
+  Layout = "~/Views/Shared/_adminLTELayout.cshtml";
 }
-<blockquote class="layui-elem-quote news_search toolList" id="menus"></blockquote>
-<>
-<div class="layui-row">
-    @*<div class="layui-col-xs2">
-            <ul id="tree" class="ztree"
-                style="padding: 2px; border: 1px solid #ddd; overflow: auto;">
-            </ul>
-        </div>*@
-    <div class="layui-col-xs10">
-        <table class="layui-table"
-               lay-data="{height: 'full-80', page:true, id:'mainList'}"
-               lay-filter="list" lay-size="sm">
-            <thead>
-                <tr>
-                    <th lay-data="{checkbox:true, fixed: true}"></th>
-                    @*<th lay-data="{field:'Id', width:150}">Id</th>*@
-                    <th lay-data="{field:'RatersName', width:150}">评测人</th>
-                    <th lay-data="{field:'JudgeName', width:150}">被评测人</th>
-                    <th lay-data="{field:'Q1', width:150, toolbar: '#QQ1'}">德</th>
-                    <th lay-data="{field:'Q2', width:150, toolbar: '#QQ2'}">能</th>
-                    <th lay-data="{field:'Q3', width:150, toolbar: '#QQ3'}">勤</th>
-                    <th lay-data="{field:'Q4', width:150, toolbar: '#QQ4'}">绩</th>
-                    <th lay-data="{field:'Q5', width:150, toolbar: '#QQ5'}">廉</th>
-                    <th lay-data="{field:'Q6', width:150, toolbar: '#QQ6'}">综合评价</th>
-                    <th lay-data="{field:'Optime', width:150}">答题完成时间</th>
-                    <th lay-data="{field:'State', width:150}">状态</th>
-                    @*<th lay-data="{field:'PlanId', width:150}">方案ID</th>*@
-                    <th lay-data="{field:'PlanName', width:150}">方案名称</th>
-                    <th lay-data="{fixed: 'right', width:160, align:'center', toolbar: '#barList'}"></th>
-                </tr>
-            </thead>
-        </table>
+
+
+<div class="box box-default">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div class="col-xs-12">
+                    <div class="col-xs-1" id="menuList">
+                    </div>
+                    <div class="col-xs-2">
+                        <select id="role" onchange="role_select(this.options[this.options.selectedIndex].value)" class="form-control">
+                            <option value="">请选择职务</option>
+                            <option value="中层正职">中层正职</option>
+                            <option value="中层副职">中层副职</option>
+                            <option value="一般干部">一般干部</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-2">
+                        <select id="DeptType" onchange="dept_type_select(this.options[this.options.selectedIndex].value)" class="form-control">
+                            <option value="">请选择部门类型</option>
+                            <option value="车间">车间</option>
+                            <option value="专业科室">专业科室</option>
+                            <option value="综合科室">综合科室</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-2">
+                        <input type="text" id="EvaluateYear" autocomplete="off" class="form-control" placeholder="请输入年份">
+                    </div>
+                    <div class="col-xs-2">
+                        <input type="text" id="UserName" autocomplete="off" class="form-control" placeholder="请输入被评测姓名">
+                    </div>
+                    <div class="col-xs-2">
+                        <input type="text" id="OrgName" autocomplete="off" class="form-control" placeholder="请输入部门">
+                    </div>
+                    <div class="col-xs-1">
+                        <button class="btn btn-sm btn-primary" id="btnSearch">搜索</button>
+                    </div>
+                </div>
+                <div class="col-xs-12" style="margin-top:5px">
+                    <div class="col-xs-1">
+                    </div>
+                    <div class="col-xs-2">
+                        <input type="text" id="PlanName" autocomplete="off" class="form-control" placeholder="请输入方案名称">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.box-body -->
+</div>
+
+<div class="box box-default">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            <table id="tbList" data-reorderable-columns="true" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"></table>
+        </div>
     </div>
 </div>
 
-<script type="text/html" id="barList">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-</script>
+@section scripts
+{
 
 
-<!--添加/编辑窗口-->
-<div id="divEdit" style="display: none">
-    <form class="layui-form" action="" id="formEdit">
-        <input type="hidden" name="Id" v-model="Id" />
-        <div class="layui-form-item">
-            <label class="layui-form-label">评测人</label>
-            <div class="layui-input-block">
-                <input type="text" name="RatersId" v-model="RatersId" required lay-verify="required"
-                       placeholder="评测人" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">被评测人</label>
-            <div class="layui-input-block">
-                <input type="text" name="JudgeId" v-model="JudgeId" required lay-verify="required"
-                       placeholder="被评测人" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">答题1</label>
-            <div class="layui-input-block">
-                <input type="text" name="Q1" v-model="Q1" required lay-verify="required"
-                       placeholder="答题1" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">答题2</label>
-            <div class="layui-input-block">
-                <input type="text" name="Q2" v-model="Q2" required lay-verify="required"
-                       placeholder="答题2" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">答题3</label>
-            <div class="layui-input-block">
-                <input type="text" name="Q3" v-model="Q3" required lay-verify="required"
-                       placeholder="答题3" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">答题4</label>
-            <div class="layui-input-block">
-                <input type="text" name="Q4" v-model="Q4" required lay-verify="required"
-                       placeholder="答题4" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">答题完成时间</label>
-            <div class="layui-input-block">
-                <input type="text" name="Optime" v-model="Optime" required lay-verify="required"
-                       placeholder="答题完成时间" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">State</label>
-            <div class="layui-input-block">
-                <input type="text" name="State" v-model="State" required lay-verify="required"
-                       placeholder="State" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">方案ID</label>
-            <div class="layui-input-block">
-                <input type="text" name="PlanId" v-model="PlanId" required lay-verify="required"
-                       placeholder="方案ID" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">方案名称</label>
-            <div class="layui-input-block">
-                <input type="text" name="PlanName" v-model="PlanName" required lay-verify="required"
-                       placeholder="方案名称" autocomplete="off" class="layui-input">
-            </div>
-        </div>
+    <script src="~/static/app/app.js"></script>
+    <script>
+
+        var _dataTable;
+        var role = '';
+        var deptType = '';
+        var tbOpts = {
+            type: 'csv',
+            fileName: '月度考核成绩排名',
+        }
+
+        var QueryObj = {};
 
 
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="formSubmit">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-            </div>
-        </div>
-    </form>
-</div>
+        $(function () {
 
-<script type="text/javascript" src="/layui/layui.js"></script>
-<script type="text/javascript" src="/userJs/Answers.js"></script>
+            $("#menuList").loadMenus("evaluate_statistic_analysis");
 
-<script type="text/html" id="QQ1">
-    {{#if (d.Q5 == "10") { }}
-    <span>优</span>
-    {{# }else if(d.Q5 == "11"){ }}
-    <span>中</span>
-    {{# }else if(d.Q5 == "12"){ }}
-    <span>差</span>
-    {{# } }}
-</script>
-<script type="text/html" id="QQ2">
-    {{#if (d.Q5 == "10") { }}
-    <span>优</span>
-    {{# }else if(d.Q5 == "11"){ }}
-    <span>中</span>
-    {{# }else if(d.Q5 == "12"){ }}
-    <span>差</span>
-    {{# } }}
-</script>
-<script type="text/html" id="QQ3">
-    {{#if (d.Q5 == "10") { }}
-    <span>优</span>
-    {{# }else if(d.Q5 == "11"){ }}
-    <span>中</span>
-    {{# }else if(d.Q5 == "12"){ }}
-    <span>差</span>
-    {{# } }}
-</script>
-<script type="text/html" id="QQ4">
-    {{#if (d.Q5 == "10") { }}
-    <span>优</span>
-    {{# }else if(d.Q5 == "11"){ }}
-    <span>中</span>
-    {{# }else if(d.Q5 == "12"){ }}
-    <span>差</span>
-    {{# } }}
-</script>
-<script type="text/html" id="QQ5">
-    {{#if (d.Q5 == "10") { }}
-    <span>优</span>
-    {{# }else if(d.Q5 == "11"){ }}
-    <span>中</span>
-    {{# }else if(d.Q5 == "12"){ }}
-    <span>差</span>
-    {{# } }}
-</script>
-<script type="text/html" id="QQ6">
-    {{#if (d.Q6 == "10") { }}
-    <span>优秀</span>
-    {{# }else if(d.Q6 == "11"){ }}
-    <span>称职</span>
-    {{# }else if(d.Q6 == "12"){ }}
-    <span>基本称职</span>
-    {{# }else if(d.Q6 == "13"){ }}
-    <span>不称职</span>
-    {{# } }}
-</script>
+            var date = new Date();
+            var fullYear = date.getFullYear();
+            var month = date.getMonth() + 1;
+
+            $("#EvaluateYear").val(fullYear);
+            $("#EvaluateMonth").val(month);
+
+            var tbOptions = {
+                pageList: [1],
+                pageSize: 100,
+                pageIndex:1,
+                columns: [
+                    {
+                        field: 'PlanName',
+                        title: '方案名称'
+                    },
+                    {
+                        field: 'RatersName',
+                        title: '评测人'
+                    },
+                    {
+                        field: 'JudgeName',
+                        title: '被评测人'
+                    },
+                    {
+                        field: 'Q1',
+                        title: '德',
+                        formatter:
+                            function (value, row, index) {
+                                if (value == "10")
+                                    value = "好";
+                                if (value == "11")
+                                    value = "中";
+                                if (value == "12")
+                                    value = "差";
+
+                                return value;
+                            }
+                    },
+                    {
+                        field: 'Q2',
+                        title: '能',
+                        formatter:
+                            function (value, row, index) {
+                                if (value == "10")
+                                    value = "好";
+                                if (value == "11")
+                                    value = "中";
+                                if (value == "12")
+                                    value = "差";
+
+                                return value;
+                            }
+                    },
+                    {
+                        field: 'Q3',
+                        title: '勤',
+                        formatter:
+                            function (value, row, index) {
+                                if (value == "10")
+                                    value = "好";
+                                if (value == "11")
+                                    value = "中";
+                                if (value == "12")
+                                    value = "差";
+
+                                return value;
+                            }
+                    },
+                    {
+                        field: 'Q4',
+                        title: '绩',
+                        formatter:
+                            function (value, row, index) {
+                                if (value == "10")
+                                    value = "好";
+                                if (value == "11")
+                                    value = "中";
+                                if (value == "12")
+                                    value = "差";
+
+                                return value;
+                            }
+                    },
+                    {
+                        field: 'Q5',
+                        title: '廉',
+                        formatter:
+                            function (value, row, index) {
+                                if (value == "10")
+                                    value = "好";
+                                if (value == "11")
+                                    value = "中";
+                                if (value == "12")
+                                    value = "差";
+
+                                return value;
+                            }
+                    },
+                    {
+                        field: 'Q6',
+                        title: '综合评价',
+                        formatter:
+                            function (value, row, index) {
+                                if (value == "10")
+                                    value = "优秀";
+                                if (value == "11")
+                                    value = "称职";
+                                if (value == "12")
+                                    value = "基本称职";
+                                if (value == "13")
+                                    value = "不称职";
+
+                                return value;
+                            }
+                    },
+                    {
+                        field: 'Optime',
+                        title: '答题完成时间'
+                    },
+                    {
+                        field: 'State',
+                        title: '状态'
+                    }]
+            }
+
+            App.init();
+
+            App.setExportOptions(tbOpts);
+
+            _dataTable = App.initTable('/Answers/Load', tbOptions);
+
+            _dataTable.SetParameters({
+                EvaluateYear: fullYear,
+                EvaluateMonth: month,
+                role: $("#role").val(),
+                DeptType: $("#DeptType").val(),
+                UserName: $("#UserName").val(),
+                OrgName: $("#OrgName").val(),
+                PlanName: $("#PlanName").val()
+            });
+
+            _dataTable.Init();
+
+
+            $("#btnSearch").click(function () {
+
+                var EvaluateYear = parseInt($("#EvaluateYear").val());
+
+                if (isNaN(EvaluateYear) || (EvaluateYear < 1977 || EvaluateYear > 9999)) {
+
+                    swal("提示", "请输入合法的年份", "warning");
+                    return;
+                }
+
+                QueryObj = {
+                    EvaluateYear: $("#EvaluateYear").val(),
+                    EvaluateMonth: $("#EvaluateMonth").val(),
+                    role: $("#role").val(),
+                    DeptType: $("#DeptType").val(),
+                    UserName: $("#UserName").val(),
+                    OrgName: $("#OrgName").val(),
+                    PlanName: $("#PlanName").val()
+                };
+
+
+                _dataTable.SetParameters(QueryObj);
+                _dataTable.Refresh();
+            });
+        });
+
+
+        function DoOnMsoNumberFormat(cell, row, col) {
+
+            var result = "";
+            if (row > 0 && col >= 3)
+                result = "0\.00";
+            return result;
+        }
+
+        function role_select(value) {
+
+            QueryObj = {
+                EvaluateYear: $("#EvaluateYear").val(),
+                EvaluateMonth: $("#EvaluateMonth").val(),
+                role: value,
+                DeptType: $("#DeptType").val(),
+                UserName: $("#UserName").val(),
+                OrgName: $("#OrgName").val(),
+                PlanName: $("#PlanName").val()
+            };
+
+            _dataTable.SetParameters(QueryObj);
+            _dataTable.Refresh();
+        }
+
+        function dept_type_select(value) {
+
+            QueryObj = {
+                EvaluateYear: $("#EvaluateYear").val(),
+                EvaluateMonth: $("#EvaluateMonth").val(),
+                role: $("#role").val(),
+                DeptType: value,
+                UserName: $("#UserName").val(),
+                OrgName: $("#OrgName").val(),
+                PlanName: $("#PlanName").val()
+            };
+
+            _dataTable.SetParameters(QueryObj);
+            _dataTable.Refresh();
+        }
+
+    </script>
+
+}
+
+

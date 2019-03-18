@@ -6,7 +6,7 @@ using OpenAuth.App.Request;
 using OpenAuth.App.Response;
 using OpenAuth.App.SSO;
 using OpenAuth.Repository.Domain;
-
+using OpenAuth.Repository.Dto;
 
 namespace OpenAuth.App
 {
@@ -14,29 +14,47 @@ namespace OpenAuth.App
     {
         public RevelanceManagerApp ReleManagerApp { get; set; }
 
-        public object page(int limit, int offset, AnswerSearch input)
+        public object page(int limit, int offset, MonthlyPostAssessmentQueryInput input)
         {
-
-            offset += 1;
+            
             string sql = $@"select top {limit} * from(
                               select row_number() over(order by a.id) as num,a.*,c.Name as RatersName,c1.Name as JudgeName
                                                        from Answer a 
                                                        left join [User] c
                                                        on a.RatersId=c.Id left join [User] c1 on a.JudgeId = c1.Id 
-                                                       
-                                                       
-                            ) as t where num > ({limit}*({offset}-1))";
+                                                       left join Relevance r on r.FirstId = a.JudgeId and r.[key]='UserOrg' 
+                                                       inner join Org o on o.id = r.SecondId 
+                                                       left join Relevance r1 on r1.FirstId = a.JudgeId and r1.[key]='UserRole' 
+                                                       inner join Role ro on ro.id = r1.SecondId 
+                                                       where (Datename(year,a.[Optime])=@EvaluateYear or @EvaluateYear is null)
+                                    and (c1.Name like '%'+@UserName+'%'  or @UserName is null)
+                                    and (o.Name like '%'+@OrgName+'%' or @OrgName is null)
+                                    and (ro.Name=@role or @role is null)
+                                    and (o.BizCode=@DeptType or (@DeptType='' or @DeptType is null or @DeptType='')) 
+                                    and (a.PlanName like '%'+@PlanName+'%' or @PlanName is null or @PlanName='') 
+                            ) as t where num > {offset}";
 
             var rows = Repository.ExecuteQuerySql<AnswerSearch>(sql, input.ToParameters()).ToList();
 
-            sql = @"select count(*) from Answer ";
+            sql = @"select count(*) from Answer a 
+                                                       left join [User] c
+                                                       on a.RatersId=c.Id left join [User] c1 on a.JudgeId = c1.Id 
+                                                       left join Relevance r on r.FirstId = a.JudgeId and r.[key]='UserOrg' 
+                                                       inner join Org o on o.id = r.SecondId 
+                                                       left join Relevance r1 on r1.FirstId = a.JudgeId and r1.[key]='UserRole' 
+                                                       inner join Role ro on ro.id = r1.SecondId 
+                                                       where (Datename(year,a.[Optime])=@EvaluateYear or @EvaluateYear is null)
+                                    and (c1.Name like '%'+@UserName+'%'  or @UserName is null)
+                                    and (o.Name like '%'+@OrgName+'%' or @OrgName is null)
+                                    and (ro.Name=@role or @role is null)
+                                    and (o.BizCode=@DeptType or (@DeptType='' or @DeptType is null or @DeptType='')) and (a.PlanName like '%'+@PlanName+'%' or @PlanName is null or @PlanName='') ";
 
             int total = Repository.ExecuteQuerySql<int>(sql, input.ToParameters()).FirstOrDefault();
 
-            return new TableData
+            return new
             {
-                count = total,
-                data = rows
+                total = total,
+                rows = rows
             };
         }
 
