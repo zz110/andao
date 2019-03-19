@@ -46,8 +46,8 @@ namespace OpenAuth.Mvc.Controllers
                 list[i].MonthlyAVG = Math.Round(Convert.ToDecimal(list[i].MonthlyAVG), 2, MidpointRounding.AwayFromZero);
                 list[i].AccessmentScore = Math.Round(Convert.ToDecimal(list[i].AccessmentScore), 2, MidpointRounding.AwayFromZero);
 
-                list[i].kaopingdefen = list[i].MonthlyAVG * (decimal)0.4 +
-                    (list[i].pingce + list[i].AccessmentScore) * (decimal)0.3 - list[i].Score;
+                list[i].kaopingdefen = list[i].pingce * (decimal)0.4 +
+                    (list[i].MonthlyAVG + list[i].AccessmentScore) * (decimal)0.3 - list[i].Score;
 
                 list[i].kaopingdefen = Math.Round(Convert.ToDecimal(list[i].kaopingdefen), 2, MidpointRounding.AwayFromZero);
 
