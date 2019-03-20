@@ -120,10 +120,10 @@ namespace OpenAuth.App
 
             var sql = @"SELECT row_number() over(order by T1.Average desc) as Num,UserName,OrgName,isnull([1],0.00) as [_1],isnull([2],0.00) as [_2],isnull([3],0.00) as [_3],
 isnull([4],0.00) as [_4],isnull([5],0.00) as [_5],isnull([6],0.00) as [_6],isnull([7],0.00) as [_7],isnull([8],0.00) as [_8],isnull([9],0.00) as [_9],isnull([10],0.00) as [_10],
-isnull([11],0.00) as [_11],isnull([12],0.00) as [_12],T1.Average FROM (select a.UserId,a.OrgId,c.Name as UserName,b.Name as OrgName,a.EvaluateMonth,a.tmpScore FROM 
+isnull([11],0.00) as [_11],isnull([12],0.00) as [_12],isnull(T1.Average,0) Average FROM (select a.UserId,a.OrgId,c.Name as UserName,b.Name as OrgName,a.EvaluateMonth,a.tmpScore FROM 
 (SELECT [MonthlyAssessment].[UserId],[MonthlyAssessment].[OrgId],[MonthlyAssessment].[EvaluateMonth],[MonthlyAssessment].[EvaluateYear],
 (ISNULL([MonthlyAssessment].[AnntubeScore],0)+ISNULL([DepartmentMonthlyEvaluation].[Score],0))/2 as tmpScore FROM [MonthlyAssessment] left join [DepartmentMonthlyEvaluation] 
-on [MonthlyAssessment].OrgId=[DepartmentMonthlyEvaluation].OrgId) a left join Org b on a.OrgId=b.Id left join [User] c on a.UserId=c.Id where 
+on [MonthlyAssessment].OrgId=[DepartmentMonthlyEvaluation].OrgId and [MonthlyAssessment].EvaluateMonth=[DepartmentMonthlyEvaluation].EvaluateMonth) a left join Org b on a.OrgId=b.Id left join [User] c on a.UserId=c.Id where 
 (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null) and (c.Name like '%'+@UserName+'%' or @UserName is null ) and ( b.Name like '%'+@OrgName+'%'  or @OrgName is null) 
 and (b.BizCode=@DeptType or (@DeptType='' or @DeptType is null or @DeptType=''))
 and (a.UserId in(select distinct a.FirstId from Relevance a  join [Role] b on a.SecondId=b.Id where a.[Key]='UserRole' and b.Name=@role) or @role is null)) AS P PIVOT 
