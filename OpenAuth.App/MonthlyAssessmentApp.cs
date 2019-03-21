@@ -227,7 +227,7 @@ create table ##ttemp(gid nvarchar(50),username nvarchar(50),
       
 insert into ##ttemp     
 
-select NEWID(),*,case when core>=95 then '优秀' when core > 75 and core <95 then '合格' else '失格' end ge from (
+select NEWID(),*,case when core>=95 then '优秀' when core > 75 and core <85 then '合格' else '失格' end ge from (
 select username,evaluateyear,EvaluateMonth,(Score+DepartmentMonthlyScore)*0.5 core,Reason1,Reason2 from (
 
 select d.Name as UserName,c.Name as OrgName,a.EvaluateYear,a.EvaluateMonth,isnull(a.Score,0.00) as Score,isnull(b.Score,0.00) as DepartmentMonthlyScore,Reason1,Reason2 

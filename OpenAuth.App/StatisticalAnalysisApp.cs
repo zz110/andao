@@ -115,7 +115,8 @@ namespace OpenAuth.App
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public object get_integration_score_data(EvaluationscoreQueryInput input) {
+        public object get_integration_score_data(EvaluationscoreQueryInput input)
+        {
 
             string sql = @"select ROW_NUMBER() over(order by 综合得分 desc) as Num,
                                            Name,
