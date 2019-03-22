@@ -227,16 +227,16 @@ create table ##ttemp(gid nvarchar(50),username nvarchar(50),
       
 insert into ##ttemp     
 
-select NEWID(),*,case when core>=95 then '优秀' when core > 75 and core <85 then '合格' when core < 75 then '失格' end ge from (
+select NEWID(),*,case when core>=95 then '1优秀' when core > 75 and core <85 then '合格' when core < 75 then '失格' end ge from (
 select username,evaluateyear,EvaluateMonth,(Score+DepartmentMonthlyScore)*0.5 core,Reason1,Reason2 from (
 
-select d.Name as UserName,c.Name as OrgName,a.EvaluateYear,a.EvaluateMonth,isnull(a.Score,0.00) as Score,isnull(b.Score,0.00) as DepartmentMonthlyScore,Reason1,Reason2 
+select d.Name as UserName,c.Name as OrgName,a.EvaluateYear,a.EvaluateMonth,isnull(a.Score,0.00) as Score,isnull(b.Score,0.00) as DepartmentMonthlyScore,mo.LessReason Reason1,Reason2 
                             FROM MonthlyAssessment a left join DepartmentMonthlyEvaluation b
                             on a.OrgId=b.OrgId and a.EvaluateYear=b.EvaluateYear and a.EvaluateMonth=b.EvaluateMonth
                             left join Org c
                             on a.OrgId=c.Id
                             left join [User] as d
-                            on a.UserId=d.Id  
+                            on a.UserId=d.Id  left join  [dbo].[MonthlyEvaluation] as mo on mo.UserId= a.UserId and mo.EvaluateMonth=a.EvaluateMonth  
 where (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null) and 
                              (c.Name like '%'+@OrgName+'%' or @OrgName is null) and 
                              (d.Name like '%'+@UserName+'%' or @UserName is null)
@@ -271,29 +271,7 @@ PIVOT
 (
    max(Names) FOR 
     p.EvaluateMonth IN ([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
-) AS T ) t ) as s group by ge   union all    select COUNT(*)-1 统计,'不合格原因',MAX(s.[1]) as 一,MAX(s.[2]) as 二,MAX(s.[3]) as 三,MAX(s.[4]) as 四,MAX(s.[5]) as 五
-     ,MAX(s.[6]) as 六,MAX(s.[7]) as 七,MAX(s.[8]) as 八,MAX(s.[9]) as 九
-     ,MAX(s.[10]) as 十,MAX(s.[11]) as 十一,MAX(s.[12]) as 十二 from (                      
-   select * from (   
-      select * from (  
-     select COUNT(*) 统计,
-  EvaluateMonth,ge,
-     Names=stuff((select ','+username+':'+Reason2 from ##ttemp t  
-     where t.EvaluateMonth=##ttemp.EvaluateMonth  and t.ge=##ttemp.ge   
-     for xml path('')), 1, 1, ''),Names1=stuff((select '/'+username from ##ttemp t  
-     where t.EvaluateMonth=##ttemp.EvaluateMonth  and t.ge=##ttemp.ge   
-     for xml path('')), 1, 1, '')   
-from  
-##ttemp  where ge='失格'
-group by 
-EvaluateMonth,ge  
- )  as p  
-                           
-PIVOT 
-(
-   max(Names) FOR 
-    p.EvaluateMonth IN ([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])
-) AS T ) t ) as s group by ge  union all    select COUNT(*)-1 统计,'减分原因',MAX(s.[1]) as 一,MAX(s.[2]) as 二,MAX(s.[3]) as 三,MAX(s.[4]) as 四,MAX(s.[5]) as 五
+) AS T ) t ) as s group by ge union all select COUNT(*)-1 统计,'减分原因',MAX(s.[1]) as 一,MAX(s.[2]) as 二,MAX(s.[3]) as 三,MAX(s.[4]) as 四,MAX(s.[5]) as 五
      ,MAX(s.[6]) as 六,MAX(s.[7]) as 七,MAX(s.[8]) as 八,MAX(s.[9]) as 九
      ,MAX(s.[10]) as 十,MAX(s.[11]) as 十一,MAX(s.[12]) as 十二 from (                      
    select * from (   
