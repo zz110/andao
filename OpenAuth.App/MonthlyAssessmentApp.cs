@@ -26,7 +26,7 @@ namespace OpenAuth.App
             string orgids = "";
             for (int i = 0; i < rli.Count; i++)
             {
-                orgids = orgids + "'" +rli[i].SecondId + "',";
+                orgids = orgids + "'" + rli[i].SecondId + "',";
             }
             if (orgids != "")
                 orgids = orgids.Substring(0, orgids.Length - 1);
@@ -169,8 +169,9 @@ select row_number() over(order by c.Name) as num,
 
                 var sql = "select 'YueFen' as field,'月份' as title,-1 as SortNo union all ";
                 sql += "select '['+[Name]+']' as field,[Name] as title,[SortNo] from [Org] ";
+                sql += "where [Name]<>'段领导' and [Name]<>'唐山供电段' ";
                 if (!string.IsNullOrEmpty(deptType))
-                    sql += "where [BizCode]='"+ deptType + "' ";
+                    sql += "and [BizCode]='" + deptType + "' ";
                 sql += "order by [SortNo] ";
 
                 var rows = Repository.ExecuteQuerySql<TableColumns>(sql, haha).ToList();
