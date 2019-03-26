@@ -201,7 +201,11 @@
                     },
                     {
                         field: 'Optime',
-                        title: '答题完成时间'
+                        title: '答题完成时间',
+                        formatter:
+                            function (value, row, index) {
+                                return value.substring(5) ;
+                            }
                     },
                     {
                         field: 'State',

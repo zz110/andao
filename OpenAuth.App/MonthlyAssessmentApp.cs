@@ -237,7 +237,7 @@ select d.Name as UserName,c.Name as OrgName,a.EvaluateYear,a.EvaluateMonth,isnul
                             left join Org c
                             on a.OrgId=c.Id
                             left join [User] as d
-                            on a.UserId=d.Id  left join  [dbo].[MonthlyEvaluation] as mo on mo.UserId= a.UserId and mo.EvaluateMonth=a.EvaluateMonth  
+                            on a.UserId=d.Id  left join  [dbo].[MonthlyEvaluation] as mo on mo.UserId= a.UserId and mo.EvaluateMonth=a.EvaluateMonth  and mo.EvaluateYear=a.EvaluateYear    
 where (a.EvaluateYear=@EvaluateYear or @EvaluateYear is null) and 
                              (c.Name like '%'+@OrgName+'%' or @OrgName is null) and 
                              (d.Name like '%'+@UserName+'%' or @UserName is null)

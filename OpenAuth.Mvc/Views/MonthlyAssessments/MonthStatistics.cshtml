@@ -90,7 +90,11 @@
                 columns: [
                     {
                         field: '结果',
-                        title: '结果'
+                        title: '结果',
+                        formatter:
+                            function (value, row, index) {
+                                return value.replace("1","");
+                            }
                     },
                     {
                         field: '一',
