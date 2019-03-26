@@ -113,7 +113,7 @@ namespace OpenAuth.App
       ,u.[Age]
       ,u.[XRank]
       ,u.[ZRank]
-      ,[CardId] from [user] u inner join dbo.Relevance r on u.id=r.firstid inner join dbo.Org o on o.id=r.secondid
+      ,[CardId],'' Politicalaffiliation,'' Position,'' DegreeEdu,'' Nation,'' Officetime from [user] u inner join dbo.Relevance r on u.id=r.firstid inner join dbo.Org o on o.id=r.secondid
   where u.id in (
  select * from temp 
   ) order by o.name
